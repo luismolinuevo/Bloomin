@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id        Int         @id @unique @default(autoincrement())
+  firstName String?     @db.VarChar(255)
+  lastName  String?     @db.VarChar(255)
+  userName  String      @db.VarChar(255)
+  email     String      @unique @db.VarChar(255)
+  password  String      @db.VarChar(255)
+  imageUrl  String?
+  post      Post[]
+  favs      Favorites[]
+  Comment   Comment[]
+  votes     Votes[]
+  chatroom  ChatRoom[]
+  messages  Message[]
+}
+
+model Post {
+  id                       Int    @id @unique @default(autoincrement())
+  cost                     String
+  description              String @db.VarChar(10000)
+  implementationDifficulty String
+  city                     String
+  livingSituation          String
+  title                    String
+
+  userId  Int
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  upvotes Int  @default(0)
+
+  downvotes Int         @default(0)
+  Favorites Favorites[]
+  Comment   Comment[]
+  votes     Votes[]
+
+  @@index([userId])
+}
+
+model Votes {
+  id     Int    @id @unique @default(autoincrement())
+  postId Int
+  type   String //could be upvote or downvote
+  userId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+}
+
+model Comment {
+  id       Int    @id @unique @default(autoincrement())
+  textbody String @db.VarChar(400)
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId   Int
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+}
+
+model Favorites {
+  id Int @id @unique @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+}
+
+model ChatRoom {
+  id    Int    @id @default(autoincrement())
+  users User[]
+
+  messages Message[]
+}
+
+model Message {
+  id       Int      @id @default(autoincrement())
+  content  String
+  createAt DateTime
+  chatId   Int
+  chat     ChatRoom @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([chatId])
+}
