@@ -9,3 +9,5 @@ router.put("/vote/:postId", passport.authenticate("jwt", { session: false }), po
 router.get("/getPosts", postControllers.getAllPost);
 router.get("/getPost/:postId", postControllers.getPost);
 
+export default router;
+

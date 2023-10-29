@@ -44,13 +44,13 @@ const getFavorites = async (req, res) => {
   }
 };
 
-const deleteFavorites = async (req, res) => {
+const deleteFavorite = async (req, res) => {
   try {
-    const { favoritesId } = req.params;
+    const { favoriteId } = req.params;
 
     const deleteFav = await prisma.favorites.deleteMany({
       where: {
-        favoritesId: favoritesId,
+        favoritesId: favoriteId,
       },
     });
 
@@ -69,4 +69,4 @@ const deleteFavorites = async (req, res) => {
   }
 };
 
-export { favoritePost, getFavorites, deleteFavorites };
+export { favoritePost, getFavorites, deleteFavorite };
