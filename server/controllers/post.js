@@ -110,4 +110,49 @@ const vote = async (req, res) => {
   }
 };
 
-export { createPost, vote };
+const getAllPost = async (req, res) => {
+  try {
+    const post = await prisma.post.findMany();
+
+    if (post) {
+      return res.status(200).json({
+        success: "true",
+        post,
+      });
+    }
+
+    return res.status(404).json({
+      message: "No post found",
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Someting went wrong" });
+  }
+};
+
+const getPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await prisma.post.findFirst({
+      where: {
+        postId: postId,
+      },
+    });
+
+    if (post) {
+      return res.status(200).json({
+        message: "Success",
+        post,
+      });
+    }
+
+    return res.status(404).json({
+      success: false,
+      message: "Post with that ID not found",
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Someting went wrong" });
+  }
+};
+
+export { createPost, vote, getAllPost, getPost };
