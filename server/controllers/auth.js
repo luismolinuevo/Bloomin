@@ -117,4 +117,16 @@ const login = async (req, res) => {
       }
 }
 
-export {signup, login}
+const getUserAuthInfo = async (req, res) => {
+    return res.status(200).json({
+        success: true,
+        data: req.user,
+      });    
+}
+
+const googleCallBack = async (req, res) => {
+    const token = req.user; // req.user now contains the JWT token
+    res.redirect(`http://localhost:5173?token=${token}`);
+}
+
+export {signup, login, getUserAuthInfo, googleCallBack}
