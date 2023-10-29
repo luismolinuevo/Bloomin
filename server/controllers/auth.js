@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../db/index.js";
 import dotenv from "dotenv";
 import passport from "passport";
-import googlePassport from "../auth/GoogleLogin.js";
+// import googlePassport from "../auth/GoogleLogin.js";
 dotenv.config()
 
 const signup = async (req, res) => {
@@ -24,7 +24,8 @@ const signup = async (req, res) => {
             const hashPassword = await argon2.hash(req.body.password);
             const newUser = await prisma.user.create({
               data: {
-                fullName: req.body.fullName,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 userName: req.body.userName,
                 email: req.body.email,
                 password: hashPassword,
