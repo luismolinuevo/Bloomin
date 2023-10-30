@@ -1,7 +1,7 @@
 import prisma from "../db/index.js";
 
 /*------------------Get user following-------------------- */
-const getUserFollowing = async (req, res) => {
+const getUserFollowers = async (req, res) => {
   try {
     const { user_id } = req.params;
 
@@ -26,6 +26,33 @@ const getUserFollowing = async (req, res) => {
     return res.status(500).json({ error: "Someting went wrong" });
   }
 };
+
+/*------------------Get user followers-------------------- */
+const getUserFollowing = async (req, res) => {
+    try {
+      const { user_id } = req.params;
+  
+      const followers = await prisma.follower.findMany({
+        where: {
+          followerId: user_id,
+        },
+      });
+  
+      if (followers) {
+        return res.status(200).json({
+          success: true,
+          followers,
+        });
+      }
+  
+      return res.status(404).json({
+        success: false,
+        message: "No following found for this user",
+      });
+    } catch (error) {
+      return res.status(500).json({ error: "Someting went wrong" });
+    }
+  };
 
 /*-------------------Follower a user----------------------- */
 const followUser = async (req, res) => {
@@ -55,4 +82,4 @@ const followUser = async (req, res) => {
   }
 };
 
-export { followUser, getUserFollowing };
+export { followUser, getUserFollowing, getUserFollowers };
