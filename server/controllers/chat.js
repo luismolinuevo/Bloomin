@@ -16,6 +16,7 @@ const createRoom = async (req, res) => {
       success: true,
       chatroom,
     });
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Server Error" });
