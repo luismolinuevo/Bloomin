@@ -2,7 +2,7 @@ import prisma from "../db/index.js";
 
 const addComment = async (req, res) => {
     try {
-        const { postId } = req.params;
+        const { postId } = req.params;  
         const newComment = await prisma.comment.create({
             data: {
                 textbody: req.body.textbody,
@@ -14,14 +14,15 @@ const addComment = async (req, res) => {
         if(newComment) {
             return res.status(200).json({
                 success: true,
-                message: "Error not creating post"
+                message: "New comment created"
             });
         }
 
         return res.status(404).json({
             success: false,
             message: "Error creating post"
-        })
+        });
+
     } catch(error) {
         return res.status(500).json({ error: "Someting went wrong" });
     }
