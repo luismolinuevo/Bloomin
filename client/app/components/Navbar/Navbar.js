@@ -105,7 +105,7 @@ export default function Navbar() {
             ? "bg-gray-800 bg-opacity-80"
             : ""
         }`}
-        id="top"
+        style={{position: isScrolled ? "sticky" : "static", top: 0}}
       >
         <nav className="flex justify-between">
           <Link
