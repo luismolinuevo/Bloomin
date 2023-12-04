@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
+import { signup } from "@/lib/auth";
 
 export default function Form() {
   const {
@@ -10,13 +11,31 @@ export default function Form() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onSubmit = async (formData) => {
+    try {
+      // Call the signup function with form data
+      console.log(formData)
+      const data = {
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        userName: formData.userName,
+      }
+      await signup(data);
+
+      // Handle successful signup response
+      console.log("Signup success:");
+    } catch (error) {
+      // Handle error during signup
+      console.error("Signup error:", error);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className="w-[350px]">
-        <form
-          onSubmit={handleSubmit(data)}
-          className="flex flex-col gap-7"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <input
             {...register("email", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
@@ -24,23 +43,23 @@ export default function Form() {
           />
           {errors.email && <p>Email is required.</p>}
           <input
-            {...register("Username", { required: true })}
+            {...register("userName", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
             placeholder="Username"
           />
-          {errors.Username && <p>Username is required.</p>}
+          {errors.userName && <p>Username is required.</p>}
           <input
-            {...register("Password", { required: true })}
+            {...register("password", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
             placeholder="Password"
           />
-          {errors.Password && <p>Password is required.</p>}
+          {errors.password && <p>Password is required.</p>}
           <input
-            {...register("ConfirmPassword", { required: true })}
+            {...register("confirmPassword", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
             placeholder="Confirm Password"
           />
-          {errors.ConfirmPassword && <p>Confirm Password is required.</p>}
+          {errors.confirmPassword && <p>Confirm Password is required.</p>}
           <div className="flex justify-center mt-5">
             <input
               type="submit"
