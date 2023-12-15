@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import { signup } from "@/lib/auth";
+import { signup } from "@/app/lib/auth";
 
 export default function Form() {
   const {
