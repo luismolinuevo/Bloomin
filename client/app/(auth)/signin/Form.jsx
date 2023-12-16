@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { signin } from "@/app/lib/auth";
+import cookie from "js-cookie";
 
 export default function Form() {
   const {
@@ -11,17 +13,22 @@ export default function Form() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (formData) => {
     try {
-      console.log(formData);
       const data = {
         password: formData.password,
         userName: formData.userName
       };
-      await signin(data);
+      const response = await signin(data);
+      if(response.token) {
+        console.log("test");
+        cookie.set("user_token", response.token);
+        router.push("/");
+      }
 
-      console.log("Signup success:");
+      console.log("Signin worked");
     } catch (error) {
       console.error("Signup error:", error);
     }
