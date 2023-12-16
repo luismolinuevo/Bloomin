@@ -63,7 +63,7 @@ export default function Form() {
           <div className="flex justify-center mt-5">
             <input
               type="submit"
-              className="py-1 px-2 bg-green-3 text-white w-1/2 rounded-[50px] text-[28px]"
+              className="py-1 px-2 bg-green-3 text-white w-1/2 rounded-[50px] text-[28px] cursor-pointer"
             />
           </div>
         </form>
