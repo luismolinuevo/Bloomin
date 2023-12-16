@@ -28,7 +28,6 @@ export default function Form() {
         router.push("/");
       }
 
-      console.log("Signin worked");
     } catch (error) {
       console.error("Signup error:", error);
     }

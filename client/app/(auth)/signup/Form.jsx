@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { signup } from "@/app/lib/auth";
+import { signup, signin } from "@/app/lib/auth";
+import cookie from "js-cookie";
 
 export default function Form() {
   const {
@@ -11,23 +13,31 @@ export default function Form() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (formData) => {
     try {
-      // Call the signup function with form data
-      console.log(formData)
       const data = {
         email: formData.email,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
         userName: formData.userName,
-      }
-      await signup(data);
+      };
+      const response = await signup(data);
 
-      // Handle successful signup response
-      console.log("Signup success:");
+      if (response.success) {
+        const loginData = {
+          userName: formData.userName,
+          password: formData.password,
+        };
+        const login = await signin(loginData);
+
+        if (login.token) {
+          cookie.set("user_token", login.token);
+          router.push("/");
+        }
+      }
     } catch (error) {
-      // Handle error during signup
       console.error("Signup error:", error);
     }
   };
@@ -51,12 +61,14 @@ export default function Form() {
           <input
             {...register("password", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
+            type="password"
             placeholder="Password"
           />
           {errors.password && <p>Password is required.</p>}
           <input
             {...register("confirmPassword", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
+            type="password"
             placeholder="Confirm Password"
           />
           {errors.confirmPassword && <p>Confirm Password is required.</p>}
