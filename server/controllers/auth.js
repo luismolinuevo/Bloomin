@@ -126,7 +126,7 @@ const getUserAuthInfo = async (req, res) => {
 
 const googleCallBack = async (req, res) => {
     const token = req.user; // req.user now contains the JWT token
-    res.redirect(`http://localhost:5173?token=${token}`);
+    res.redirect(`http://localhost:3000?token=${token}`);
 }
 
 export {signup, login, getUserAuthInfo, googleCallBack}
