@@ -8,7 +8,7 @@ dotenv.config();
 
 import { apiRouter } from "./routes/index.js";
 
-export default function createServer() {
+export default async function createServer() {
   const PORT = process.env.PORT;
 
   const app = express();

@@ -1,6 +1,14 @@
-const request = require("supertest");
-const app = require("../server.js");
-const prisma = require("../db/index.js");
+import request from 'supertest';
+import createServer from '../index.js';
+import prisma from '../db/index.js';
+import argon2 from 'argon2';
+
+let server;
+const runServer = async () => {
+  server = await createServer();
+}
+
+runServer();
 
 describe("POST /api/login", () => {
   let testUser;
@@ -10,7 +18,7 @@ describe("POST /api/login", () => {
     testUser = await prisma.user.create({
       data: {
         userName: "example",
-        password: "password",
+        password: await argon2.hash("password"),
         email: "example@gmail.com",
         firstName: "example",
         lastName: "example",
@@ -24,10 +32,19 @@ describe("POST /api/login", () => {
     await prisma.$disconnect();
   });
 
+  it("should return 404 for not found user", async () => {
+    const res = await request(server)
+      .post("/api/login")
+      .send({ userName: "invalid", password: "wrongpassword" })
+      .expect(404);
+    // Assert that the response contains a success property
+    expect(res.body).toHaveProperty("success", false);
+  });
+
   it("should return a JWT token upon successful login", async () => {
-    const res = await request(app)
-      .post("/login")
-      .send({ username: "example", password: "password" })
+    const res = await request(server)
+      .post("/api/login")
+      .send({ userName: "example", password: "password" })
       .expect(200);
 
     // Assert that the response contains a token
@@ -36,10 +53,10 @@ describe("POST /api/login", () => {
     expect(res.body).toHaveProperty("success", true);
   });
 
-  it("should return Unauthorized for invalid credentials", async () => {
-    await request(app)
-      .post("/login")
-      .send({ username: "invalid", password: "wrongpassword" })
+  it("should return Unauthorized for invalid password", async () => {
+    const res = await request(server)
+      .post("/api/login")
+      .send({ userName: "example", password: "wrongpassword" })
       .expect(401);
     // Assert that the response contains a success property
     expect(res.body).toHaveProperty("success", false);
