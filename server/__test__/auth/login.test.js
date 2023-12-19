@@ -1,12 +1,12 @@
-import request from 'supertest';
-import createServer from '../index.js';
-import prisma from '../db/index.js';
-import argon2 from 'argon2';
+import request from "supertest";
+import createServer from "../../index.js";
+import prisma from "../../db/index.js";
+import argon2 from "argon2";
 
 let server;
 const runServer = async () => {
   server = await createServer();
-}
+};
 
 runServer();
 
