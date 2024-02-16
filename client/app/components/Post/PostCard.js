@@ -1,11 +1,6 @@
 import VotingButtons from "./VotingButtons";
 
-export default function PostCard({
-  post_img,
-  post_body,
-  post_title,
-  post_tags,
-}) {
+export default function PostCard({ post }) {
   return (
     <div>
       <div className="flex justify-between">
