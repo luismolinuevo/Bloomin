@@ -113,17 +113,19 @@ const vote = async (req, res) => {
 const getAllPost = async (req, res) => {
   try {
     const post = await prisma.post.findMany();
+    console.log("I nedfds")
 
     if (post) {
       return res.status(200).json({
         success: "true",
         post,
       });
+    } else {
+      console.log("Error")
+      return res.status(404).json({
+        message: "No post found",
+      });
     }
-
-    return res.status(404).json({
-      message: "No post found",
-    });
   } catch (error) {
     return res.status(500).json({ error: "Someting went wrong" });
   }

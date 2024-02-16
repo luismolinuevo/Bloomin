@@ -6,8 +6,8 @@ const router = Router();
 
 router.post("/createpost", passport.authenticate("jwt", { session: false }), postControllers.createPost);
 router.put("/vote/:postId", passport.authenticate("jwt", { session: false }), postControllers.vote);
-router.get("/getPosts", postControllers.getAllPost);
-router.get("/getPost/:postId", postControllers.getPost);
+router.get("/posts", postControllers.getAllPost);
+router.get("/post/:postId", postControllers.getPost);
 
 export default router;
 
