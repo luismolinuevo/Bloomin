@@ -35,6 +35,7 @@ model Post {
   city                     String
   livingSituation          String
   title                    String
+  img                      String?
 
   userId  Int
   user    User @relation(fields: [userId], references: [id], onDelete: Cascade)

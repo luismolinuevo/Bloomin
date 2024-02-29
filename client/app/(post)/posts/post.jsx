@@ -4,6 +4,7 @@ import PostCard from "@/app/components/Post/PostCard";
 import PostSearch from "../../components/Search/PostSearch.jsx";
 import { getAllPosts } from "@/app/lib/post";
 import { useEffect, useState } from "react";
+import CreatePost from "@/app/components/Post/CreatePost.jsx";
 
 export default function Post() {
   const [loading, setLoading] = useState(false);
@@ -28,12 +29,13 @@ export default function Post() {
   return (
     <div>
       <PostSearch />
-      <div className="px-16 flex justify-between items-center">
+      <div className="mx-16 flex justify-between items-center">
         <p className="text-[40px] text-[#459857]">Recommended</p>
         <button className="bg-[#459858] text-white rounded-2xl p-2">Sort by</button>
       </div>
 
-      <div className="px-16 py-20">
+      <div className="mx-16">
+        <CreatePost/>
         
         {/* <Homepage/> */}
         {/* <div>
