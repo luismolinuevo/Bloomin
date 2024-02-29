@@ -8,8 +8,8 @@ import cookie from "js-cookie";
 
 export default function Home() {
   const [isAuthed, setIsAuthed] = useState(false); //would be done in a more secure way if it is for real users
- const cookieCheck = cookie.get("user_token");
- 
+  const cookieCheck = cookie.get("user_token");
+
   useEffect(() => {
     if (cookie.get("user_token") != null) {
       setIsAuthed(true);
@@ -17,7 +17,7 @@ export default function Home() {
       setIsAuthed(false);
     }
 
-    console.log(isAuthed)
+    console.log(isAuthed);
   }, [cookieCheck]);
 
   useClearUrl();
