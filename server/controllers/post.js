@@ -1,29 +1,9 @@
 import prisma from "../db/index.js";
-import { v2 as cloudinary } from 'cloudinary';
-import multer from 'multer';
-import cloudinary from "../utils/cloudinary.js";
-import upload from "../middlewares/multer.js";
-
-// Initialize Multer for handling file uploads
-const upload = multer({ dest: 'uploads/' });
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET_KEY
-});
-
-export default cloudinary;
+import uploadImageToCloudinary from "../helpers/imageUpload.js";
 
 const createPost = async (req, res) => {
   try {
-    let imageUrl;
-
-    if(req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path);
-      imageUrl = result.secure_url;
-    }
-
+    let imageUrl = await uploadImageToCloudinary(req.file);
     const createPost = await prisma.post.create({
       data: {
         cost: req.body.cost,
