@@ -1,6 +1,8 @@
 import prisma from "../db/index.js";
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
+import cloudinary from "../utils/cloudinary.js";
+import upload from "../middlewares/multer.js";
 
 // Initialize Multer for handling file uploads
 const upload = multer({ dest: 'uploads/' });
