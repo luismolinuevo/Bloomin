@@ -3,7 +3,7 @@ import uploadImageToCloudinary from "../helpers/imageUpload.js";
 
 const createPost = async (req, res) => {
   try {
-    let imageUrl = await uploadImageToCloudinary(req.file);
+    // let imageUrl = await uploadImageToCloudinary(req.img);
     const createPost = await prisma.post.create({
       data: {
         cost: req.body.cost,
@@ -13,7 +13,7 @@ const createPost = async (req, res) => {
         livingSituation: req.body.livingSituation,
         description: req.body.description,
         userId: req.user.id,
-        img: imageUrl
+        img: req.img
       },
     });
 
@@ -21,8 +21,10 @@ const createPost = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
-      success: true,
+      success: false,
+      error
     });
   }
 };

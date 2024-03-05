@@ -3,24 +3,58 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../General/Modal";
+import { Input, Textarea } from "@material-tailwind/react";
+import cookie from "js-cookie";
+import { createPost } from "@/app/lib/post";
 import {
-  Select,
-  Option,
-  Input,
-  Textarea,
-} from "@material-tailwind/react";
+  implementationDifficulty,
+  housingOption,
+} from "../../utils/SelectOptions.js";
+import Select from "react-select";
 
 export default function CreatePost() {
   const [openModal, setOpenModal] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm();
+  const token = cookie.get("user_token");
 
   const onSubmit = (data) => {
-    console.log(data); // Handle form submission here
-    setOpenModal(false); // Close modal after form submission
+    try {
+      let postData = {
+        title: data.title,
+        description: data.description,
+        cost: data.cost,
+        target: data.target,
+        livingSituation: data.housingType,
+        implementationDifficulty: data.implementationDifficulty,
+        city: "bronx",
+        img: data.image[0], // Assuming only one image is uploaded
+      };
+
+      if (token != null) {
+        createPost(postData, token);
+      }
+
+      setOpenModal(false);
+    } catch (error) {
+      console.error("Error creating post: ", error);
+    }
+  };
+
+  // implementationDifficulty: req.body.implementationDifficulty,
+  // city: req.body.city,
+  // userId: req.user.id,
+  const handleHousingTypeChange = (selectedOption) => {
+    setValue("housingType", selectedOption.value);
+  };
+
+  const handleImplementationDifficultyChange = (selectedOption) => {
+    setValue("implementationDifficulty", selectedOption.value);
   };
 
   return (
@@ -51,19 +85,20 @@ export default function CreatePost() {
             {...register("target")}
           />
           <Select
+            {...register("housingType", { required: true })}
             label="Housing Type"
-            {...register("housingType")}
-            defaultValue=""
-          >
-            <Option value="">Select housing type</Option>
-            <Option value="Apartment">Apartment</Option>
-            <Option value="House">House</Option>
-            <Option value="Condo">Condo</Option>
-            <Option value="Townhouse">Townhouse</Option>
-          </Select>
+            options={housingOption}
+            onChange={handleHousingTypeChange}
+          />
+          <Select
+            label="Implementation Difficulty"
+            {...register("implementationDifficulty", { required: true })}
+            options={implementationDifficulty}
+            onChange={handleImplementationDifficultyChange}
+          />
           {/* Input for image upload */}
           <input type="file" {...register("image")} />
-          <button color="blue" buttonType="filled" type="submit">
+          <button color="blue" type="submit">
             Submit
           </button>
         </form>

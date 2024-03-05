@@ -1,5 +1,5 @@
 import cloudinary from '../utils/cloudinary.js';
-import upload from '../middlewares/multer.js';
+import upload from '../middlewares/mutler.js';
 
 const uploadImageToCloudinary = async (file) => {
   return new Promise((resolve, reject) => {
