@@ -6,6 +6,7 @@ import commentRoutes from "./comment.js";
 import favoritesRoutes from "./favorites.js";
 import followerRoutes from "./follower.js";
 import chatRoutes from "./chat.js";
+import imageUploadRoutes from "./imageupload.js";
 
 const apiRouter = Router();
 
@@ -15,5 +16,6 @@ apiRouter.use(commentRoutes);
 apiRouter.use(favoritesRoutes);
 apiRouter.use(followerRoutes);
 apiRouter.use(chatRoutes);
+apiRouter.use(imageUploadRoutes);
 
-export { apiRouter }
+export { apiRouter };

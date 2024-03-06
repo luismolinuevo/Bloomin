@@ -1,5 +1,5 @@
-import upload from "../middlewares/mutler";
-import cloudinary from "../utils/cloudinary";
+// import upload from "../middlewares/mutler";
+import cloudinary from "../utils/cloudinary.js";
 
 const uploadImage = async (req, res) => {
   try {
