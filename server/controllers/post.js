@@ -1,10 +1,8 @@
 import prisma from "../db/index.js";
-import uploadImageToCloudinary from "../helpers/imageUpload.js";
 
 const createPost = async (req, res) => {
   try {
-    // let imageUrl = await uploadImageToCloudinary(req.img);
-    const createPost = await prisma.post.create({
+    const newPost = await prisma.post.create({
       data: {
         cost: req.body.cost,
         title: req.body.title,
@@ -13,7 +11,7 @@ const createPost = async (req, res) => {
         livingSituation: req.body.livingSituation,
         description: req.body.description,
         userId: req.user.id,
-        img: req.img
+        img: req.user.imageUrl,
       },
     });
 
@@ -24,7 +22,7 @@ const createPost = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       success: false,
-      error
+      error,
     });
   }
 };
@@ -118,7 +116,7 @@ const vote = async (req, res) => {
 const getAllPost = async (req, res) => {
   try {
     const post = await prisma.post.findMany();
-    console.log("I nedfds")
+    console.log("I nedfds");
 
     if (post) {
       return res.status(200).json({
@@ -126,7 +124,7 @@ const getAllPost = async (req, res) => {
         post,
       });
     } else {
-      console.log("Error")
+      console.log("Error");
       return res.status(404).json({
         message: "No post found",
       });
