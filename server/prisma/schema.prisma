@@ -35,7 +35,7 @@ model Post {
   city                     String
   livingSituation          String
   title                    String
-  img                      String?
+  img                      String? @db.VarChar(300)
 
   userId  Int
   user    User @relation(fields: [userId], references: [id], onDelete: Cascade)

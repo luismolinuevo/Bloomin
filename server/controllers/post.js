@@ -2,6 +2,7 @@ import prisma from "../db/index.js";
 
 const createPost = async (req, res) => {
   try {
+    console.log(req.body.img);
     const newPost = await prisma.post.create({
       data: {
         cost: req.body.cost,
@@ -11,7 +12,7 @@ const createPost = async (req, res) => {
         livingSituation: req.body.livingSituation,
         description: req.body.description,
         userId: req.user.id,
-        img: req.user.imageUrl,
+        img: req.body.img,
       },
     });
 
