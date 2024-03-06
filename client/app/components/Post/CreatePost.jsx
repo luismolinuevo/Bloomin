@@ -11,6 +11,7 @@ import {
   housingOption,
 } from "../../utils/SelectOptions.js";
 import Select from "react-select";
+import { uploadImage } from "@/app/lib/imageupload";
 
 export default function CreatePost() {
   const [openModal, setOpenModal] = useState(false);
@@ -23,8 +24,19 @@ export default function CreatePost() {
   } = useForm();
   const token = cookie.get("user_token");
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
+      let imageUrl = null;
+      if (data.image[0] != null) {
+        const upload = await uploadImage(data.image[0]);
+        if (upload.data) {
+          console.log(upload.data)
+          imageUrl = upload.data;
+        } else {
+          //need to have some from a error alert
+          console.error("Error uploading image")
+        }
+      }
       let postData = {
         title: data.title,
         description: data.description,
@@ -33,7 +45,7 @@ export default function CreatePost() {
         livingSituation: data.housingType,
         implementationDifficulty: data.implementationDifficulty,
         city: "bronx",
-        img: data.image[0], // Assuming only one image is uploaded
+        img: data.image[0] && imageUrl != null ? imageUrl : null, // Assuming only one image is uploaded
       };
 
       if (token != null) {
