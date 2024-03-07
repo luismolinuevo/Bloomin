@@ -1,22 +1,36 @@
 import VotingButtons from "./VotingButtons";
+import Link from "next/link";
+import { EllipsisHorizontalCircleIcon } from "@heroicons/react/solid";
+import PostMenu from "./PostMenu";
+import ShowMoreText from "../General/ShowMoreText";
 
 export default function PostCard({ post }) {
   return (
-    <div className="flex justify-center">
-      <div className="border border-black">
-        <div className="flex justify-between">
-          <h3>Username</h3>
-          <button>Menu</button>
+    <div className="flex">
+      <div className="border-b p-4 w-full">
+        <div className="flex justify-between font-sans">
+          <h3 className="text-[18px] font-bold">Username</h3>
+          <PostMenu />
         </div>
-
-        <div>
-          <h1>Test</h1>
-          <p>
-            asdfasf asdfasfd asdfasdf dfsadf sdasd eerer erer erere e
-            erererererereeeere ererere eererer
-          </p>
+        <div className="flex">
+          {post.img != null && (
+            <div className=" mr-7 flex-shrink-0">
+              <img
+                src={post.img}
+                className="bg-cover bg-center object-center bg-black rounded-xl w-[400px] h-[300px]"
+              />
+            </div>
+          )}
+          <div className="">
+            <h1 className="text-[25px] break-words font-bold">Test</h1>
+            <p className="break-words text-[18px] w-3/4">
+              <ShowMoreText
+                text="Lorem adfaf adfa asdf aadfaf asdf adf asdf aadf a a a a a a  f f f f  ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                maxLength={50}
+              />
+            </p>
+          </div>
         </div>
-        <img src="post_img" />
         <div>
           <VotingButtons />
           <button>
