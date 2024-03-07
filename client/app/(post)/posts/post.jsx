@@ -15,9 +15,10 @@ export default function Post() {
       setLoading(!loading);
       const posts = await getAllPosts();
       if (posts.success) {
-        setPosts(post.post);
+        console.log(posts.post);
+        setPosts(posts.post);
         setLoading(!loading);
-        console.log(post.post);
+        console.log(posts.post);
       } else {
         //take to error page or something
       }
@@ -31,12 +32,14 @@ export default function Post() {
       <PostSearch />
       <div className="mx-16 flex justify-between items-center">
         <p className="text-[40px] text-[#459857]">Recommended</p>
-        <button className="bg-[#459858] text-white rounded-2xl p-2">Sort by</button>
+        <button className="bg-[#459858] text-white rounded-2xl p-2">
+          Sort by
+        </button>
       </div>
 
       <div className="mx-16">
-        <CreatePost/>
-        
+        <CreatePost />
+
         {/* <Homepage/> */}
         {/* <div>
         {
