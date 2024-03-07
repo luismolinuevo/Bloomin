@@ -21,14 +21,16 @@ export default function PostCard({ post }) {
               />
             </div>
           )}
-          <div className="">
-            <h1 className="text-[25px] break-words font-bold">Test</h1>
-            <p className="break-words text-[18px] w-3/4">
-              <ShowMoreText
-                text="Lorem adfaf adfa asdf aadfaf asdf adf asdf aadf a a a a a a  f f f f  ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                maxLength={50}
-              />
+          <div className="w-[65%]">
+            <h1 className="text-[25px] break-words font-bold">{post.title}</h1>
+            <p className="break-words text-[18px]">
+              <ShowMoreText text={post.description} maxLength={150} />
             </p>
+            <div className="text-[16px] mt-4 font-bold">
+              <h4>Cost: {post.cost}</h4>
+              <h4>Living Situation: {post.livingSituation}</h4>
+              <h4>Difficulty: {post.implementationDifficulty}</h4>
+            </div>
           </div>
         </div>
         <div>

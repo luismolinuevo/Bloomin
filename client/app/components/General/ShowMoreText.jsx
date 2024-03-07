@@ -10,11 +10,13 @@ export default function ShowMoreText({ text, maxLength }) {
   };
 
   const renderText = () => {
-    if (text.length <= 150) {
-      return text;
+    const trimmedText = text.trim(); // Trim whitespace from the text
+
+    if (trimmedText.length <= maxLength) {
+      return trimmedText;
     }
 
-    return showAll ? text : `${text.slice(0, 150)}...`;
+    return showAll ? trimmedText : `${trimmedText.slice(0, maxLength)}...`;
   };
 
   return (
