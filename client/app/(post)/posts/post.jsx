@@ -41,16 +41,16 @@ export default function Post() {
         <CreatePost />
 
         {/* <Homepage/> */}
-        {/* <div>
-        {
-          post && post.length >= 0 ? (
-            post.map((post) => <PostCard key={post.id} post={post} />)
-          ) : (
-            <p></p>
-          )
-          // <Loading/>
-        }
-      </div> */}
+        <div>
+          {
+            post && post.length >= 0 ? (
+              post.map((post) => <PostCard key={post.id} post={post} />)
+            ) : (
+              <p></p>
+            )
+            // <Loading/>
+          }
+        </div>
       </div>
     </div>
   );
