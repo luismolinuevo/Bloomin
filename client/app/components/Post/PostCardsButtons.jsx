@@ -1,26 +1,16 @@
 import React from "react";
+import cookie from "js-cookie";
 import VotingButtons from "./VotingButtons";
+import FavoritePostButton from "./FavoritePostButton";
 
-export default function PostCardsButtons({}) {
+export default function PostCardsButtons({post_id}) {
+  const token = cookie.get("user_token");
+
+
   return (
     <div className="flex gap-5 mt-8">
       <VotingButtons />
-      <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-          />
-        </svg>
-      </button>
+      <FavoritePostButton post_id={post_id} token={token}/>
       <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
