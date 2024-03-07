@@ -8,7 +8,7 @@ const favoritePost = async (req, res) => {
     const favoritedPost = await prisma.favorites.findFirst({
       where: {
         userId: req.user.id,
-        postId: postId,
+        postId: parseInt(postId),
       },
     });
 
@@ -16,7 +16,7 @@ const favoritePost = async (req, res) => {
     if (favoritedPost) {
       const deleteFavorite = await prisma.favorites.deleteMany({
         where: {
-          favoritesId: favoriteId,
+          id: favoritedPost.id,
         },
       });
 
@@ -28,10 +28,10 @@ const favoritePost = async (req, res) => {
 
       //Else it would create the favorite
     } else {
-      const favpost = await prisma.favorites.post({
+      const favpost = await prisma.favorites.create({
         data: {
           userId: req.user.id,
-          postId: postId,
+          postId: parseInt(postId),
         },
       });
 
@@ -43,7 +43,8 @@ const favoritePost = async (req, res) => {
       }
     }
   } catch (error) {
-    return res.status(500).json({ error: "Someting went wrong" });
+    console.log(error);
+    return res.status(500).json({ error: "Someting went wrong", error });
   }
 };
 
