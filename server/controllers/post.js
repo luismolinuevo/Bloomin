@@ -11,7 +11,7 @@ const createPost = async (req, res) => {
         city: req.body.city,
         livingSituation: req.body.livingSituation,
         description: req.body.description,
-        userId: req.user.id,
+        user: { connect: { id: req.user.id } },
         img: req.body.img,
       },
     });
@@ -116,8 +116,11 @@ const vote = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const post = await prisma.post.findMany();
-    console.log("I nedfds");
+    const post = await prisma.post.findMany({
+      include: {
+        user: true,
+      },
+    });
 
     if (post) {
       return res.status(200).json({
