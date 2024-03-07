@@ -2,6 +2,7 @@ import VotingButtons from "./VotingButtons";
 import Link from "next/link";
 import { EllipsisHorizontalCircleIcon } from "@heroicons/react/solid";
 import PostMenu from "./PostMenu";
+import PostCardsButtons from "./PostCardsButtons";
 import ShowMoreText from "../General/ShowMoreText";
 
 export default function PostCard({ post }) {
@@ -34,7 +35,7 @@ export default function PostCard({ post }) {
           </div>
         </div>
         <div>
-          <VotingButtons />
+          <PostCardsButtons />
           <button>
             <img src="favs" alt="" />
           </button>

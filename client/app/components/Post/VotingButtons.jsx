@@ -1,6 +1,6 @@
 export default function VotingButtons({}) {
   return (
-    <div>
+    <div className="border p-2 bg-gray-300 rounded-lg flex items-center gap-2">
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
