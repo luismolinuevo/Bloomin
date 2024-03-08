@@ -89,3 +89,26 @@ export const votePost = async (post_id, token, type) => {
     throw error;
   }
 };
+
+export const getPost = async (post_id) => {
+  try {
+    const post = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/post/${post_id}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+
+    if (post.ok) {
+      const res = await post.json();
+
+      return res;
+    }
+  } catch (error) {
+    console.log(error.message);
+    return error;
+  }
+};
