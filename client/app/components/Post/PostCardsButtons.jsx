@@ -6,10 +6,9 @@ import FavoritePostButton from "./FavoritePostButton";
 export default function PostCardsButtons({post_id}) {
   const token = cookie.get("user_token");
 
-
   return (
     <div className="flex gap-5 mt-8">
-      <VotingButtons />
+      <VotingButtons token={token} post_id={post_id}/>
       <FavoritePostButton post_id={post_id} token={token}/>
       <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg

@@ -1,7 +1,17 @@
-export default function VotingButtons({}) {
+import { votePost } from "@/app/lib/post";
+
+export default function VotingButtons({ post_id, token }) {
+  const vote = async (type) => {
+    try {
+      const voting = await votePost(post_id, token, type);
+      console.log(voting);
+    } catch (error) {
+      console.log("Voting not working ", error);
+    }
+  };
   return (
     <div className="border p-2 bg-gray-300 rounded-lg flex items-center gap-2">
-      <button>
+      <button onClick={() => vote("upvote")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -17,7 +27,7 @@ export default function VotingButtons({}) {
           />
         </svg>
       </button>
-      <button>
+      <button onClick={() => vote("downvote")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

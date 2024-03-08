@@ -30,7 +30,7 @@ const createPost = async (req, res) => {
 
 const vote = async (req, res) => {
   const { postId } = req.params;
-  const { type } = req.body;
+  const type = req.query.type;
   console.log(postId);
   console.log(type);
 
@@ -53,8 +53,11 @@ const vote = async (req, res) => {
     if (existingVote) {
       if (existingVote.type === type) {
         return res
-          .status(400)
-          .json({ error: `You have already ${type}voted this post` });
+          .status(200)
+          .json({
+            error: `You have already ${type}voted this post`,
+            success: true,
+          });
       } else {
         // Decrement the corresponding vote count if it's greater than 0
         if (existingVote.type === "upvote" && post.upvotes > 0) {
@@ -106,6 +109,7 @@ const vote = async (req, res) => {
 
     return res.status(200).json({
       message: `Successfully ${type}voted the post`,
+      success: true,
       updatedVotes,
     });
   } catch (error) {
