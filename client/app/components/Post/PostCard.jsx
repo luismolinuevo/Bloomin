@@ -25,7 +25,7 @@ export default function PostCard({ post }) {
           <div className="w-[65%]">
             <h1 className="text-[25px] break-words font-bold">{post?.title}</h1>
             <p className="break-words text-[18px]">
-              <ShowMoreText text={post?.description} maxLength={150} />
+              {/* <ShowMoreText text={post?.description} maxLength={150} /> */}
             </p>
             <div className="text-[16px] mt-4 font-bold">
               <h4>Cost: {post?.cost}</h4>

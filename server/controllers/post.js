@@ -156,6 +156,7 @@ const getPost = async (req, res) => {
     if (post) {
       return res.status(200).json({
         message: "Success",
+        success: true,
         post,
       });
     }

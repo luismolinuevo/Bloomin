@@ -10,7 +10,8 @@ export default function ShowMoreText({ text, maxLength }) {
   };
 
   const renderText = () => {
-    const trimmedText = text.trim(); // Trim whitespace from the text
+    // Check if text is defined and not null before trimming
+    const trimmedText = text ? text.trim() : "";
 
     if (trimmedText.length <= maxLength) {
       return trimmedText;
