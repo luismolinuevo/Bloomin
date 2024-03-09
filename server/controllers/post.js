@@ -52,12 +52,10 @@ const vote = async (req, res) => {
 
     if (existingVote) {
       if (existingVote.type === type) {
-        return res
-          .status(200)
-          .json({
-            error: `You have already ${type}voted this post`,
-            success: true,
-          });
+        return res.status(200).json({
+          error: `You have already ${type}voted this post`,
+          success: true,
+        });
       } else {
         // Decrement the corresponding vote count if it's greater than 0
         if (existingVote.type === "upvote" && post.upvotes > 0) {
@@ -148,7 +146,10 @@ const getPost = async (req, res) => {
 
     const post = await prisma.post.findFirst({
       where: {
-        postId: postId,
+        id: parseInt(postId),
+      },
+      include: {
+        user: true,
       },
     });
 
@@ -164,7 +165,8 @@ const getPost = async (req, res) => {
       message: "Post with that ID not found",
     });
   } catch (error) {
-    return res.status(500).json({ error: "Someting went wrong" });
+    console.log(error);
+    return res.status(500).json({ error });
   }
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import cookie from "js-cookie";
 import VotingButtons from "./VotingButtons";
 import FavoritePostButton from "./FavoritePostButton";
+import Link from 'next/link';
 
 export default function PostCardsButtons({post_id}) {
   const token = cookie.get("user_token");
@@ -27,7 +28,7 @@ export default function PostCardsButtons({post_id}) {
         </svg>
         Share
       </button>
-      <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
+      <Link href={`/posts/${post_id}`} className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -43,7 +44,7 @@ export default function PostCardsButtons({post_id}) {
           />
         </svg>
         Comments
-      </button>
+      </Link>
     </div>
   );
 }
