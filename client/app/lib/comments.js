@@ -11,7 +11,7 @@ export const getComments = async (post_id) => {
       );
   
       if (comments.ok) {
-        const res = await post.json();
+        const res = await comments.json();
   
         return res;
       }

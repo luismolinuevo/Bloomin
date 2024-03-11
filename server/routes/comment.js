@@ -4,7 +4,7 @@ import passport from "passport";
 
 const router = Router();
 
-router.get("/comment/:post_id", commentControllers.getComments);
+router.get("/comments/:post_id", commentControllers.getComments);
 router.post(
   "/addcomment/:postId",
   passport.authenticate("jwt", { session: false }),

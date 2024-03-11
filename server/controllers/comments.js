@@ -55,9 +55,9 @@ const getComments = async (req, res) => {
   try {
     const { post_id } = req.params;
     if (post_id) {
-      const comments = await prisma.comment.findAll({
+      const comments = await prisma.comment.findMany({
         where: {
-          post_id: post_id,
+          postId: parseInt(post_id),
         },
       });
 
@@ -77,9 +77,10 @@ const getComments = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       message: "Server error",
-      error: error,
+      error,
       success: false,
     });
   }
