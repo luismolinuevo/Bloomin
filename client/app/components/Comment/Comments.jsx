@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getComments } from "@/app/lib/comments";
+import CommentCard from "./CommentCard";
 
 export default function Comments({ post_id }) {
+  const [comments, setComments] = useState([]);
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -12,5 +14,18 @@ export default function Comments({ post_id }) {
 
     fetchComments();
   }, []);
-  return <div>Comments</div>;
+  return (
+    <div>
+      {comments && comments.length !== 0 ? (
+        <div>
+          {comments.map((comment) => (
+            // Render each comment here
+            <CommentCard key={comment?.id} comment={comment} />
+          ))}
+        </div>
+      ) : (
+        <p>No comments</p>
+      )}
+    </div>
+  );
 }
