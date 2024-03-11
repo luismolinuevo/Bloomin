@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { getPost } from "@/app/lib/post";
 import PostCard from "@/app/components/Post/PostCard";
-import CommentCard from "@/app/components/Comment/CommentCard";
 import { useRouter, useParams } from "next/navigation";
+import Comments from "@/app/components/Comment/Comments";
 
 export default function PostId() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function PostId() {
     <div className="flex justify-center">
       <div className="w-[600px]">
         <PostCard post={post} />
-        <CommentCard/>
+        <Comments/>
       </div>
 
     </div>
