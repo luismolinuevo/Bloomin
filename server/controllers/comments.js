@@ -3,27 +3,36 @@ import prisma from "../db/index.js";
 const addComment = async (req, res) => {
   try {
     const { postId } = req.params;
-    const newComment = await prisma.comment.create({
-      data: {
-        textbody: req.body.textbody,
-        userId: req.user.id,
-        postId: postId,
-      },
-    });
+    if (postId != null) {
+      const newComment = await prisma.comment.create({
+        data: {
+          textbody: req.body.textbody,
+          userId: req.user.id,
+          postId: parseInt(postId),
+        },
+      });
 
-    if (newComment) {
-      return res.status(200).json({
-        success: true,
-        message: "New comment created",
+      if (newComment) {
+        return res.status(200).json({
+          success: true,
+          message: "New comment created",
+        });
+      } else {
+        return res.status(404).json({
+          success: false,
+          message: "Error creating post",
+        });
+      }
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "PostId invalid",
       });
     }
-
-    return res.status(404).json({
-      success: false,
-      message: "Error creating post",
-    });
   } catch (error) {
-    return res.status(500).json({ error: "Someting went wrong" });
+    return res
+      .status(500)
+      .json({ error: error, message: "Error creating comment" });
   }
 };
 
@@ -77,7 +86,7 @@ const getComments = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({
       message: "Server error",
       error,
