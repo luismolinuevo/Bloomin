@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Select, Option } from "@material-tailwind/react";
 import { createComment } from "@/app/lib/comments";
 
-export default function AddComment({ post_id, token }) {
+export default function AddComment({ post_id, token, setRefresh, refresh }) {
   const [textbody, setTextBody] = useState("");
 
   const onClick = async () => {
@@ -16,7 +15,8 @@ export default function AddComment({ post_id, token }) {
       const create = createComment(post_id, data, token);
       if (create.success) {
         //success alert or something. need to figure out what im going to do
-        console.log("Success creating comment")
+        setRefresh(!refresh);
+        console.log("Success creating comment");
       }
     } catch (error) {
       console.log(error);
@@ -24,7 +24,7 @@ export default function AddComment({ post_id, token }) {
   };
   return (
     <div>
-      <div className="flex gap-4 justify-between mt-10">
+      <div className="flex gap-4 justify-between mt-5">
         <input
           type="text"
           className="border bg-grey-1 w-[70%] rounded-lg p-2 "

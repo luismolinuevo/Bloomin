@@ -12,6 +12,7 @@ export default function PostId() {
   console.log(params);
   const postId = params.postId;
   const [post, setPost] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -33,13 +34,13 @@ export default function PostId() {
     };
 
     fetchPost();
-  }, [postId]);
-  
+  }, [postId, refresh]);
+
   return (
     <div className="flex justify-center">
       <div className="w-[600px]">
         <PostCard post={post} />
-        <Comments post_id={postId} />
+        <Comments post_id={postId} setRefresh={setRefresh} refresh={refresh} />
       </div>
     </div>
   );

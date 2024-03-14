@@ -3,8 +3,9 @@ import { getComments } from "@/app/lib/comments";
 import CommentCard from "./CommentCard";
 import AddComment from "./AddComment";
 import cookie from "js-cookie";
+import SortComments from "./SortComments";
 
-export default function Comments({ post_id }) {
+export default function Comments({ post_id, setRefresh, refresh }) {
   const [comments, setComments] = useState([]);
   const token = cookie.get("user_token");
   useEffect(() => {
@@ -18,8 +19,14 @@ export default function Comments({ post_id }) {
     fetchComments();
   }, []);
   return (
-    <div>
-      <AddComment post_id={post_id} token={token}/>
+    <div className="mt-10">
+      <SortComments setRefresh={setRefresh} refresh={refresh} />
+      <AddComment
+        post_id={post_id}
+        token={token}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
       {comments && comments.length !== 0 ? (
         <div>
           {comments.map((comment) => (
