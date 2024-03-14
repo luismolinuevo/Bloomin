@@ -6,12 +6,12 @@ const router = Router();
 
 router.get("/comments/:post_id", commentControllers.getComments);
 router.post(
-  "/addcomment/:postId",
+  "/comment/:postId",
   passport.authenticate("jwt", { session: false }),
   commentControllers.addComment
 );
 router.delete(
-  "/deletecomment/:commentId",
+  "/comment/:commentId",
   passport.authenticate("jwt", { session: false }),
   commentControllers.deleteComment
 );

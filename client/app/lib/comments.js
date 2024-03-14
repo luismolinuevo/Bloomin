@@ -24,7 +24,7 @@ export const getComments = async (post_id) => {
 export const createComment = async (post_id, data, token) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/addcomment/${post_id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comment/${post_id}`,
       {
         method: "POST",
         headers: {
