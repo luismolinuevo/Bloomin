@@ -12,7 +12,10 @@ export default function Comments({ post_id, setRefresh, refresh }) {
     const fetchComments = async () => {
       try {
         const data = await getComments(post_id);
-        console.log(data);
+        if(data.success) {
+          setComments(data.comments)
+        }
+        console.log(data.comments);
       } catch (error) {}
     };
 
@@ -27,7 +30,7 @@ export default function Comments({ post_id, setRefresh, refresh }) {
         setRefresh={setRefresh}
         refresh={refresh}
       />
-      {comments && comments.length !== 0 ? (
+      {comments && comments.length != 0 ? (
         <div>
           {comments.map((comment) => (
             // Render each comment here
