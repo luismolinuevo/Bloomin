@@ -63,7 +63,15 @@ const deleteComment = async (req, res) => {
 const getComments = async (req, res) => {
   try {
     const { post_id } = req.params;
+    const { sortBy } = req.query;
+
     if (post_id) {
+      // let orderBy;
+
+      // switch(sortBy) {
+      //   case "newest":
+      //     orderBy = { } //need to add date and likes/dislikes to comment
+      // }
       const comments = await prisma.comment.findMany({
         where: {
           postId: parseInt(post_id),

@@ -17,7 +17,7 @@ model User {
   lastName  String?     @db.VarChar(255)
   userName  String      @db.VarChar(255)
   email     String      @unique @db.VarChar(255)
-  password  String?      @db.VarChar(255)
+  password  String?     @db.VarChar(255)
   imageUrl  String?
   post      Post[]
   favs      Favorites[]
@@ -28,14 +28,15 @@ model User {
 }
 
 model Post {
-  id                       Int    @id @unique @default(autoincrement())
+  id                       Int      @id @unique @default(autoincrement())
   cost                     String
-  description              String @db.VarChar(10000)
+  description              String   @db.VarChar(10000)
   implementationDifficulty String
   city                     String
   livingSituation          String
   title                    String
-  img                      String? @db.VarChar(300)
+  img                      String?  @db.VarChar(300)
+  createdAt                DateTime @default(now())
 
   userId  Int
   user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -63,12 +64,13 @@ model Votes {
 }
 
 model Comment {
-  id       Int    @id @unique @default(autoincrement())
-  textbody String @db.VarChar(400)
-  userId   Int
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId   Int
-  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id        Int      @id @unique @default(autoincrement())
+  textbody  String   @db.VarChar(400)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([postId])
@@ -77,10 +79,11 @@ model Comment {
 model Favorites {
   id Int @id @unique @default(autoincrement())
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId Int
-  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([postId])
