@@ -34,6 +34,7 @@ export default function PostId() {
 
     fetchPost();
   }, [postId]);
+  
   return (
     <div className="flex justify-center">
       <div className="w-[600px]">

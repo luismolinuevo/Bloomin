@@ -1,17 +1,22 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import { createComment } from "@/app/lib/comments";
 
-
 export default function AddComment({ post_id, token }) {
-  
+  const [textbody, setTextBody] = useState("");
+
   const onClick = async () => {
     try {
-      const create = createComment(post_id, token);
-      if(create.success) {
+      const data = {
+        textbody: textbody,
+      };
+      const create = createComment(post_id, data, token);
+      if (create.success) {
         //success alert or something. need to figure out what im going to do
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -22,8 +27,12 @@ export default function AddComment({ post_id, token }) {
           type="text"
           className="border-black border w-[70%] rounded-lg p-2 "
           placeholder="Add comment"
+          onChange={(e) => setTextBody(e.target.value)}
         />
-        <button className="bg-[#459858] px-4 rounded-lg text-white h-[40px]" onClick={onClick}>
+        <button
+          className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+          onClick={onClick}
+        >
           Add Comments
         </button>
       </div>
