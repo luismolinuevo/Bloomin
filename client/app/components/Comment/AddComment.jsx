@@ -12,9 +12,11 @@ export default function AddComment({ post_id, token }) {
       const data = {
         textbody: textbody,
       };
+
       const create = createComment(post_id, data, token);
       if (create.success) {
         //success alert or something. need to figure out what im going to do
+        console.log("Success creating comment")
       }
     } catch (error) {
       console.log(error);
@@ -25,12 +27,12 @@ export default function AddComment({ post_id, token }) {
       <div className="flex gap-4 justify-between mt-10">
         <input
           type="text"
-          className="border-black border w-[70%] rounded-lg p-2 "
+          className="border bg-grey-1 w-[70%] rounded-lg p-2 "
           placeholder="Add comment"
           onChange={(e) => setTextBody(e.target.value)}
         />
         <button
-          className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+          className="bg-[#459858] px-3 rounded-lg text-white h-[40px] text-[15px]"
           onClick={onClick}
         >
           Add Comments
