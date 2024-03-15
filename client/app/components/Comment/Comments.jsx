@@ -12,8 +12,8 @@ export default function Comments({ post_id, setRefresh, refresh }) {
     const fetchComments = async () => {
       try {
         const data = await getComments(post_id);
-        if(data.success) {
-          setComments(data.comments)
+        if (data.success) {
+          setComments(data.comments);
         }
         console.log(data.comments);
       } catch (error) {}
@@ -34,7 +34,13 @@ export default function Comments({ post_id, setRefresh, refresh }) {
         <div>
           {comments.map((comment) => (
             // Render each comment here
-            <CommentCard key={comment?.id} comment={comment} />
+            <CommentCard
+              key={comment?.id}
+              comment={comment}
+              setRefresh={setRefresh}
+              refresh={refresh}
+              token={token}
+            />
           ))}
         </div>
       ) : (
