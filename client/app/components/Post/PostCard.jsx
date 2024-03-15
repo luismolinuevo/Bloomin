@@ -35,7 +35,7 @@ export default function PostCard({ post }) {
           </div>
         </div>
         <div>
-          <PostCardsButtons post_id={post?.id}/>
+          <PostCardsButtons post={post}/>
           <button>
             <img src="favs" alt="" />
           </button>

@@ -1,6 +1,6 @@
 import { votePost } from "@/app/lib/post";
 
-export default function VotingButtons({ post_id, token }) {
+export default function VotingButtons({ post_id, token, post_upvotes }) {
   const vote = async (type) => {
     try {
       const voting = await votePost(post_id, token, type);
@@ -11,22 +11,26 @@ export default function VotingButtons({ post_id, token }) {
   };
   return (
     <div className="border p-2 bg-gray-300 rounded-lg flex items-center gap-2">
-      <button onClick={() => vote("upvote")}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-          />
-        </svg>
-      </button>
+      <div>
+        <button onClick={() => vote("upvote")}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
+            />
+          </svg>
+        </button>
+        <p>{post_upvotes && post_upvotes}</p>
+      </div>
+
       <button onClick={() => vote("downvote")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

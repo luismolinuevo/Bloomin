@@ -38,7 +38,7 @@ export default function PostId() {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[600px]">
+      <div className="w-[800px]">
         <PostCard post={post} />
         <Comments post_id={postId} setRefresh={setRefresh} refresh={refresh} />
       </div>

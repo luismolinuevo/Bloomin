@@ -4,13 +4,13 @@ import VotingButtons from "./VotingButtons";
 import FavoritePostButton from "./FavoritePostButton";
 import Link from 'next/link';
 
-export default function PostCardsButtons({post_id}) {
+export default function PostCardsButtons({ post}) {
   const token = cookie.get("user_token");
 
   return (
     <div className="flex gap-5 mt-8">
-      <VotingButtons token={token} post_id={post_id}/>
-      <FavoritePostButton post_id={post_id} token={token}/>
+      <VotingButtons token={token} post_id={post?.post_id} post_upvotes={post?.post_upvotes}/>
+      <FavoritePostButton post_id={post?.post_id} token={token}/>
       <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ export default function PostCardsButtons({post_id}) {
         </svg>
         Share
       </button>
-      <Link href={`/posts/${post_id}`} className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
+      <Link href={`/posts/${post?.post_id}`} className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

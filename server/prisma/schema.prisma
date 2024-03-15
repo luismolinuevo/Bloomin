@@ -12,19 +12,21 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @unique @default(autoincrement())
-  firstName String?     @db.VarChar(255)
-  lastName  String?     @db.VarChar(255)
-  userName  String      @db.VarChar(255)
-  email     String      @unique @db.VarChar(255)
-  password  String?     @db.VarChar(255)
-  imageUrl  String?
-  post      Post[]
-  favs      Favorites[]
-  Comment   Comment[]
-  votes     Votes[]
-  chatroom  ChatRoom[]
-  messages  Message[]
+  id           Int            @id @unique @default(autoincrement())
+  firstName    String?        @db.VarChar(255)
+  lastName     String?        @db.VarChar(255)
+  userName     String         @db.VarChar(255)
+  email        String         @unique @db.VarChar(255)
+  password     String?        @db.VarChar(255)
+  imageUrl     String?
+  post         Post[]
+  favs         Favorites[]
+  Comment      Comment[]
+  // votes        Votes[]
+  chatroom     ChatRoom[]
+  messages     Message[]
+  commentReply CommentReply[]
+  like         Like[]
 }
 
 model Post {
@@ -40,28 +42,28 @@ model Post {
 
   userId  Int
   user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  upvotes Int  @default(0)
 
   downvotes Int         @default(0)
   Favorites Favorites[]
   Comment   Comment[]
-  votes     Votes[]
+  // votes     Votes[]
+  like      Like[]
 
   @@index([userId])
 }
 
-model Votes {
-  id     Int    @id @unique @default(autoincrement())
-  postId Int
-  type   String //could be upvote or downvote
-  userId Int
+// model Votes {
+//   id     Int    @id @unique @default(autoincrement())
+//   postId Int
+//   type   String //could be upvote or downvote
+//   userId Int
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
-  @@index([postId])
-}
+//   @@index([userId])
+//   @@index([postId])
+// }
 
 model Comment {
   id        Int      @id @unique @default(autoincrement())
@@ -72,7 +74,46 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
+  comment CommentReply[]
+  like    Like[]
+
   @@index([userId])
+  @@index([postId])
+}
+
+//Its going to work like youtube. One comment will have many replys
+model CommentReply {
+  id        Int      @id @unique @default(autoincrement())
+  textbody  String   @db.VarChar(400)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId Int
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  like Like[]
+
+  @@index([userId])
+  @@index([commentId])
+}
+
+model Like {
+  id           Int      @id @default(autoincrement())
+  type         String // "like" or "dislike"
+  postId       Int?
+  commentId    Int?
+  commentReply Int?
+  userId       Int
+  createdAt    DateTime @default(now())
+
+  post         Post?         @relation(fields: [postId], references: [id])
+  comment      Comment?      @relation(fields: [commentId], references: [id])
+  commentreply CommentReply? @relation(fields: [commentReply], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([commentId])
+  @@index([commentReply])
   @@index([postId])
 }
 
