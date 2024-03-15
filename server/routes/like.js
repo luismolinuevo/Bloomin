@@ -5,5 +5,6 @@ import passport from "passport";
 const router = Router();
 
 router.post("/postlike/:post_id", passport.authenticate("jwt", { session: false }), likeControllers.postLike);
+router.post("/commentlike/:post_id", passport.authenticate("jwt", { session: false }), likeControllers.commentLike);
 
 export default router;
