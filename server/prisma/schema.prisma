@@ -43,7 +43,6 @@ model Post {
   userId  Int
   user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  downvotes Int         @default(0)
   Favorites Favorites[]
   Comment   Comment[]
   // votes     Votes[]
