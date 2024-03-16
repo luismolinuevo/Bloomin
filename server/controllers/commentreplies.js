@@ -38,25 +38,26 @@ const addCommentReply = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   try {
-    const { commentId } = req.params;
-    const deleteComment = await prisma.comment.deleteMany({
+    const { comment_Id } = req.params;
+    const deleteComment = await prisma.commentReply.deleteMany({
       where: {
-        id: commentId,
+        id: comment_Id,
       },
     });
 
     if (deleteComment) {
       return res.status(200).json({
         success: true,
+        message: "Deleted comment reply"
       });
     }
 
     return res.status(404).json({
       success: false,
-      message: "Unable to delete commment",
+      message: "Unable to delete commment reply",
     });
   } catch (error) {
-    return res.status(500).json({ error: "Someting went wrong" });
+    return res.status(500).json({ error: "Something went wrong", error: error });
   }
 };
 
