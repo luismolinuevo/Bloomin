@@ -13,6 +13,7 @@ export default function CommentReplies({
 }) {
   const [showReplies, setShowReplies] = useState(false);
   const [comments, setComments] = useState([]);
+  const [refreshReplies, setRefreshReplies] = useState(false);
 
   const fetchReplies = async () => {
     try {
@@ -32,6 +33,13 @@ export default function CommentReplies({
       );
     }
   };
+
+  useEffect(() => {
+    if (refreshReplies) {
+      fetchReplies();
+      setRefreshReplies(false); // Reset the refresh flag after fetching
+    }
+  }, [refreshReplies]); // Trigger the effect when refreshReplies changes
 
   return (
     <div className="flex gap-3 mx-4">
@@ -77,8 +85,8 @@ export default function CommentReplies({
         <div className="w-full">
           <AddCommentReply
             token={token}
-            setRefresh={setRefresh}
-            refresh={refresh}
+            setRefresh={setRefreshReplies}
+            refresh={refreshReplies}
             comment_id={comment_id}
           />
           {comments && comments.length != 0 ? (

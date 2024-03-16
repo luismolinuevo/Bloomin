@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { createCommentReply } from "@/app/lib/commentreply";
@@ -25,10 +25,12 @@ export default function AddCommentReply({
         textbody: textbody,
       };
 
-      const create = createCommentReply(comment_id, data, token);
+      const create = await createCommentReply(comment_id, data, token);
+      console.log(create)
       if (create.success) {
         // Success alert or something. Need to figure out what I'm going to do
         setRefresh(!refresh);
+        setTextBody("");
         console.log("Success creating comment reply");
       }
     } catch (error) {
