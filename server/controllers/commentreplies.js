@@ -61,32 +61,28 @@ const deleteComment = async (req, res) => {
   }
 };
 
-const getComments = async (req, res) => {
+const getCommentReplies = async (req, res) => {
   try {
-    const { post_id } = req.params;
-    const { sortBy } = req.query;
+    const { comment_id } = req.params;
 
-    if (post_id) {
-      // let orderBy;
-
-      // switch(sortBy) {
-      //   case "newest":
-      //     orderBy = { } //need to add date and likes/dislikes to comment
-      // }
-      const comments = await prisma.comment.findMany({
+    if (comment_id) {
+      const comments = await prisma.commentReply.findMany({
         where: {
-          postId: parseInt(post_id),
+          commentId: parseInt(comment_id),
         },
       });
 
       if (comments) {
         return res.status(200).json({
           success: true,
-          message: "Fetched all comments",
+          message: "Fetched all comment replies",
           comments,
         });
       } else {
-        return res.status(404).json({});
+        return res.status(404).json({
+            success: false,
+            message: "No comment replies found with that Id"
+        });
       }
     } else {
       return res.status(404).json({
@@ -104,4 +100,4 @@ const getComments = async (req, res) => {
   }
 };
 
-export { addComment, deleteComment, getComments };
+export { addComment, deleteComment, getCommentReplies };
