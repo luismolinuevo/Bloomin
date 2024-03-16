@@ -79,7 +79,7 @@ const getCommentReplies = async (req, res) => {
           comments,
         });
       } else {
-        return res.status(404).json({
+        return res.status(204).json({
             success: false,
             message: "No comment replies found with that Id"
         });

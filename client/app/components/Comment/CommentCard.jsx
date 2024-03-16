@@ -1,7 +1,7 @@
 import React from "react";
 import CommentMenu from "./CommentMenu";
 import CommentLikeButtons from "./CommentLikeButtons";
-import CommentReplys from "./CommentReplys";
+import CommentReplies from "./CommentReplies";
 
 export default function CommentCard({
   comment,
@@ -28,7 +28,7 @@ export default function CommentCard({
         setRefresh={setRefresh}
         refresh={refresh}
       />
-      <CommentReplys />
+      <CommentReplies comment_id={comment?.id} />
     </div>
   );
 }
