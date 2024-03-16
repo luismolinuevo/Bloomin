@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import { likeComment } from "@/app/lib/comments";
 
 export default function CommentLikeButtons({
@@ -9,7 +7,6 @@ export default function CommentLikeButtons({
   setRefresh,
   refresh,
 }) {
-  const [wantToReply, setWantToReply] = useState(false);
   const onClick = async (type) => {
     try {
       const data = {

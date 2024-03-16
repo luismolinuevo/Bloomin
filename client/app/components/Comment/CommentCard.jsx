@@ -1,8 +1,15 @@
 import React from "react";
 import CommentMenu from "./CommentMenu";
 import CommentLikeButtons from "./CommentLikeButtons";
+import CommentReplys from "./CommentReplys";
 
-export default function CommentCard({ comment, post, token, setRefresh, refresh }) {
+export default function CommentCard({
+  comment,
+  post,
+  token,
+  setRefresh,
+  refresh,
+}) {
   //need to show menu only when its ur comment
   return (
     <div>
@@ -15,7 +22,13 @@ export default function CommentCard({ comment, post, token, setRefresh, refresh 
           <CommentMenu comment_id={comment?.id} />
         </div>
       </div>
-      <CommentLikeButtons token={token} comment_id={comment?.id} setRefresh={setRefresh} refresh={refresh}/>
+      <CommentLikeButtons
+        token={token}
+        comment_id={comment?.id}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      <CommentReplys />
     </div>
   );
 }
