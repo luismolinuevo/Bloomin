@@ -48,7 +48,7 @@ const deleteComment = async (req, res) => {
     if (deleteComment) {
       return res.status(200).json({
         success: true,
-        message: "Deleted comment reply"
+        message: "Deleted comment reply",
       });
     }
 
@@ -57,7 +57,9 @@ const deleteComment = async (req, res) => {
       message: "Unable to delete commment reply",
     });
   } catch (error) {
-    return res.status(500).json({ error: "Something went wrong", error: error });
+    return res
+      .status(500)
+      .json({ error: "Something went wrong", error: error });
   }
 };
 
@@ -65,7 +67,7 @@ const getCommentReplies = async (req, res) => {
   try {
     const { comment_id } = req.params;
 
-    if (comment_id) {
+    if (comment_id != null) {
       const comments = await prisma.commentReply.findMany({
         where: {
           commentId: parseInt(comment_id),
@@ -80,8 +82,8 @@ const getCommentReplies = async (req, res) => {
         });
       } else {
         return res.status(204).json({
-            success: false,
-            message: "No comment replies found with that Id"
+          success: false,
+          message: "No comment replies found with that Id",
         });
       }
     } else {

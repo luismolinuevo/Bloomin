@@ -19,8 +19,8 @@ export default function CommentReplies({
       const data = await getCommentReplies(comment_id);
       setShowReplies(true);
       console.log(data);
-      if (data.success) {
-        setCommentReplys(data.comments);
+      if (data?.success) {
+        setCommentReplys(data?.comments);
       } else {
         //error toast. Need to install toast
       }
@@ -74,7 +74,12 @@ export default function CommentReplies({
       <p></p>
       {showReplies && (
         <div>
-          <AddCommentReply token={token} setRefresh={setRefresh} refresh={refresh} comment_id={comment_id}/>
+          <AddCommentReply
+            token={token}
+            setRefresh={setRefresh}
+            refresh={refresh}
+            comment_id={comment_id}
+          />
         </div>
       )}
     </div>

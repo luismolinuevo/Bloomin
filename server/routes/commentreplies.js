@@ -5,7 +5,7 @@ import passport from "passport";
 const router = Router();
 
 router.get(
-  "/commmentreply/:comment_id",
+  "/commentreply/:comment_id",
   commentRepliesControllers.getCommentReplies
 );
 router.post(
