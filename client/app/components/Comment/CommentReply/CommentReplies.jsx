@@ -10,6 +10,8 @@ export default function CommentReplies({
   comment_id,
   setRefresh,
   refresh,
+  wantToReply,
+  setWantToReply,
 }) {
   const [showReplies, setShowReplies] = useState(false);
   const [comments, setComments] = useState([]);
@@ -83,12 +85,15 @@ export default function CommentReplies({
       <p></p>
       {showReplies && (
         <div className="w-full">
-          <AddCommentReply
-            token={token}
-            setRefresh={setRefreshReplies}
-            refresh={refreshReplies}
-            comment_id={comment_id}
-          />
+          <div className="mb-5">
+            <AddCommentReply
+              token={token}
+              setRefresh={setRefreshReplies}
+              refresh={refreshReplies}
+              comment_id={comment_id}
+            />
+          </div>
+
           {comments && comments.length != 0 ? (
             <div>
               {comments.map((comment) => (
