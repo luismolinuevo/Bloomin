@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import AddCommentReply from "./AddCommentReply";
-import CommentCard from "./CommentCard";
+import CommentCard from "../CommentCard";
 import { getCommentReplies } from "@/app/lib/commentreply";
 
 export default function CommentReplies({
@@ -12,7 +12,7 @@ export default function CommentReplies({
   refresh,
 }) {
   const [showReplies, setShowReplies] = useState(false);
-  const [commentReplys, setCommentReplys] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const fetchReplies = async () => {
     try {
@@ -20,7 +20,8 @@ export default function CommentReplies({
       setShowReplies(true);
       console.log(data);
       if (data?.success) {
-        setCommentReplys(data?.comments);
+        setComments(data?.comments);
+        setRefresh(!refresh);
       } else {
         //error toast. Need to install toast
       }
@@ -73,13 +74,30 @@ export default function CommentReplies({
       )}
       <p></p>
       {showReplies && (
-        <div>
+        <div className="w-full">
           <AddCommentReply
             token={token}
             setRefresh={setRefresh}
             refresh={refresh}
             comment_id={comment_id}
           />
+          {comments && comments.length != 0 ? (
+            <div>
+              {comments.map((comment) => (
+                // Render each comment here
+                <CommentCard
+                  key={comment?.id}
+                  comment={comment}
+                  setRefresh={setRefresh}
+                  refresh={refresh}
+                  token={token}
+                  isReply={true}
+                />
+              ))}
+            </div>
+          ) : (
+            <p>No comments</p>
+          )}
         </div>
       )}
     </div>
