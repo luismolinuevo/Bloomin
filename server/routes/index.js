@@ -8,6 +8,7 @@ import followerRoutes from "./follower.js";
 import chatRoutes from "./chat.js";
 import imageUploadRoutes from "./imageupload.js";
 import likeRoutes from "./like.js";
+import commentReply from "./commentreplies.js";
 
 const apiRouter = Router();
 
@@ -19,5 +20,6 @@ apiRouter.use(followerRoutes);
 apiRouter.use(chatRoutes);
 apiRouter.use(imageUploadRoutes);
 apiRouter.use(likeRoutes);
+apiRouter.use(commentReply);
 
 export { apiRouter };

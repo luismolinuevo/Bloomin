@@ -87,7 +87,7 @@ const getCommentReplies = async (req, res) => {
     } else {
       return res.status(404).json({
         success: false,
-        message: "No post_id",
+        message: "No comment_id",
       });
     }
   } catch (error) {
@@ -100,4 +100,4 @@ const getCommentReplies = async (req, res) => {
   }
 };
 
-export { addComment, deleteComment, getCommentReplies };
+export { addCommentReply, deleteComment, getCommentReplies };
