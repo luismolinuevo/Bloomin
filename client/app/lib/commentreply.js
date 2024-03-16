@@ -21,8 +21,9 @@ export const getCommentReplies = async (comment_id) => {
   }
 };
 
-export const createComment = async (comment_id, data, token) => {
+export const createCommentReply = async (comment_id, data, token) => {
   try {
+    console.log(comment_id, data, token)
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/commentreply/${comment_id}`,
       {

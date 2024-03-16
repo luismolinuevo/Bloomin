@@ -1,16 +1,23 @@
-"use client";
+"use client"
 
 import React, { useState } from "react";
-import { createComment } from "@/app/lib/commentreply";
+import { createCommentReply } from "@/app/lib/commentreply";
 import { Input } from "@material-tailwind/react";
 
 export default function AddCommentReply({
-  post_id,
+  comment_id,
   token,
   setRefresh,
   refresh,
 }) {
   const [textbody, setTextBody] = useState("");
+
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent form submission
+      await onClick(); // Call the onClick function
+    }
+  };
 
   const onClick = async () => {
     try {
@@ -18,11 +25,11 @@ export default function AddCommentReply({
         textbody: textbody,
       };
 
-      const create = createComment(post_id, data, token);
+      const create = createCommentReply(comment_id, data, token);
       if (create.success) {
-        //success alert or something. need to figure out what im going to do
+        // Success alert or something. Need to figure out what I'm going to do
         setRefresh(!refresh);
-        console.log("Success creating comment");
+        console.log("Success creating comment reply");
       }
     } catch (error) {
       console.log(error);
@@ -36,16 +43,11 @@ export default function AddCommentReply({
           type="text"
           variant="standard"
           label="Add comment"
-          className="border bg-grey-1 w-[70%] rounded-lg p-2 "
+          className=""
           placeholder="Add comment"
           onChange={(e) => setTextBody(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-        <button
-          className="bg-[#459858] px-3 rounded-lg text-white h-[40px] text-[15px]"
-          onClick={onClick}
-        >
-          Add Comments
-        </button>
       </div>
     </div>
   );

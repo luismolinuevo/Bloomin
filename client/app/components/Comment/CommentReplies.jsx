@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import AddComment from "./AddComment";
+import AddCommentReply from "./AddCommentReply";
 import CommentCard from "./CommentCard";
 import { getCommentReplies } from "@/app/lib/commentreply";
 
@@ -17,10 +17,10 @@ export default function CommentReplies({
   const fetchReplies = async () => {
     try {
       const data = await getCommentReplies(comment_id);
+      setShowReplies(true);
       console.log(data);
       if (data.success) {
         setCommentReplys(data.comments);
-        setShowReplies(!showReplies);
       } else {
         //error toast. Need to install toast
       }
@@ -61,7 +61,7 @@ export default function CommentReplies({
             strokeWidth={1.5}
             stroke="currentColor"
             className="w-6 h-6"
-            onClick={() => setShowReplies(!showReplies)}
+            onClick={() => setShowReplies(false)}
           >
             <path
               strokeLinecap="round"
@@ -72,7 +72,11 @@ export default function CommentReplies({
         </button>
       )}
       <p></p>
-      {/* <div><AddComment /></div> */}
+      {showReplies && (
+        <div>
+          <AddCommentReply token={token} setRefresh={setRefresh} refresh={refresh} comment_id={comment_id}/>
+        </div>
+      )}
     </div>
   );
 }

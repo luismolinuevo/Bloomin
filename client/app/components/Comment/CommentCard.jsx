@@ -28,7 +28,12 @@ export default function CommentCard({
         setRefresh={setRefresh}
         refresh={refresh}
       />
-      <CommentReplies comment_id={comment?.id} />
+      <CommentReplies
+        comment_id={comment?.id}
+        token={token}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
     </div>
   );
 }
