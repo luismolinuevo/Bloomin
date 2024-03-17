@@ -3,7 +3,7 @@ import { likeComment } from "@/app/lib/commentreply";
 
 export default function CommentReplyLikeButtons({
   token,
-  comment_id,
+  comment,
   setRefresh,
   refresh,
 }) {
@@ -12,7 +12,7 @@ export default function CommentReplyLikeButtons({
       const data = {
         type: type,
       };
-      const like = await likeComment(comment_id, data, token);
+      const like = await likeComment(comment?.id, data, token);
       if (like.success) {
         //do something if needed
         setRefresh(!refresh);

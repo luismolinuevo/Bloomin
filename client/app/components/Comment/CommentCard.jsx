@@ -23,12 +23,14 @@ export default function CommentCard({
           <CommentMenu comment_id={comment?.id} />
         </div>
       </div>
-      <CommentLikeButtons
-        token={token}
-        comment_id={comment?.id}
-        setRefresh={setRefresh}
-        refresh={refresh}
-      />
+      {!isReply && (
+        <CommentLikeButtons
+          token={token}
+          comment_id={comment?.id}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
+      )}
       {!isReply && (
         <CommentReplies
           comment_id={comment?.id}

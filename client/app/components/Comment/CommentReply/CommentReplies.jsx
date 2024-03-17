@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import AddCommentReply from "./AddCommentReply";
 import CommentCard from "../CommentCard";
 import { getCommentReplies } from "@/app/lib/commentreply";
+import CommentReplyLikeButtons from "./CommentReplyLikeButtons";
 
 export default function CommentReplies({
   token,
@@ -97,15 +98,23 @@ export default function CommentReplies({
           {comments && comments.length != 0 ? (
             <div>
               {comments.map((comment) => (
-                // Render each comment here
-                <CommentCard
-                  key={comment?.id}
-                  comment={comment}
-                  setRefresh={setRefresh}
-                  refresh={refresh}
-                  token={token}
-                  isReply={true}
-                />
+                <div>
+                  <CommentCard
+                    key={comment?.id}
+                    comment={comment}
+                    setRefresh={setRefresh}
+                    refresh={refresh}
+                    token={token}
+                    isReply={true}
+                  />
+                  <CommentReplyLikeButtons
+                    key={comment?.id}
+                    comment={comment}
+                    setRefresh={setRefresh}
+                    refresh={refresh}
+                    token={token}
+                  />
+                </div>
               ))}
             </div>
           ) : (
