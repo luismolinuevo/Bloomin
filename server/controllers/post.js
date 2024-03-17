@@ -139,6 +139,7 @@ const getAllPost = async (req, res) => {
         const likeCount = await prisma.like.count({
           where: {
             postId: post.id,
+            type: "like"
           },
         });
 

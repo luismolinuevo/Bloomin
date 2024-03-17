@@ -24,7 +24,7 @@ export default function CommentLikeButtons({
 
   return (
     <div className="flex gap-3">
-      <button onClick={() => onClick("like")}>
+      <button onClick={() => onClick("like")} title="Like">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -40,7 +40,7 @@ export default function CommentLikeButtons({
           />
         </svg>
       </button>
-      <button onClick={() => onClick("dislike")}>
+      <button onClick={() => onClick("dislike")} title="Dislike">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

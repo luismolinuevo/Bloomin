@@ -9,7 +9,7 @@ export default function FavoritePostButton({ post, token }) {
 
   return (
     <div>
-      <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1" onClick={handleFavorite}>
+      <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1" onClick={handleFavorite} title="Favorite Post">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
