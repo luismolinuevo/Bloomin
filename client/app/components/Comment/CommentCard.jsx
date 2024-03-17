@@ -13,7 +13,7 @@ export default function CommentCard({
 }) {
   //need to show menu only when its ur comment
   return (
-    <div>
+    <div className="">
       <div className="flex justify-between">
         <div>
           <h3>User</h3>

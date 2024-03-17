@@ -98,7 +98,7 @@ export default function CommentReplies({
           {comments && comments.length != 0 ? (
             <div>
               {comments.map((comment) => (
-                <div>
+                <div className="mb-5">
                   <CommentCard
                     key={comment?.id}
                     comment={comment}
