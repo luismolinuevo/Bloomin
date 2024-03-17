@@ -163,7 +163,7 @@ const getAllPost = async (req, res) => {
     if (postsWithData.length > 0) {
       return res.status(200).json({
         success: true,
-        posts: postsWithData,
+        post: postsWithData,
       });
     } else {
       console.log("Error: No posts found");
