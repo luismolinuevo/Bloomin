@@ -118,27 +118,65 @@ const vote = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const post = await prisma.post.findMany({
+    // Retrieve all posts with associated user
+    const posts = await prisma.post.findMany({
       include: {
         user: true,
       },
     });
 
-    if (post) {
+    // Iterate over each post to retrieve comment count, like count, and favorite count
+    const postsWithData = await Promise.all(
+      posts.map(async (post) => {
+        // Retrieve comment count for the post
+        const commentCount = await prisma.comment.count({
+          where: {
+            postId: post.id,
+          },
+        });
+
+        // Retrieve like count for the post
+        const likeCount = await prisma.like.count({
+          where: {
+            postId: post.id,
+          },
+        });
+
+        // Retrieve favorite count for the post
+        const favCount = await prisma.favorites.count({
+          where: {
+            postId: post.id,
+          },
+        });
+
+        // Return the post object with comment count, like count, and favorite count
+        return {
+          ...post,
+          commentCount,
+          likeCount,
+          favCount,
+        };
+      })
+    );
+
+    // Check if posts are found
+    if (postsWithData.length > 0) {
       return res.status(200).json({
-        success: "true",
-        post,
+        success: true,
+        posts: postsWithData,
       });
     } else {
-      console.log("Error");
+      console.log("Error: No posts found");
       return res.status(404).json({
-        message: "No post found",
+        message: "No posts found",
       });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Someting went wrong" });
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
+
 
 const getPost = async (req, res) => {
   try {
