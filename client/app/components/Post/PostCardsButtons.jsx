@@ -33,7 +33,7 @@ export default function PostCardsButtons({ post }) {
         Share
       </button>
       <Link
-        href={`/posts/${post?.post_id}`}
+        href={`/posts/${post?.id}`}
         className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1"
         title="Comments"
       >
