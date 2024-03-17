@@ -10,7 +10,7 @@ export default function PostCardsButtons({ post }) {
   return (
     <div className="flex gap-5 mt-8">
       <VotingButtons token={token} post_id={post?.post_id} post_upvotes={post?.post_upvotes}/>
-      <FavoritePostButton post_id={post?.post_id} token={token}/>
+      <FavoritePostButton post={post} token={token}/>
       <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
