@@ -59,7 +59,7 @@ export const createCommentReply = async (comment_id, data, token) => {
 export const likeComment = async (comment_id, data, token) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/commentlike/${comment_id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/commentreplylike/${comment_id}`,
       {
         method: "POST",
         headers: {
@@ -72,13 +72,13 @@ export const likeComment = async (comment_id, data, token) => {
 
     if (!response.ok) {
       console.error(
-        "Like comment request request failed. Response status:",
+        "Like comment reply request request failed. Response status:",
         response.status
       );
       const errorData = await response.json();
       console.error("Error details:", errorData);
 
-      throw new Error("Like comment request failed");
+      throw new Error("Like comment reply request failed");
     }
 
     // If the response is successful, return the data (if needed)
@@ -86,7 +86,7 @@ export const likeComment = async (comment_id, data, token) => {
     return responseData;
   } catch (error) {
     // Log more details about the error
-    console.error("Error liking comment:", error);
+    console.error("Error liking comment reply: ", error);
     throw error;
   }
 };
