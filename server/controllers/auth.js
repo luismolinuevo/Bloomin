@@ -118,17 +118,17 @@ const login = async (req, res) => {
 };
 
 const getUserAuthInfo = async (req, res) => {
-  if (req.user != null) {
-    return res.status(200).json({
-      success: true,
-      data: req.user,
-    });
-  } else {
-    return res.status(404).json({
-      success: false,
-      message: "Not logged in",
-    });
-  }
+  // if (req.user != null) {
+  return res.status(200).json({
+    success: true,
+    data: req.user,
+  });
+  // } else {
+  //   return res.status(404).json({
+  //     success: false,
+  //     message: "Not logged in",
+  //   });
+  // }
 };
 
 const googleCallBack = async (req, res) => {
