@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Navbar from "../components/Navbar/Navbar";
 import { ThemeProvider } from "../utils/MaterialTailwind";
-import { Providers } from "../store/Providers";
+import StoreProvider from "../store/StoreProvider";
 import AuthWrapper from "../components/Auth/AuthWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
             <Navbar />
 
             <main className="flex-grow">
-              <Providers><AuthWrapper>{children}</AuthWrapper></Providers>
+              <StoreProvider><AuthWrapper>{children}</AuthWrapper></StoreProvider>
             </main>
           </div>
         </body>

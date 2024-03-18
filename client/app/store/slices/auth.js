@@ -12,7 +12,8 @@ export const Auth = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn;
     },
     setUserData: (state, action) => {
-      state.userData = action.payload.userData;
+      state.userData = action.payload;
+      console.log(action.payload)
     },
   },
 });
