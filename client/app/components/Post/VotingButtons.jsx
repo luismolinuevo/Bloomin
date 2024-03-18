@@ -3,6 +3,7 @@ import { votePost } from "@/app/lib/post";
 export default function VotingButtons({ post, token, post_upvotes }) {
   const vote = async (type) => {
     try {
+      console.log(type)
       const voting = await votePost(post?.id, token, type);
       console.log(voting);
     } catch (error) {
@@ -12,7 +13,11 @@ export default function VotingButtons({ post, token, post_upvotes }) {
   return (
     <div className="border p-2 bg-gray-300 rounded-lg flex items-center gap-2 ">
       <div>
-        <button onClick={() => vote("upvote")}  title="Like" className="flex gap-1">
+        <button
+          onClick={() => vote("like")}
+          title="Like"
+          className="flex gap-1"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -32,7 +37,7 @@ export default function VotingButtons({ post, token, post_upvotes }) {
         <p>{post_upvotes && post_upvotes}</p>
       </div>
       <p className="border border-[#459858] h-full"></p>
-      <button onClick={() => vote("downvote")} title="Dislike">
+      <button onClick={() => vote("dislike")} title="Dislike">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

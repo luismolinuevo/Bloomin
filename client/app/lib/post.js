@@ -60,9 +60,9 @@ export const createPost = async (data, token) => {
 export const votePost = async (post_id, token, type) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/vote/${post_id}?type=${type}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/postlike/${post_id}?type=${type}`,
       {
-        method: "PUT",
+        method: "POST",
         headers: {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,

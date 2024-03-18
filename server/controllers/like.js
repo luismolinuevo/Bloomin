@@ -2,7 +2,7 @@ import prisma from "../db/index.js";
 
 const postLike = async (req, res) => {
   const { post_id } = req.params;
-  const { type } = req.body;
+  const { type } = req.query;
 
   try {
     //Getting the post
