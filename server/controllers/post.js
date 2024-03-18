@@ -139,7 +139,7 @@ const getAllPost = async (req, res) => {
         const likeCount = await prisma.like.count({
           where: {
             postId: post.id,
-            type: "like"
+            type: "like",
           },
         });
 
@@ -150,12 +150,28 @@ const getAllPost = async (req, res) => {
           },
         });
 
+        const userFav = await prisma.favorites.findFirst({
+          where: {
+            postId: post.id,
+            userId: req.user.id
+          },
+        });
+        // Check if the user has already liked the post
+        const userLike = await prisma.like.findFirst({
+          where: {
+            postId: post.id,
+            userId: req.user.id,
+          },
+        });
+
         // Return the post object with comment count, like count, and favorite count
         return {
           ...post,
           commentCount,
           likeCount,
           favCount,
+          userLike: userLike ? userLike.type : null,
+          userFav: userFav ? true : false
         };
       })
     );
@@ -177,7 +193,6 @@ const getAllPost = async (req, res) => {
     return res.status(500).json({ error: "Something went wrong" });
   }
 };
-
 
 const getPost = async (req, res) => {
   try {

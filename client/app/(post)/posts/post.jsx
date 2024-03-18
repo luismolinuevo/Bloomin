@@ -5,8 +5,10 @@ import PostSearch from "../../components/Search/PostSearch.jsx";
 import { getAllPosts } from "@/app/lib/post";
 import { useEffect, useState } from "react";
 import CreatePost from "@/app/components/Post/CreatePost.jsx";
+import { useAppSelector } from "@/app/store/reduxhooks.js";
 
 export default function Post() {
+  const userId = useAppSelector((state) => state.auth.userData);
   const [loading, setLoading] = useState(false);
   const [post, setPosts] = useState([]);
 

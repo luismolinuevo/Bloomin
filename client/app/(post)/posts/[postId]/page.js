@@ -5,11 +5,13 @@ import { getPost } from "@/app/lib/post";
 import PostCard from "@/app/components/Post/PostCard";
 import { useRouter, useParams } from "next/navigation";
 import Comments from "@/app/components/Comment/Comments";
+import { useAppSelector } from "@/app/store/reduxhooks";
 
 export default function PostId() {
   const router = useRouter();
   const params = useParams();
-  console.log(params);
+  const userId = useAppSelector((state) => state.auth.userData);
+  console.log(userId);
   const postId = params.postId;
   const [post, setPost] = useState([]);
   const [refresh, setRefresh] = useState(false);
