@@ -3,6 +3,7 @@ import "../globals.css";
 import Navbar from "../components/Navbar/Navbar";
 import { ThemeProvider } from "../utils/MaterialTailwind";
 import { Providers } from "../store/Providers";
+import AuthWrapper from "../components/Auth/AuthWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
             <Navbar />
 
             <main className="flex-grow">
-              <Providers>{children}</Providers>
+              <Providers><AuthWrapper>{children}</AuthWrapper></Providers>
             </main>
           </div>
         </body>

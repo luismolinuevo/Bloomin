@@ -118,16 +118,22 @@ const login = async (req, res) => {
 };
 
 const getUserAuthInfo = async (req, res) => {
-  return res.status(200).json({
-    success: true,
-    data: req.user,
-  });
+  if (req.user != null) {
+    return res.status(200).json({
+      success: true,
+      data: req.user,
+    });
+  } else {
+    return res.status(404).json({
+      success: false,
+      message: "Not logged in",
+    });
+  }
 };
 
 const googleCallBack = async (req, res) => {
   const token = req.user; // req.user now contains the JWT token
   res.redirect(`http://localhost:3000?token=${token}`);
 };
-
 
 export { signup, login, getUserAuthInfo, googleCallBack };
