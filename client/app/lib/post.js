@@ -1,4 +1,4 @@
-export const getAllPosts = async () => {
+export const getAllPosts = async (token) => {
   try {
     const posts = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts`,
@@ -6,6 +6,7 @@ export const getAllPosts = async () => {
         method: "GET",
         headers: {
           "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

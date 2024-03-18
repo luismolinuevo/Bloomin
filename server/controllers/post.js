@@ -170,7 +170,7 @@ const getAllPost = async (req, res) => {
           commentCount,
           likeCount,
           favCount,
-          userLike: userLike ? userLike.type : null,
+          userLike: userLike ? userLike.type : false,
           userFav: userFav ? true : false
         };
       })

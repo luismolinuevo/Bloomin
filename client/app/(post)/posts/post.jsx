@@ -6,16 +6,18 @@ import { getAllPosts } from "@/app/lib/post";
 import { useEffect, useState } from "react";
 import CreatePost from "@/app/components/Post/CreatePost.jsx";
 import { useAppSelector } from "@/app/store/reduxhooks.js";
+import cookie from "js-cookie";
 
 export default function Post() {
   const userId = useAppSelector((state) => state.auth.userData);
+  const token = cookie.get("user_token");
   const [loading, setLoading] = useState(false);
   const [post, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(!loading);
-      const posts = await getAllPosts();
+      const posts = await getAllPosts(token);
       if (posts.success) {
         console.log(posts.post);
         setPosts(posts.post);
