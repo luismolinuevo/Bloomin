@@ -129,4 +129,5 @@ const googleCallBack = async (req, res) => {
   res.redirect(`http://localhost:3000?token=${token}`);
 };
 
+
 export { signup, login, getUserAuthInfo, googleCallBack };

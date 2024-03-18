@@ -55,11 +55,35 @@ export const signin = async (data) => {
     }
 
     const responseData = await response.json();
-    console.log(responseData)
-  
+    console.log(responseData);
+
     return responseData;
   } catch (error) {
     console.error("Error during signup:", error);
     throw error;
+  }
+};
+
+export const getUser = async (token) => {
+  try {
+    const user = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (user.ok) {
+      const res = await user.json();
+
+      return res;
+    }
+  } catch (error) {
+    console.log(error.message);
+    return error;
   }
 };
