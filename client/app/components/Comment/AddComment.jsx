@@ -12,17 +12,16 @@ export default function AddComment({ post_id, token, setRefresh, refresh }) {
         textbody: textbody,
       };
 
-      const create = createComment(post_id, data, token);
-      console.log("create " + create);
+      const create = await createComment(post_id, data, token);
       if (create.success) {
-        //success alert or something. need to figure out what im going to do
         setRefresh(!refresh);
-        console.log("Success creating comment");
+        setTextBody("");
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div>
       <div className="flex gap-4 justify-between mt-5">
