@@ -6,6 +6,7 @@ import PostCard from "@/app/components/Post/PostCard";
 import { useRouter, useParams } from "next/navigation";
 import Comments from "@/app/components/Comment/Comments";
 import { useAppSelector } from "@/app/store/reduxhooks";
+import cookie from "js-cookie"
 
 export default function PostId() {
   const router = useRouter();
@@ -15,13 +16,14 @@ export default function PostId() {
   const postId = params.postId;
   const [post, setPost] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const token = cookie.get("user_token");
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         if (postId) {
           console.log("Entered");
-          const data = await getPost(postId);
+          const data = await getPost(postId, token);
           console.log(data);
           if (data.success) {
             setPost(data.post);
@@ -42,7 +44,7 @@ export default function PostId() {
     <div className="flex justify-center">
       <div className="w-[800px]">
         <PostCard post={post} />
-        <Comments post_id={postId} setRefresh={setRefresh} refresh={refresh} />
+        <Comments post={post} setRefresh={setRefresh} refresh={refresh} post_id={postId}/>
       </div>
     </div>
   );

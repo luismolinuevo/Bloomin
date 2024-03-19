@@ -91,7 +91,7 @@ export const votePost = async (post_id, token, type) => {
   }
 };
 
-export const getPost = async (post_id) => {
+export const getPost = async (post_id, token) => {
   try {
     const post = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/post/${post_id}`,
@@ -99,6 +99,7 @@ export const getPost = async (post_id) => {
         method: "GET",
         headers: {
           "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

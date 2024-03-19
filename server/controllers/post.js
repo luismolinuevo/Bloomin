@@ -216,10 +216,60 @@ const getPost = async (req, res) => {
     });
 
     if (post) {
+      const commentCount = await prisma.comment.count({
+        where: {
+          postId: parseInt(postId),
+        },
+      });
+
+      const commentReplyCount = await prisma.commentReply.count({
+        where: {
+          postId: parseInt(postId),
+        },
+      });
+
+      const totalCommentCount = commentCount + commentReplyCount;
+
+      const likeCount = await prisma.like.count({
+        where: {
+          postId: parseInt(postId),
+          type: "like",
+        },
+      });
+
+      const favCount = await prisma.favorites.count({
+        where: {
+          postId: parseInt(postId),
+        },
+      });
+
+      const userFav = await prisma.favorites.findFirst({
+        where: {
+          postId: parseInt(postId),
+          userId: req.user.id,
+        },
+      });
+
+      const userLike = await prisma.like.findFirst({
+        where: {
+          postId: parseInt(postId),
+          userId: req.user.id,
+        },
+      });
+
+      const postData = {
+        ...post,
+        commentCount: totalCommentCount,
+        likeCount,
+        favCount,
+        userLike: userLike ? userLike.type : false,
+        userFav: userFav ? true : false,
+      };
+
       return res.status(200).json({
         message: "Success",
         success: true,
-        post,
+        post: postData,
       });
     }
 

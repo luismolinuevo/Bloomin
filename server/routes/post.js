@@ -19,6 +19,10 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   postControllers.getAllPost
 );
-router.get("/post/:postId", postControllers.getPost);
+router.get(
+  "/post/:postId",
+  passport.authenticate("jwt", { session: false }),
+  postControllers.getPost
+);
 
 export default router;
