@@ -30,7 +30,7 @@ export default function Comments({ post, setRefresh, refresh, post_id}) {
 
   return (
     <div className="mt-10">
-      <SortComments setRefresh={setRefresh} refresh={refresh} />
+      <SortComments setRefresh={setRefresh} refresh={refresh} post={post}/>
       <AddComment
         post_id={post_id}
         token={token}
