@@ -47,6 +47,7 @@ model Post {
   Comment   Comment[]
   // votes     Votes[]
   like      Like[]
+  commentReply CommentReply[]
 
   @@index([userId])
 }
@@ -86,6 +87,8 @@ model CommentReply {
   textbody  String   @db.VarChar(400)
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   commentId Int
   comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
@@ -94,6 +97,7 @@ model CommentReply {
 
   @@index([userId])
   @@index([commentId])
+  @@index([postId])
 }
 
 model Like {
