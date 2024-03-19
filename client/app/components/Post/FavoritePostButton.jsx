@@ -1,15 +1,26 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { favoritePost } from "@/app/lib/favorites";
+import { useAppSelector } from "@/app/store/reduxhooks";
 
 export default function FavoritePostButton({ post, token }) {
+  const [faved, setFaved] = useState(post?.userFav); //doing it this way so api doest have to refresh, I would also use web sockets.
   const handleFavorite = async () => {
     const data = await favoritePost(post?.id, token);
     console.log(data);
+    setFaved(!faved);
   };
 
   return (
     <div>
-      <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1" onClick={handleFavorite} title="Favorite Post">
+      <button
+        className={`border p-2 rounded-lg flex items-center gap-1 ${
+          faved ? "bg-[#459858]" : "bg-gray-300"
+        }`}
+        onClick={handleFavorite}
+        title="Favorite Post"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
