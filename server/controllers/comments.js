@@ -8,7 +8,7 @@ const addComment = async (req, res) => {
         data: {
           textbody: req.body.textbody,
           user: { connect: { id: req.user.id } },
-          post: { connect: { id: req.body.postId } },
+          post: { connect: { id: parseInt(postId) } },
         },
       });
 
@@ -30,6 +30,7 @@ const addComment = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error)
     return res
       .status(500)
       .json({ error: error, message: "Error creating comment" });

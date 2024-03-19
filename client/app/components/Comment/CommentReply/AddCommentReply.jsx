@@ -28,7 +28,7 @@ export default function AddCommentReply({
       };
 
       const create = await createCommentReply(comment?.id, data, token);
-      console.log(create);
+      console.log("create " + create);
       if (create.success) {
         // Success alert or something. Need to figure out what I'm going to do
         setRefresh(!refresh);

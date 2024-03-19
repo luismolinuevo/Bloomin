@@ -13,6 +13,7 @@ export default function AddComment({ post_id, token, setRefresh, refresh }) {
       };
 
       const create = createComment(post_id, data, token);
+      console.log("create " + create);
       if (create.success) {
         //success alert or something. need to figure out what im going to do
         setRefresh(!refresh);
