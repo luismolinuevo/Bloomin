@@ -1,22 +1,39 @@
+"use client";
+
 import { votePost } from "@/app/lib/post";
+import { useState } from "react";
 
 export default function VotingButtons({ post, token, post_upvotes }) {
+  const [liked, setLiked] = useState(post?.userLike);
+  const [postLikes, setPostLikes] = useState(post?.likeCount);
+
   const vote = async (type) => {
     try {
-      console.log(type)
+      console.log(type);
       const voting = await votePost(post?.id, token, type);
+
+      if (liked === "like") {
+        setLiked("dislike");
+        setPostLikes(postLikes - 1);
+      } else if (liked === "dislike") {
+        setLiked("like");
+        setPostLikes(postLikes + 1);
+      }
+
       console.log(voting);
     } catch (error) {
       console.log("Voting not working ", error);
     }
   };
   return (
-    <div className="border p-2 bg-gray-300 rounded-lg flex items-center gap-2 ">
+    <div
+      className={`border p-2 bg-gray-300 rounded-lg flex items-center gap-2`}
+    >
       <div>
         <button
           onClick={() => vote("like")}
           title="Like"
-          className="flex gap-1"
+          className={`flex gap-1 `}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +41,9 @@ export default function VotingButtons({ post, token, post_upvotes }) {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            className={`w-6 h-6 ${
+              liked === "like" ? "text-green-500" : "text-black"
+            }`}
           >
             <path
               stroke-linecap="round"
@@ -32,7 +51,7 @@ export default function VotingButtons({ post, token, post_upvotes }) {
               d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
             />
           </svg>
-          <p>{post?.likeCount}</p>
+          <p>{postLikes}</p>
         </button>
         <p>{post_upvotes && post_upvotes}</p>
       </div>
@@ -44,7 +63,9 @@ export default function VotingButtons({ post, token, post_upvotes }) {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          className={`w-6 h-6 ${
+            liked === "dislike" ? "text-green-500" : "text-black"
+          }`}
         >
           <path
             stroke-linecap="round"
