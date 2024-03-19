@@ -2,6 +2,7 @@ import React from "react";
 import CommentMenu from "./CommentMenu";
 import CommentLikeButtons from "./CommentLikeButtons";
 import CommentReplies from "./CommentReply/CommentReplies";
+import { AvatarDefault } from "../General/ProfilePic";
 
 export default function CommentCard({
   comment,
@@ -13,10 +14,16 @@ export default function CommentCard({
 }) {
   //need to show menu only when its ur comment
   return (
-    <div className="">
+    <div className="mt-6">
       <div className="flex justify-between">
         <div>
-          <h3>User</h3>
+          <div className="flex items-center gap-4 my-2">
+            <AvatarDefault size={"sm"} />
+            <h3>
+              {comment?.user?.userName ? comment?.user?.userName : "User"}
+            </h3>
+          </div>
+
           <p>{comment.textbody}</p>
         </div>
         <div>
