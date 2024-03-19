@@ -135,6 +135,14 @@ const getAllPost = async (req, res) => {
           },
         });
 
+        const commentReplyCount = await prisma.commentReply.count({
+          where: {
+            postId: post.id,
+          },
+        });
+
+        let totalCommentCount = commentCount + commentReplyCount;
+
         // Retrieve like count for the post
         const likeCount = await prisma.like.count({
           where: {
@@ -153,7 +161,7 @@ const getAllPost = async (req, res) => {
         const userFav = await prisma.favorites.findFirst({
           where: {
             postId: post.id,
-            userId: req.user.id
+            userId: req.user.id,
           },
         });
         // Check if the user has already liked the post
@@ -167,11 +175,11 @@ const getAllPost = async (req, res) => {
         // Return the post object with comment count, like count, and favorite count
         return {
           ...post,
-          commentCount,
+          commentCount: totalCommentCount,
           likeCount,
           favCount,
           userLike: userLike ? userLike.type : false,
-          userFav: userFav ? true : false
+          userFav: userFav ? true : false,
         };
       })
     );
