@@ -7,8 +7,10 @@ const addCommentReply = async (req, res) => {
       const newComment = await prisma.commentReply.create({
         data: {
           textbody: req.body.textbody,
-          userId: req.user.id,
-          commentId: parseInt(comment_id),
+          // userId: req.user.id,
+          user: { connect: { id: req.user.id } },
+          comment: { connect: { id: parseInt(comment_id) } },
+          post: { connect: { id: req.body.postId } },
         },
       });
 
@@ -30,6 +32,7 @@ const addCommentReply = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: error, message: "Error creating comment reply" });
@@ -71,6 +74,9 @@ const getCommentReplies = async (req, res) => {
       const comments = await prisma.commentReply.findMany({
         where: {
           commentId: parseInt(comment_id),
+        },
+        include: {
+          user: true,
         },
       });
 

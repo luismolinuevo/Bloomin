@@ -5,12 +5,13 @@ import { createCommentReply } from "@/app/lib/commentreply";
 import { Input } from "@material-tailwind/react";
 
 export default function AddCommentReply({
-  comment_id,
+  comment,
   token,
   setRefresh,
   refresh,
 }) {
   const [textbody, setTextBody] = useState("");
+  console.log(comment)
 
   const handleKeyDown = async (e) => {
     if (e.key === "Enter") {
@@ -23,10 +24,11 @@ export default function AddCommentReply({
     try {
       const data = {
         textbody: textbody,
+        postId: comment?.postId,
       };
 
-      const create = await createCommentReply(comment_id, data, token);
-      console.log(create)
+      const create = await createCommentReply(comment?.id, data, token);
+      console.log(create);
       if (create.success) {
         // Success alert or something. Need to figure out what I'm going to do
         setRefresh(!refresh);

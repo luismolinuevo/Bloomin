@@ -8,7 +8,7 @@ import CommentReplyLikeButtons from "./CommentReplyLikeButtons";
 
 export default function CommentReplies({
   token,
-  comment_id,
+  comment,
   setRefresh,
   refresh,
   wantToReply,
@@ -20,7 +20,7 @@ export default function CommentReplies({
 
   const fetchReplies = async () => {
     try {
-      const data = await getCommentReplies(comment_id);
+      const data = await getCommentReplies(comment?.id);
       setShowReplies(true);
       console.log(data);
       if (data?.success) {
@@ -91,7 +91,7 @@ export default function CommentReplies({
               token={token}
               setRefresh={setRefreshReplies}
               refresh={refreshReplies}
-              comment_id={comment_id}
+              comment={comment}
             />
           </div>
 

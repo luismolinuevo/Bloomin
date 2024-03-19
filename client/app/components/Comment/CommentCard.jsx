@@ -33,7 +33,7 @@ export default function CommentCard({
       )}
       {!isReply && (
         <CommentReplies
-          comment_id={comment?.id}
+          comment={comment}
           token={token}
           setRefresh={setRefresh}
           refresh={refresh}

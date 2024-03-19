@@ -18,7 +18,7 @@ export default function PostCard({ post }) {
             <h3 className="text-[19px] font-bold">{post?.user?.userName}</h3>
           </div>
 
-          {post?.user?.id == userData.id && <PostMenu post={post} />}
+          {post?.user?.id == userData?.id && <PostMenu post={post} />}
         </div>
         <div className="flex">
           {post?.img != null && (
