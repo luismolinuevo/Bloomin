@@ -7,8 +7,8 @@ const addComment = async (req, res) => {
       const newComment = await prisma.comment.create({
         data: {
           textbody: req.body.textbody,
-          userId: req.user.id,
-          postId: parseInt(postId),
+          user: { connect: { id: req.user.id } },
+          post: { connect: { id: req.body.postId } },
         },
       });
 
@@ -75,6 +75,9 @@ const getComments = async (req, res) => {
       const comments = await prisma.comment.findMany({
         where: {
           postId: parseInt(post_id),
+        },
+        include: {
+          user: true,
         },
       });
 
