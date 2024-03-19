@@ -89,7 +89,7 @@ export default function CreatePost() {
                 error={errors.title}
                 helperText={errors.title && "Title is required"}
                 className="w-[230px]"
-                size=""
+                size="md"
               />
             </div>
             <div>
@@ -99,7 +99,7 @@ export default function CreatePost() {
                 label="Who is it good for?"
                 {...register("target")}
                 className="w-[230px]"
-                size=""
+                size="md"
               />
             </div>
           </div>
@@ -122,6 +122,7 @@ export default function CreatePost() {
                 label="Cost"
                 {...register("cost")}
                 className="w-[230px]"
+                size="md"
               />
             </div>
             <div>
@@ -133,6 +134,7 @@ export default function CreatePost() {
                 error={errors.city}
                 helperText={errors.city && "City is required"}
                 className="w-[230px]"
+                size="md"
               />
             </div>
           </div>
