@@ -3,6 +3,7 @@ import CommentMenu from "./CommentMenu";
 import CommentLikeButtons from "./CommentLikeButtons";
 import CommentReplies from "./CommentReply/CommentReplies";
 import { AvatarDefault } from "../General/ProfilePic";
+import { useAppSelector } from "@/app/store/reduxhooks";
 
 export default function CommentCard({
   comment,
@@ -12,7 +13,7 @@ export default function CommentCard({
   refresh,
   isReply,
 }) {
-  //need to show menu only when its ur comment
+  const userData = useAppSelector((state) => state.auth.userData);
   return (
     <div className="mt-6">
       <div className="flex justify-between">
@@ -27,7 +28,9 @@ export default function CommentCard({
           <p>{comment.textbody}</p>
         </div>
         <div>
-          <CommentMenu comment_id={comment?.id} />
+          {comment?.user?.id == userData?.id && (
+            <CommentMenu comment_id={comment?.id} />
+          )}
         </div>
       </div>
       {!isReply && (

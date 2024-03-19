@@ -30,7 +30,7 @@ const addComment = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res
       .status(500)
       .json({ error: error, message: "Error creating comment" });
@@ -67,12 +67,6 @@ const getComments = async (req, res) => {
     const { sortBy } = req.query;
 
     if (post_id) {
-      // let orderBy;
-
-      // switch(sortBy) {
-      //   case "newest":
-      //     orderBy = { } //need to add date and likes/dislikes to comment
-      // }
       const comments = await prisma.comment.findMany({
         where: {
           postId: parseInt(post_id),
@@ -83,26 +77,46 @@ const getComments = async (req, res) => {
       });
 
       if (comments) {
+        const commentsWithData = await Promise.all(
+          comments.map(async (comment) => {
+            const commentReplyCount = await prisma.commentReply.count({
+              where: {
+                commentId: comment.id,
+              },
+            });
+            // Return the comment object with reply count
+            return {
+              ...comment,
+              success: true,
+              message: "Fetched all comments",
+              commentReplyCount,
+            };
+          })
+        );
+
         return res.status(200).json({
           success: true,
-          message: "Fetched all comments",
-          comments,
+          message: "Fetched all comments with reply count",
+          comments: commentsWithData,
         });
       } else {
-        return res.status(404).json({});
+        return res.status(404).json({
+          success: false,
+          message: "No comments found for this post",
+        });
       }
     } else {
       return res.status(404).json({
         success: false,
-        message: "No post_id",
+        message: "No post_id provided",
       });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
+      success: false,
       message: "Server error",
       error,
-      success: false,
     });
   }
 };

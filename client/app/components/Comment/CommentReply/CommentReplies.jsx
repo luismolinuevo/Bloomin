@@ -47,23 +47,29 @@ export default function CommentReplies({
   return (
     <div className="flex gap-3 mx-4">
       {!showReplies ? (
-        <button>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-            onClick={fetchReplies}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m19.5 8.25-7.5 7.5-7.5-7.5"
-            />
-          </svg>
-        </button>
+        <div className="flex items-center gap-2">
+          <button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+              onClick={fetchReplies}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m19.5 8.25-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          </button>
+          <div className="flex items-center gap-2">
+            <p>{comment?.commentReplyCount}</p>
+            <p>{comment?.commentReplyCount == 1 ? "Reply" : "Replies"}</p>
+          </div>
+        </div>
       ) : (
         <button>
           <svg

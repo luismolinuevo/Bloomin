@@ -5,7 +5,7 @@ import AddComment from "./AddComment";
 import cookie from "js-cookie";
 import SortComments from "./SortComments";
 
-export default function Comments({ post, setRefresh, refresh, post_id}) {
+export default function Comments({ post, setRefresh, refresh, post_id }) {
   const [comments, setComments] = useState([]);
   const token = cookie.get("user_token");
   useEffect(() => {
@@ -15,10 +15,11 @@ export default function Comments({ post, setRefresh, refresh, post_id}) {
           // Ensure post is not null or undefined
           console.log(post);
           const data = await getComments(post_id);
+          console.log(data);
           if (data.success) {
             setComments(data.comments);
           }
-          console.log(data.comments);
+          
         }
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -30,7 +31,7 @@ export default function Comments({ post, setRefresh, refresh, post_id}) {
 
   return (
     <div className="mt-10">
-      <SortComments setRefresh={setRefresh} refresh={refresh} post={post}/>
+      <SortComments setRefresh={setRefresh} refresh={refresh} post={post} />
       <AddComment
         post_id={post_id}
         token={token}
