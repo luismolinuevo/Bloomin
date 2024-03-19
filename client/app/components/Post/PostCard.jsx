@@ -4,14 +4,16 @@ import { EllipsisHorizontalCircleIcon } from "@heroicons/react/solid";
 import PostMenu from "./PostMenu";
 import PostCardsButtons from "./PostCardsButtons";
 import ShowMoreText from "../General/ShowMoreText";
+import { useAppSelector } from "@/app/store/reduxhooks";
 
 export default function PostCard({ post }) {
+  const userData = useAppSelector((state) => state.auth.userData);
   return (
     <div className="flex">
       <div className="border-b p-4 w-full">
         <div className="flex justify-between font-sans">
           <h3 className="text-[18px] font-bold">{post?.user?.userName}</h3>
-          <PostMenu />
+          {post?.user?.id == userData.id && <PostMenu post={post} />}
         </div>
         <div className="flex">
           {post?.img != null && (
@@ -35,7 +37,7 @@ export default function PostCard({ post }) {
           </div>
         </div>
         <div>
-          <PostCardsButtons post={post}/>
+          <PostCardsButtons post={post} />
           <button>
             <img src="favs" alt="" />
           </button>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PostMenu({}) {
+export default function PostMenu({ post }) {
   return (
     <div>
       <button className="">
