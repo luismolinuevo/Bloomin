@@ -36,7 +36,7 @@ export default function CommentCard({
       {!isReply && (
         <CommentLikeButtons
           token={token}
-          comment_id={comment?.id}
+          comment={comment}
           setRefresh={setRefresh}
           refresh={refresh}
         />

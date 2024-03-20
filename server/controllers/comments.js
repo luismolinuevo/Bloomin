@@ -84,12 +84,19 @@ const getComments = async (req, res) => {
                 commentId: comment.id,
               },
             });
+
+            const commentLikeCount = await prisma.like.count({
+              where: {
+                commentId: comment.id,
+              },
+            });
             // Return the comment object with reply count
             return {
               ...comment,
               success: true,
               message: "Fetched all comments",
               commentReplyCount,
+              commentLikeCount
             };
           })
         );
