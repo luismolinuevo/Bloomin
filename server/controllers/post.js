@@ -118,77 +118,93 @@ const vote = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    // Retrieve all posts with associated user
-    const posts = await prisma.post.findMany({
-      include: {
-        user: true,
-      },
-    });
+    const { cursor, limit = 10 } = req.query;
 
-    // Iterate over each post to retrieve comment count, like count, and favorite count
-    const postsWithData = await Promise.all(
-      posts.map(async (post) => {
-        // Retrieve comment count for the post
-        const commentCount = await prisma.comment.count({
-          where: {
-            postId: post.id,
-          },
-        });
-
-        const commentReplyCount = await prisma.commentReply.count({
-          where: {
-            postId: post.id,
-          },
-        });
-
-        let totalCommentCount = commentCount + commentReplyCount;
-
-        // Retrieve like count for the post
-        const likeCount = await prisma.like.count({
-          where: {
-            postId: post.id,
-            type: "like",
-          },
-        });
-
-        // Retrieve favorite count for the post
-        const favCount = await prisma.favorites.count({
-          where: {
-            postId: post.id,
-          },
-        });
-
-        const userFav = await prisma.favorites.findFirst({
-          where: {
-            postId: post.id,
-            userId: req.user.id,
-          },
-        });
-        // Check if the user has already liked the post
-        const userLike = await prisma.like.findFirst({
-          where: {
-            postId: post.id,
-            userId: req.user.id,
-          },
-        });
-
-        // Return the post object with comment count, like count, and favorite count
-        return {
-          ...post,
-          commentCount: totalCommentCount,
-          likeCount,
-          favCount,
-          userLike: userLike ? userLike.type : false,
-          userFav: userFav ? true : false,
-        };
-      })
-    );
+    // Retrieve posts with associated user, applying pagination
+    let posts;
+    if (cursor) {
+      posts = await prisma.post.findMany({
+        include: {
+          user: true,
+        },
+        cursor: {
+          id: cursor,
+        },
+        take: limit,
+      });
+    } else {
+      posts = await prisma.post.findMany({
+        include: {
+          user: true,
+        },
+        take: limit,
+      });
+    }
 
     // Check if posts are found
-    if (postsWithData.length > 0) {
+    if (posts.length > 0) {
+      // Iterate over each post to retrieve additional data
+      const postsWithData = await Promise.all(
+        posts.map(async (post) => {
+          // Retrieve comment count for the post
+          const commentCount = await prisma.comment.count({
+            where: {
+              postId: post.id,
+            },
+          });
+
+          const commentReplyCount = await prisma.commentReply.count({
+            where: {
+              postId: post.id,
+            },
+          });
+
+          const totalCommentCount = commentCount + commentReplyCount;
+
+          // Retrieve like count for the post
+          const likeCount = await prisma.like.count({
+            where: {
+              postId: post.id,
+              type: "like",
+            },
+          });
+
+          // Retrieve favorite count for the post
+          const favCount = await prisma.favorites.count({
+            where: {
+              postId: post.id,
+            },
+          });
+
+          const userFav = await prisma.favorites.findFirst({
+            where: {
+              postId: post.id,
+              userId: req.user.id,
+            },
+          });
+          // Check if the user has already liked the post
+          const userLike = await prisma.like.findFirst({
+            where: {
+              postId: post.id,
+              userId: req.user.id,
+            },
+          });
+
+          // Return the post object with comment count, like count, and favorite count
+          return {
+            ...post,
+            commentCount: totalCommentCount,
+            likeCount,
+            favCount,
+            userLike: userLike ? userLike.type : false,
+            userFav: userFav ? true : false,
+          };
+        })
+      );
+
       return res.status(200).json({
         success: true,
-        post: postsWithData,
+        posts: postsWithData,
       });
     } else {
       console.log("Error: No posts found");
