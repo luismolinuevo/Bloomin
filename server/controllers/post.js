@@ -118,7 +118,7 @@ const vote = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const { cursor, limit = 10 } = req.query;
+    const { cursor, limit = 3 } = req.query;
 
     // Retrieve posts with associated user, applying pagination
     let posts;
@@ -128,7 +128,7 @@ const getAllPost = async (req, res) => {
           user: true,
         },
         cursor: {
-          id: cursor,
+          id: parseInt(cursor),
         },
         take: limit,
       });

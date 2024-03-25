@@ -5,7 +5,7 @@ import PostSearch from "../../components/Search/PostSearch.jsx";
 import CreatePost from "@/app/components/Post/CreatePost.jsx";
 import { useAppSelector } from "@/app/store/reduxhooks.js";
 import cookie from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getAllPosts } from "@/app/lib/post.js";
 
 export default function Post() {
@@ -13,28 +13,26 @@ export default function Post() {
   const token = cookie.get("user_token");
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [skip, setSkip] = useState(0);
-  const [hasMore, setHasMore] = useState(true); // Keep track if there are more posts
-  const [loadedPostIds, setLoadedPostIds] = useState([]); // Keep track of loaded post IDs
+  const [lastPostId, setLastPostId] = useState(null);
+  const [allPostsFetched, setAllPostsFetched] = useState(false); // New state variable to track if all posts have been fetched
+  const sentinelRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await getAllPosts(token, skip);
+        const response = await getAllPosts(token, lastPostId);
         if (response.success) {
+          console.log(response.posts)
           const newPosts = response.posts.filter(
-            (post) => !loadedPostIds.includes(post.id)
-          );
+            (post) => post.id !== lastPostId
+          ); // Filter out posts with the same ID as the last one
           setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-          // Update the list of loaded post IDs
-          setLoadedPostIds((prevIds) => [
-            ...prevIds,
-            ...newPosts.map((post) => post.id),
-          ]);
-          // Check if the number of fetched posts is less than the take parameter
-          if (response.posts.length < 10) {
-            setHasMore(false); // No more posts available
+          if (newPosts.length > 0) {
+            setLastPostId(newPosts[newPosts.length - 1].id);
+          } else {
+            // If no new posts were fetched, it means all posts have been fetched
+            setAllPostsFetched(true);
           }
         } else {
           console.error("Error fetching posts:", response.error);
@@ -45,33 +43,19 @@ export default function Post() {
       setLoading(false);
     };
 
-    // Fetch data only when the component mounts or when more posts are available
-    if (hasMore && (skip === 0 || loadedPostIds.length < skip)) {
-      fetchData();
+    const observer = new IntersectionObserver((entries) => {
+      const sentinel = entries[0];
+      if (sentinel.isIntersecting && !loading && !allPostsFetched) {
+        fetchData();
+      }
+    });
+
+    if (sentinelRef.current) {
+      observer.observe(sentinelRef.current);
     }
-  }, [skip, hasMore, token, loadedPostIds]); // Fetch data when skip, hasMore, token, or loadedPostIds changes
 
-  const loadMore = () => {
-    setSkip((prevSkip) => prevSkip + 10);
-  };
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (
-  //       window.innerHeight + document.documentElement.scrollTop ===
-  //       document.documentElement.offsetHeight
-  //     ) {
-  //       if (!loading && hasMore) {
-  //         // Load more posts when the user scrolls to the bottom and there are more posts to load
-  //         loadMore();
-  //       }
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [loading, hasMore]); // Add loading and hasMore to the dependency array
+    return () => observer.disconnect();
+  }, [loading, lastPostId, token, allPostsFetched]);
 
   return (
     <div>
@@ -90,6 +74,7 @@ export default function Post() {
           {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}
+          <div ref={sentinelRef}></div>
           {loading && <p>Loading...</p>}
         </div>
       </div>
