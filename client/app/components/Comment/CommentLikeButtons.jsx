@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import { likeComment } from "@/app/lib/comments";
+import { useState } from "react";
 
 export default function CommentLikeButtons({
   token,
@@ -7,6 +10,10 @@ export default function CommentLikeButtons({
   setRefresh,
   refresh,
 }) {
+  const [liked, setLiked] = useState(comment?.userLike || null);
+  const [commentLikes, setCommentLikes] = useState(
+    comment?.commentLikeCount || 0
+  );
   const onClick = async (type) => {
     try {
       const data = {
@@ -14,8 +21,14 @@ export default function CommentLikeButtons({
       };
       const like = await likeComment(comment?.id, data, token);
       if (like.success) {
-        //do something if needed
-        setRefresh(!refresh);
+        if (type === "like") {
+          setLiked("like");
+          setCommentLikes(commentLikes + 1);
+        } else if (type === "dislike") {
+          setLiked("dislike");
+          setCommentLikes(commentLikes - 1);
+        }
+        // setRefresh(!refresh);
       }
     } catch (error) {
       console.log("Error liking comments");
@@ -32,7 +45,9 @@ export default function CommentLikeButtons({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className={`w-6 h-6 ${
+              liked === "like" ? "text-green-500" : "text-black"
+            }`}
           >
             <path
               strokeLinecap="round"
@@ -50,7 +65,9 @@ export default function CommentLikeButtons({
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className={`w-6 h-6 ${
+            liked === "dislike" ? "text-green-500" : "text-black"
+          }`}
         >
           <path
             strokeLinecap="round"
