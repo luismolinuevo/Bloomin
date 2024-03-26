@@ -34,6 +34,7 @@ export default function VotingButtons({ post, token }) {
   if (!post) {
     return null; //need to add loading icon here
   }
+
   return (
     <div
       className={`border p-2 bg-gray-300 rounded-lg flex items-center gap-2`}
