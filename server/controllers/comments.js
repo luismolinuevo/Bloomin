@@ -90,13 +90,21 @@ const getComments = async (req, res) => {
                 commentId: comment.id,
               },
             });
+
+            const userLike = await prisma.like.findFirst({
+              where: {
+                commentId: parseInt(comment.id),
+                userId: req.user.id,
+              },
+            });
             // Return the comment object with reply count
             return {
               ...comment,
               success: true,
               message: "Fetched all comments",
               commentReplyCount,
-              commentLikeCount
+              commentLikeCount,
+              userLike: userLike ? userLike.type : false,
             };
           })
         );

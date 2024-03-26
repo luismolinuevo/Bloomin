@@ -14,7 +14,7 @@ export default function Comments({ post, setRefresh, refresh, post_id }) {
         if (post) {
           // Ensure post is not null or undefined
           console.log(post);
-          const data = await getComments(post_id);
+          const data = await getComments(post_id, token);
           console.log(data);
           if (data.success) {
             setComments(data.comments);
