@@ -1,11 +1,18 @@
 "use client";
 
 import { votePost } from "@/app/lib/post";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function VotingButtons({ post, token }) {
-  const [liked, setLiked] = useState(post?.userLike);
-  const [postLikes, setPostLikes] = useState(post?.likeCount);
+  const [liked, setLiked] = useState(post?.userLike || null);
+  const [postLikes, setPostLikes] = useState(post?.likeCount || 0);
+
+  useEffect(() => {
+    if (post) {
+      setLiked(post.userLike);
+      setPostLikes(post.likeCount);
+    }
+  }, [post]);
 
   const vote = async (type) => {
     try {
@@ -23,6 +30,10 @@ export default function VotingButtons({ post, token }) {
       console.log("Voting not working ", error);
     }
   };
+
+  if (!post) {
+    return null; //need to add loading icon here
+  }
   return (
     <div
       className={`border p-2 bg-gray-300 rounded-lg flex items-center gap-2`}
