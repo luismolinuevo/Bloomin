@@ -3,24 +3,22 @@
 import { votePost } from "@/app/lib/post";
 import { useState } from "react";
 
-export default function VotingButtons({ post, token, post_upvotes }) {
+export default function VotingButtons({ post, token }) {
   const [liked, setLiked] = useState(post?.userLike);
   const [postLikes, setPostLikes] = useState(post?.likeCount);
 
   const vote = async (type) => {
     try {
-      console.log(type);
       const voting = await votePost(post?.id, token, type);
-
-      if (liked === "like") {
-        setLiked("dislike");
-        setPostLikes(postLikes - 1);
-      } else if (liked === "dislike") {
-        setLiked("like");
-        setPostLikes(postLikes + 1);
+      if (voting.success) {
+        if (type === "like") {
+          setLiked("like");
+          setPostLikes(postLikes + 1);
+        } else if (type === "dislike") {
+          setLiked("dislike");
+          setPostLikes(postLikes - 1);
+        }
       }
-
-      console.log(voting);
     } catch (error) {
       console.log("Voting not working ", error);
     }
@@ -53,7 +51,7 @@ export default function VotingButtons({ post, token, post_upvotes }) {
           </svg>
           <p>{postLikes}</p>
         </button>
-        <p>{post_upvotes && post_upvotes}</p>
+        {/* <p>{post_upvotes && post_upvotes}</p> */}
       </div>
       <p className="border border-[#459858] h-full"></p>
       <button onClick={() => vote("dislike")} title="Dislike">
