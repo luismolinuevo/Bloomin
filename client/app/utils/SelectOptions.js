@@ -10,3 +10,9 @@ export const implementationDifficulty = [
     {value: "Intermediate", label: "Intermediate"},
     {value: "Advanced", label: "Advanced"},
 ]
+
+export const sort = [
+    {value : "Oldest to Newest", label: "Oldest to Newest"},
+    {value: "Newest to Oldest", label: "Newest to Oldest"},
+    {value: "Most Liked", label: "Most Liked"},
+]
