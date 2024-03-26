@@ -12,18 +12,49 @@ import SortPost from "@/app/components/Post/SortPost.jsx";
 export default function Post() {
   const userId = useAppSelector((state) => state.auth.userData);
   const [sortType, setSortType] = useState("");
+  const [onChange, setOnChange] = useState(false);
   const token = cookie.get("user_token");
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [lastPostId, setLastPostId] = useState(null);
-  const [allPostsFetched, setAllPostsFetched] = useState(false); // New state variable to track if all posts have been fetched
+  const [allPostsFetched, setAllPostsFetched] = useState(false);
   const sentinelRef = useRef(null);
 
+  // const fetchData = async () => {
+  //   setLoading(true);
+  //   console.log(sortType);
+
+  //   try {
+  //     const response = await getAllPosts(token, lastPostId, sortType);
+  //     if (response.success) {
+  //       console.log(response.posts);
+  //       const newPosts = response.posts.filter(
+  //         (post) => post.id !== lastPostId
+  //       ); // Filter out posts with the same ID as the last one
+  //       setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+  //       if (newPosts.length > 0) {
+  //         setLastPostId(newPosts[newPosts.length - 1].id);
+  //       } else {
+  //         // If no new posts were fetched, it means all posts have been fetched
+  //         setAllPostsFetched(true);
+  //       }
+  //     } else {
+  //       console.error("Error fetching posts:", response.error);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching posts:", error);
+  //   }
+  //   setLoading(false);
+  // };
+
   useEffect(() => {
+    // fetchData();
     const fetchData = async () => {
       setLoading(true);
+      console.log(sortType);
+
       try {
-        const response = await getAllPosts(token, lastPostId);
+        const response = await getAllPosts(token, lastPostId, sortType);
         if (response.success) {
           console.log(response.posts);
           const newPosts = response.posts.filter(
@@ -57,14 +88,25 @@ export default function Post() {
     }
 
     return () => observer.disconnect();
-  }, [loading, lastPostId, token, allPostsFetched]);
+  }, [loading, lastPostId, token, allPostsFetched, onChange]);
+
+  const handleSortTypeChange = (newSortType) => {
+    setSortType(newSortType);
+    setPosts([]); // Clear posts when changing sort criteria
+    setLastPostId(null); // Reset lastPostId to null when changing sort criteria
+    setAllPostsFetched(false); // Reset allPostsFetched when changing sort criteria
+  };
 
   return (
     <div>
       <PostSearch />
       <div className="mx-16 flex justify-between items-center">
         <p className="text-[40px] text-[#459857]">Recommended</p>
-        <SortPost setSortType={setSortType} sortType={sortType} />
+        <SortPost
+          setSortType={handleSortTypeChange}
+          onChange={onChange}
+          setOnChange={setOnChange}
+        />
       </div>
 
       <div className="mx-16">

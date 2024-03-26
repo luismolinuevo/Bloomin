@@ -1,7 +1,9 @@
-export const getAllPosts = async (token, cursor) => {
+export const getAllPosts = async (token, cursor, sort) => {
   try {
     const posts = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts?cursor=${cursor || ""}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts?cursor=${
+        cursor || ""
+      }&&sort=${sort}`,
       {
         method: "GET",
         headers: {
