@@ -9,11 +9,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   postControllers.createPost
 );
-router.put(
-  "/vote/:postId",
-  passport.authenticate("jwt", { session: false }),
-  postControllers.vote
-);
+
 router.get(
   "/posts",
   passport.authenticate("jwt", { session: false }),

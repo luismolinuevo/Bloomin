@@ -30,7 +30,19 @@ const createPost = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const { cursor, limit = 15 } = req.query;
+    const { cursor, limit = 15, sort } = req.query;
+
+    // Define the default sort order
+    let orderBy = { createdAt: "desc" }; // Default to newest to oldest
+
+    // Handle different sorting criteria
+    if (sort === "oldest") {
+      orderBy = { createdAt: "asc" };
+    } else if (sort === "newest") {
+      orderBy = { createdAt: "desc" };
+    } else if (sort === "most_liked") {
+      orderBy = { like: { _count: "desc" } }; // Sort by the count of likes in descending order
+    }
 
     // Retrieve posts with associated user, applying pagination
     let posts;
@@ -38,18 +50,22 @@ const getAllPost = async (req, res) => {
       posts = await prisma.post.findMany({
         include: {
           user: true,
+          like: true,
         },
         cursor: {
           id: parseInt(cursor),
         },
         take: limit,
+        orderBy,
       });
     } else {
       posts = await prisma.post.findMany({
         include: {
           user: true,
+          like: true,
         },
         take: limit,
+        orderBy,
       });
     }
 
@@ -211,4 +227,4 @@ const getPost = async (req, res) => {
   }
 };
 
-export { createPost, vote, getAllPost, getPost };
+export { createPost, getAllPost, getPost };
