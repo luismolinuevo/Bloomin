@@ -71,7 +71,7 @@ const getCommentReplies = async (req, res) => {
     const { comment_id } = req.params;
 
     if (comment_id != null) {
-      const comments = await prisma.commentReply.findMany({
+      const replies = await prisma.commentReply.findMany({
         where: {
           commentId: parseInt(comment_id),
         },
@@ -80,11 +80,37 @@ const getCommentReplies = async (req, res) => {
         },
       });
 
-      if (comments) {
+      if (replies) {
+        const repliesWithData = await Promise.all(
+          replies.map(async (reply) => {
+            const replyLikeCount = await prisma.like.count({
+              where: {
+                commentReply: reply.id,
+                type: "like",
+              }, 
+            });
+
+            const userLike = await prisma.like.findFirst({
+              where: {
+                commentReply: parseInt(reply.id),
+                userId: req.user.id,
+              },
+            });
+            // Return the reply object with like count and user's like status
+            return {
+              ...reply,
+              success: true,
+              message: "Fetched all comment replies",
+              replyLikeCount,
+              userLike: userLike ? userLike.type : false,
+            };
+          })
+        );
+
         return res.status(200).json({
           success: true,
-          message: "Fetched all comment replies",
-          comments,
+          message: "Fetched all comment replies with like count",
+          comments: repliesWithData,
         });
       } else {
         return res.status(204).json({
@@ -107,5 +133,47 @@ const getCommentReplies = async (req, res) => {
     });
   }
 };
+
+// const getCommentReplies = async (req, res) => {
+//   try {
+//     const { comment_id } = req.params;
+
+//     if (comment_id != null) {
+//       const comments = await prisma.commentReply.findMany({
+//         where: {
+//           commentId: parseInt(comment_id),
+//         },
+//         include: {
+//           user: true,
+//         },
+//       });
+
+//       if (comments) {
+//         return res.status(200).json({
+//           success: true,
+//           message: "Fetched all comment replies",
+//           comments,
+//         });
+//       } else {
+//         return res.status(204).json({
+//           success: false,
+//           message: "No comment replies found with that Id",
+//         });
+//       }
+//     } else {
+//       return res.status(404).json({
+//         success: false,
+//         message: "No comment_id",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({
+//       message: "Server error",
+//       error,
+//       success: false,
+//     });
+//   }
+// };
 
 export { addCommentReply, deleteComment, getCommentReplies };

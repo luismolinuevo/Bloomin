@@ -6,6 +6,7 @@ const router = Router();
 
 router.get(
   "/commentreply/:comment_id",
+  passport.authenticate("jwt", { session: false }),
   commentRepliesControllers.getCommentReplies
 );
 router.post(

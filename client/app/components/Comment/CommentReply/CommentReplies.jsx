@@ -20,10 +20,11 @@ export default function CommentReplies({
 
   const fetchReplies = async () => {
     try {
-      const data = await getCommentReplies(comment?.id);
+      const data = await getCommentReplies(comment?.id, token);
       setShowReplies(true);
-      console.log(data);
+
       if (data?.success) {
+        console.log(data);
         setComments(data?.comments);
         setRefresh(!refresh);
       } else {
@@ -103,10 +104,10 @@ export default function CommentReplies({
 
           {comments && comments.length != 0 ? (
             <div>
-              {comments.map((comment) => (
+              {comments.map((comment, index) => (
                 <div className="mb-5">
                   <CommentCard
-                    key={comment?.id}
+                    key={index}
                     comment={comment}
                     setRefresh={setRefresh}
                     refresh={refresh}

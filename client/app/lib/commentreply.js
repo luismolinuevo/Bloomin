@@ -1,4 +1,4 @@
-export const getCommentReplies = async (comment_id) => {
+export const getCommentReplies = async (comment_id, token) => {
   try {
     const comments = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/commentreply/${comment_id}`,
@@ -6,6 +6,7 @@ export const getCommentReplies = async (comment_id) => {
         method: "GET",
         headers: {
           "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
