@@ -88,6 +88,7 @@ const getComments = async (req, res) => {
             const commentLikeCount = await prisma.like.count({
               where: {
                 commentId: comment.id,
+                type: "like",
               },
             });
 

@@ -56,7 +56,7 @@ export default function CommentLikeButtons({
             />
           </svg>
         </button>
-        <p>{comment?.commentLikeCount}</p>
+        <p>{commentLikes}</p>
       </div>
       <button onClick={() => onClick("dislike")} title="Dislike">
         <svg
