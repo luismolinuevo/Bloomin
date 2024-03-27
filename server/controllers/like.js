@@ -195,7 +195,7 @@ const commentReplyLike = async (req, res) => {
       // See if like exists with the comment reply and user id
       const existingLike = await prisma.like.findFirst({
         where: {
-          commentReplyId: parseInt(comment_id),
+          commentReply: parseInt(comment_id),
           userId: req.user.id,
         },
       });
@@ -234,7 +234,7 @@ const commentReplyLike = async (req, res) => {
         const likeCommentReply = await prisma.like.create({
           data: {
             type: type,
-            commentReplyId: parseInt(comment_id),
+            commentReply: parseInt(comment_id),
             userId: req.user.id,
           },
         });
