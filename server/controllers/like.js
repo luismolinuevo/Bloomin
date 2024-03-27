@@ -183,44 +183,66 @@ const commentReplyLike = async (req, res) => {
   const { type } = req.body;
 
   try {
-    //Getting the comment rely
-    const comment = await prisma.commentReply.findFirst({
+    // Getting the comment reply
+    const commentReply = await prisma.commentReply.findFirst({
       where: {
         id: parseInt(comment_id),
       },
     });
 
-    //If there is a comment with comment id
-    if (comment) {
-      //See if like exist with the post and user id
+    // If there is a comment reply with the comment_id
+    if (commentReply) {
+      // See if like exists with the comment reply and user id
       const existingLike = await prisma.like.findFirst({
         where: {
-          commentReply: parseInt(comment_id),
+          commentReplyId: parseInt(comment_id),
           userId: req.user.id,
         },
       });
 
-      //If exisitingLike
+      // If existingLike
       if (existingLike) {
-        return res.status(400).json({
-          message: "You have already liked this comment",
-          success: false,
-        });
-        //Create
+        // If the existing like type is the same as the requested type, delete the like
+        if (existingLike.type === type) {
+          await prisma.like.delete({
+            where: {
+              id: existingLike.id,
+            },
+          });
+          return res.status(200).json({
+            message: "Unliked comment reply",
+            success: true,
+          });
+        } else {
+          // If the existing like type is different, update the like type
+          const updatedLike = await prisma.like.update({
+            where: {
+              id: existingLike.id,
+            },
+            data: {
+              type: type,
+            },
+          });
+          return res.status(200).json({
+            message: "Updated comment reply like type",
+            success: true,
+            updatedLike,
+          });
+        }
       } else {
-        const likeComment = await prisma.like.create({
+        // Create a new like
+        const likeCommentReply = await prisma.like.create({
           data: {
             type: type,
-            commentReply: parseInt(comment_id),
+            commentReplyId: parseInt(comment_id),
             userId: req.user.id,
           },
         });
-
-        if (likeComment) {
+        if (likeCommentReply) {
           return res.status(200).json({
-            message: "Liked comment",
+            message: "Liked comment reply",
             success: true,
-            likeComment,
+            likeCommentReply,
           });
         } else {
           return res.status(500).json({
@@ -231,7 +253,7 @@ const commentReplyLike = async (req, res) => {
       }
     } else {
       return res.status(404).json({
-        message: "No comment with that id found. Make sure id is valid",
+        message: "No comment reply with that id found. Make sure id is valid",
         success: false,
       });
     }
@@ -244,5 +266,72 @@ const commentReplyLike = async (req, res) => {
     });
   }
 };
+
+// const commentReplyLike = async (req, res) => {
+//   const { comment_id } = req.params;
+//   const { type } = req.body;
+
+//   try {
+//     //Getting the comment rely
+//     const comment = await prisma.commentReply.findFirst({
+//       where: {
+//         id: parseInt(comment_id),
+//       },
+//     });
+
+//     //If there is a comment with comment id
+//     if (comment) {
+//       //See if like exist with the post and user id
+//       const existingLike = await prisma.like.findFirst({
+//         where: {
+//           commentReply: parseInt(comment_id),
+//           userId: req.user.id,
+//         },
+//       });
+
+//       //If exisitingLike
+//       if (existingLike) {
+//         return res.status(400).json({
+//           message: "You have already liked this comment",
+//           success: false,
+//         });
+//         //Create
+//       } else {
+//         const likeComment = await prisma.like.create({
+//           data: {
+//             type: type,
+//             commentReply: parseInt(comment_id),
+//             userId: req.user.id,
+//           },
+//         });
+
+//         if (likeComment) {
+//           return res.status(200).json({
+//             message: "Liked comment",
+//             success: true,
+//             likeComment,
+//           });
+//         } else {
+//           return res.status(500).json({
+//             message: "Error creating like",
+//             success: false,
+//           });
+//         }
+//       }
+//     } else {
+//       return res.status(404).json({
+//         message: "No comment with that id found. Make sure id is valid",
+//         success: false,
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Server error",
+//       error: error,
+//     });
+//   }
+// };
 
 export { postLike, commentLike, commentReplyLike };
