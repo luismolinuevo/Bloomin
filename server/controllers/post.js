@@ -70,7 +70,7 @@ const getAllPost = async (req, res) => {
     }
 
     // Check if posts are found
-    if (posts.length > 0) {
+    if (posts.length >= 0) {
       // Iterate over each post to retrieve additional data
       const postsWithData = await Promise.all(
         posts.map(async (post) => {
@@ -138,6 +138,7 @@ const getAllPost = async (req, res) => {
       console.log("Error: No posts found");
       return res.status(404).json({
         message: "No posts found",
+        success: false
       });
     }
   } catch (error) {

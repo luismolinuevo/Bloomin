@@ -55,6 +55,7 @@ export default function Post() {
 
       try {
         const response = await getAllPosts(token, lastPostId, sortType);
+        console.log(response)
         if (response.success) {
           console.log(response.posts);
           const newPosts = response.posts.filter(
