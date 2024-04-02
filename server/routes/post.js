@@ -11,7 +11,7 @@ router.post(
 );
 
 router.delete(
-  "/post",
+  "/post/:post_id",
   passport.authenticate("jwt", { session: false }),
   postControllers.createPost
 );

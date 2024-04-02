@@ -121,9 +121,9 @@ export const getPost = async (post_id, token) => {
 export const deletePost = async (post_id, token) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/postlike/${post_id}?type=${type}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/post/${post_id}`,
       {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -133,13 +133,13 @@ export const deletePost = async (post_id, token) => {
 
     if (!response.ok) {
       console.error(
-        "Vote post request request failed. Response status:",
+        "Delete post request request failed. Response status:",
         response.status
       );
       const errorData = await response.json();
       console.error("Error details:", errorData);
 
-      throw new Error("Vote request failed");
+      throw new Error("Delete request failed");
     }
 
     // If the response is successful, return the data (if needed)
@@ -147,7 +147,7 @@ export const deletePost = async (post_id, token) => {
     return responseData;
   } catch (error) {
     // Log more details about the error
-    console.error("Error during signup:", error);
+    console.error("Error deleting post:", error);
     throw error;
   }
 };
