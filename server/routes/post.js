@@ -10,6 +10,12 @@ router.post(
   postControllers.createPost
 );
 
+router.delete(
+  "/post",
+  passport.authenticate("jwt", { session: false }),
+  postControllers.createPost
+);
+
 router.get(
   "/posts",
   passport.authenticate("jwt", { session: false }),

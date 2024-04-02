@@ -28,6 +28,43 @@ const createPost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+    //check if post exist
+    const post = await prisma.post.findUnique({
+      where: {
+        id: post_id,
+      },
+    });
+
+    //if post exist then delete the post
+    if (post) {
+      const delPost = await prisma.post.deleteMany({
+        where: {
+          id: post_id,
+        },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Post delete successfully"
+      })
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "No post with that Id"
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error,
+    });
+  }
+};
+
 const getAllPost = async (req, res) => {
   try {
     const { cursor, limit = 15, sort } = req.query;
@@ -138,7 +175,7 @@ const getAllPost = async (req, res) => {
       console.log("Error: No posts found");
       return res.status(404).json({
         message: "No posts found",
-        success: false
+        success: false,
       });
     }
   } catch (error) {
@@ -228,4 +265,4 @@ const getPost = async (req, res) => {
   }
 };
 
-export { createPost, getAllPost, getPost };
+export { createPost, getAllPost, getPost, deletePost };
