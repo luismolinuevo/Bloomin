@@ -37,8 +37,8 @@ export default function PostMenu({ post }) {
         </svg>
       </MenuHandler>
       <MenuList>
-        <MenuItem>Edit</MenuItem>
-        <MenuItem>Delete</MenuItem>
+        <MenuItem><button>Edit</button></MenuItem>
+        <MenuItem><button>Delete</button></MenuItem>
       </MenuList>
     </Menu>
   );
