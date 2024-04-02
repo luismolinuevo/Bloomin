@@ -8,14 +8,11 @@ import {
   MenuItem,
 } from "../../utils/MaterialTailwind";
 import DeletePost from "./DeletePost";
+import EditPost from "./EditPost";
 
 export default function PostMenu({ post, token }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const deletePost = async () => {
-    try {
-      // const delete = await
-    } catch (error) {}
-  };
+  const [wantToEdit, setWantToEdit] = useState(false);
 
   return (
     <div>
@@ -38,15 +35,31 @@ export default function PostMenu({ post, token }) {
         </MenuHandler>
         <MenuList>
           <MenuItem>
-            <button>Edit</button>
+            <button onClick={() => setWantToEdit(true)}>Edit</button>
           </MenuItem>
           <MenuItem>
-          <button onClick={() => setConfirmDelete(!confirmDelete)}>Delete</button>
-
+            <button onClick={() => setConfirmDelete(!confirmDelete)}>
+              Delete
+            </button>
           </MenuItem>
         </MenuList>
       </Menu>
-      {confirmDelete && <DeletePost post_id={post?.id} isVisable={confirmDelete} onClose={() => setConfirmDelete(false)} token={token}/>}
+      {confirmDelete && (
+        <DeletePost
+          post_id={post?.id}
+          isVisable={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          token={token}
+        />
+      )}
+      {wantToEdit && (
+        <EditPost
+          post={post}
+          isVisible={wantToEdit} // Corrected prop name
+          onClose={() => setWantToEdit(false)}
+          token={token}
+        />
+      )}
     </div>
   );
 }

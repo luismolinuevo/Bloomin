@@ -60,9 +60,6 @@ export default function CreatePost() {
     }
   };
 
-  // implementationDifficulty: req.body.implementationDifficulty,
-  // city: req.body.city,
-  // userId: req.user.id,
   const handleHousingTypeChange = (selectedOption) => {
     setValue("housingType", selectedOption.value);
   };
