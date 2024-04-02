@@ -48,13 +48,13 @@ const deletePost = async (req, res) => {
 
       return res.status(200).json({
         success: true,
-        message: "Post delete successfully"
-      })
+        message: "Post delete successfully",
+      });
     } else {
       return res.status(404).json({
         success: false,
-        message: "No post with that Id"
-      })
+        message: "No post with that Id",
+      });
     }
   } catch (error) {
     console.log(error);
@@ -265,4 +265,51 @@ const getPost = async (req, res) => {
   }
 };
 
-export { createPost, getAllPost, getPost, deletePost };
+const editPost = async (req, res) => {
+  try {
+    const { post_id } = req.query;
+
+    const post = await prisma.post.findUnique({
+      where: {
+        id: post_id,
+      },
+    });
+
+    if (post) {
+      const post = await prisma.post.updateMany({
+        where: {
+          id: post_id,
+        },
+        data: {
+          cost: req.body.cost,
+          title: req.body.title,
+          implementationDifficulty: req.body.implementationDifficulty,
+          city: req.body.city,
+          livingSituation: req.body.livingSituation,
+          description: req.body.description,
+          user: { connect: { id: req.user.id } },
+          img: req.body.img,
+        },
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "Edited post successfully",
+        post
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "No post with that Id found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error,
+    });
+  }
+};
+
+export { createPost, getAllPost, getPost, deletePost, editPost };
