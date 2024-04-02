@@ -13,7 +13,7 @@ router.post(
 router.delete(
   "/post/:post_id",
   passport.authenticate("jwt", { session: false }),
-  postControllers.createPost
+  postControllers.deletePost
 );
 
 router.get(

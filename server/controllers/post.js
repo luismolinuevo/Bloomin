@@ -34,7 +34,7 @@ const deletePost = async (req, res) => {
     //check if post exist
     const post = await prisma.post.findUnique({
       where: {
-        id: post_id,
+        id: parseInt(post_id),
       },
     });
 
@@ -42,7 +42,7 @@ const deletePost = async (req, res) => {
     if (post) {
       const delPost = await prisma.post.deleteMany({
         where: {
-          id: post_id,
+          id: parseInt(post_id),
         },
       });
 

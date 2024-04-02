@@ -24,7 +24,7 @@ export default function DeletePost({onClose, isVisable, post_id, token}) {
             <div>
                 <h1>Are you sure you want to delete post?</h1>
                 <div>
-                    <button>Yes</button>
+                    <button onClick={handleDelete}>Yes</button>
                     <button onClick={onClose}>No</button>
                 </div>
             </div>

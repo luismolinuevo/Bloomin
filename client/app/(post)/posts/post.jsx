@@ -115,7 +115,7 @@ export default function Post() {
 
         <div>
           {posts.map((post, index) => (
-            <PostCard key={index} post={post} />
+            <PostCard key={index} post={post} token={token}/>
           ))}
           <div ref={sentinelRef}></div>
           {loading && <p>Loading...</p>}
