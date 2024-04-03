@@ -16,14 +16,6 @@ export default function PostMenu({ post, token }) {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setEdit(!edit);
-          console.log("Edit state:", edit); // Add this line
-        }}
-      >
-        Edit
-      </button>
       <Menu>
         <MenuHandler>
           <svg
@@ -53,11 +45,11 @@ export default function PostMenu({ post, token }) {
             </button>
           </MenuItem>
 
-          {/* <MenuItem>
+          <MenuItem>
             <button onClick={() => setConfirmDelete(!confirmDelete)}>
               Delete
             </button>
-          </MenuItem> */}
+          </MenuItem>
         </MenuList>
       </Menu>
 
