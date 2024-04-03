@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../General/Modal";
-import { Input, Textarea, Button } from "@material-tailwind/react";
+import { Input, Textarea, Button } from "../../utils/MaterialTailwind"; // Assuming MaterialTailwind components are used for styling
 import Select from "react-select";
 import { uploadImage } from "@/app/lib/imageupload";
-// import { updatePost } from "@/app/lib/post"; // Assuming you have an updatePost function
-import { housingOption, implementationDifficulty } from "@/app/utils/SelectOptions";
+import { updatePost } from "@/app/lib/post";
+import {
+  housingOption,
+  implementationDifficulty,
+} from "../../utils/SelectOptions";
 
 export default function EditPost({ token, post, onClose, isVisible }) {
   const {
@@ -13,19 +16,19 @@ export default function EditPost({ token, post, onClose, isVisible }) {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: post?.title || "",
+      target: post?.target || "",
+      description: post?.description || "",
+      cost: post?.cost || "",
+      city: post?.city || "",
+      housingType: post?.livingSituation || "",
+      implementationDifficulty: post?.implementationDifficulty || "",
+    },
+  });
+
   const [imageUrl, setImageUrl] = useState(post.img);
-  console.log("Im in the edit mod")
-  useEffect(() => {
-    setValue("title", post?.title);
-    setValue("target", post?.target);
-    setValue("description", post?.description);
-    setValue("cost", post?.cost);
-    setValue("city", post?.city);
-    setValue("housingType", post?.livingSituation);
-    setValue("implementationDifficulty", post?.implementationDifficulty);
-    console.log("I enter")
-  }, [post]);
 
   const onSubmit = async (data) => {
     try {
@@ -40,7 +43,7 @@ export default function EditPost({ token, post, onClose, isVisible }) {
       }
 
       const updatedPostData = {
-        id: post.id, // Assuming post.id exists
+        id: post.id,
         title: data.title,
         description: data.description,
         cost: data.cost,
@@ -51,8 +54,8 @@ export default function EditPost({ token, post, onClose, isVisible }) {
         img: newImageUrl,
       };
 
-    //   await updatePost(updatedPostData, token);
-      onClose(); // Close modal after successful update
+      await updatePost(updatedPostData, token, post?.id);
+      onClose();
     } catch (error) {
       console.error("Error updating post: ", error);
     }
@@ -78,67 +81,115 @@ export default function EditPost({ token, post, onClose, isVisible }) {
   };
 
   return (
-    <Modal onClose={onClose} isVisible={isVisible}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-[25px] text-center text-bold">Edit Post</h1>
-        {/* Form Fields */}
-        {/* Title */}
-        <Input
-          type="text"
-          label="Title"
-          {...register("title", { required: true })}
-          error={errors.title}
-          helperText={errors.title && "Title is required"}
-        />
-        {/* Who is it good for? */}
-        <Input
-          type="text"
-          label="Who is it good for?"
-          {...register("target")}
-        />
-        {/* Description */}
-        <Textarea
-          type="text"
-          label="Description"
-          {...register("description", { required: true })}
-          error={errors.description}
-          helperText={errors.description && "Description is required"}
-        />
-        {/* Cost */}
-        <Input
-          type="number"
-          label="Cost"
-          {...register("cost")}
-        />
-        {/* City */}
-        <Input
-          type="text"
-          label="City"
-          {...register("city", { required: true })}
-          error={errors.city}
-          helperText={errors.city && "City is required"}
-        />
-        {/* Housing Type */}
-        <Select
-          {...register("housingType", { required: true })}
-          label="Housing Type"
-          options={housingOption}
-          onChange={handleHousingTypeChange}
-        />
-        {/* Implementation Difficulty */}
-        <Select
-          label="Implementation Difficulty"
-          {...register("implementationDifficulty", { required: true })}
-          options={implementationDifficulty}
-          onChange={handleImplementationDifficultyChange}
-        />
-        {/* Upload Image */}
-        <input type="file" {...register("image")} onChange={handleImageChange} />
-        {/* Submit Button */}
-        <Button type="submit" className="bg-[#459858] px-4 rounded-lg text-white h-[40px]">
-          Submit
-        </Button>
-      </form>
-    </Modal>
+    <div>
+      <Modal onClose={onClose} isVisable={isVisible}>
+        <form onSubmit={handleSubmit(onSubmit)} className="">
+          <h1 className="text-[25px] text-center font-bold">Edit Post</h1>
+          <div className="flex gap-5 my-5 justify-between">
+            <div>
+              <label>Title</label>
+              <Input
+                type="text"
+                label="Title"
+                {...register("title", { required: true })}
+                error={errors.title}
+                helperText={errors.title && "Title is required"}
+                className="w-[230px]"
+                size="md"
+              />
+            </div>
+            <div>
+              <label>Who is it good for?</label>
+              <Input
+                type="text"
+                label="Who is it good for?"
+                {...register("target")}
+                className="w-[230px]"
+                size="md"
+              />
+            </div>
+          </div>
+          <div>
+            <label>Description</label>
+            <Textarea
+              type="text"
+              label="Description"
+              {...register("description", { required: true })}
+              error={errors.description}
+              helperText={errors.description && "Description is required"}
+              className="w-[480px]"
+            />
+          </div>
+          <div className="flex gap-5 my-5 justify-between">
+            <div>
+              <label>Cost</label>
+              <Input
+                type="number"
+                label="Cost"
+                {...register("cost")}
+                className="w-[230px]"
+                size="md"
+              />
+            </div>
+            <div>
+              <label>City</label>
+              <Input
+                type="text"
+                label="City"
+                {...register("city", { required: true })}
+                error={errors.city}
+                helperText={errors.city && "City is required"}
+                className="w-[230px]"
+                size="md"
+              />
+            </div>
+          </div>
+          <div className="flex gap-5 my-5 justify-between">
+            <div>
+              <label>Housing Type</label>
+              <Select
+                {...register("housingType", { required: true })}
+                label="Housing Type"
+                options={housingOption}
+                onChange={handleHousingTypeChange}
+                className="w-[230px]"
+                defaultValue={housingOption.find(
+                    (option) => option.value === post?.livingSituation
+                  )}
+              />
+            </div>
+            <div>
+              <label>Implementation Difficulty</label>
+              <Select
+                label="Implementation Difficulty"
+                {...register("implementationDifficulty", { required: true })}
+                options={implementationDifficulty}
+                onChange={handleImplementationDifficultyChange}
+                className="w-[230px]"
+                defaultValue={implementationDifficulty.find(
+                    (option) => option.value === post?.implementationDifficulty
+                  )}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 my-5">
+            <label>Upload Image</label>
+            <input
+              type="file"
+              {...register("image")}
+              onChange={handleImageChange}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Modal>
+    </div>
   );
 }

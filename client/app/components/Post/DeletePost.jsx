@@ -17,6 +17,7 @@ export default function DeletePost({ onClose, isVisable, post_id, token }) {
       console.log("There ha been a error deleting post");
     }
   };
+  
   return (
     <div>
       <Modal onClose={onClose} isVisable={isVisable}>

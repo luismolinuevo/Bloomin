@@ -9,6 +9,8 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
+  Textarea,
+  Button
 } from "@material-tailwind/react";
 
 export {
@@ -20,4 +22,6 @@ export {
   MenuHandler,
   MenuList,
   MenuItem,
+  Textarea,
+  Button
 };

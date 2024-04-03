@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Menu,
   MenuHandler,
@@ -11,11 +11,19 @@ import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 
 export default function PostMenu({ post, token }) {
+  const [edit, setEdit] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [wantToEdit, setWantToEdit] = useState(false);
 
   return (
     <div>
+      <button
+        onClick={() => {
+          setEdit(!edit);
+          console.log("Edit state:", edit); // Add this line
+        }}
+      >
+        Edit
+      </button>
       <Menu>
         <MenuHandler>
           <svg
@@ -35,28 +43,39 @@ export default function PostMenu({ post, token }) {
         </MenuHandler>
         <MenuList>
           <MenuItem>
-            <button onClick={() => setWantToEdit(true)}>Edit</button>
+            <button
+              onClick={() => {
+                setEdit(!edit);
+                console.log("Edit state:", edit); // Add this line
+              }}
+            >
+              Edit
+            </button>
           </MenuItem>
-          <MenuItem>
+
+          {/* <MenuItem>
             <button onClick={() => setConfirmDelete(!confirmDelete)}>
               Delete
             </button>
-          </MenuItem>
+          </MenuItem> */}
         </MenuList>
       </Menu>
+
+      {edit && (
+        <EditPost
+          post={post}
+          isVisible={edit} // Corrected prop name
+          onClose={() => setEdit(false)}
+          token={token}
+        />
+        // <p>hey</p>
+      )}
+
       {confirmDelete && (
         <DeletePost
           post_id={post?.id}
           isVisable={confirmDelete}
           onClose={() => setConfirmDelete(false)}
-          token={token}
-        />
-      )}
-      {wantToEdit && (
-        <EditPost
-          post={post}
-          isVisible={wantToEdit} // Corrected prop name
-          onClose={() => setWantToEdit(false)}
           token={token}
         />
       )}

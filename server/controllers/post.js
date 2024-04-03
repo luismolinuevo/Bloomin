@@ -267,7 +267,7 @@ const getPost = async (req, res) => {
 
 const editPost = async (req, res) => {
   try {
-    const { post_id } = req.query;
+    const { post_id } = req.params;
 
     const post = await prisma.post.findUnique({
       where: {
