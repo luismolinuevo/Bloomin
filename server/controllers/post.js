@@ -271,14 +271,14 @@ const editPost = async (req, res) => {
 
     const post = await prisma.post.findUnique({
       where: {
-        id: post_id,
+        id: parseInt(post_id),
       },
     });
 
     if (post) {
       const post = await prisma.post.updateMany({
         where: {
-          id: post_id,
+          id: parseInt(post_id),
         },
         data: {
           cost: req.body.cost,
@@ -287,12 +287,11 @@ const editPost = async (req, res) => {
           city: req.body.city,
           livingSituation: req.body.livingSituation,
           description: req.body.description,
-          user: { connect: { id: req.user.id } },
           img: req.body.img,
         },
       });
 
-      return res.status(201).json({
+      return res.status(200).json({
         success: true,
         message: "Edited post successfully",
         post
