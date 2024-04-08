@@ -9,9 +9,9 @@ import {
 } from "../../utils/MaterialTailwind";
 import DeleteComment from "./CommentDelete";
 
-export default function CommentMenu({ comment, token }) {
+export default function CommentMenu({ comment, token, setRefresh, refresh }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  console.log(comment)
+  console.log(comment);
   return (
     <div>
       <Menu>
@@ -46,6 +46,8 @@ export default function CommentMenu({ comment, token }) {
           isVisable={confirmDelete}
           onClose={() => setConfirmDelete(false)}
           token={token}
+          setRefresh={setRefresh}
+          refresh={refresh}
         />
       )}
     </div>

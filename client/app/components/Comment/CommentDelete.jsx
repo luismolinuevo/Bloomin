@@ -4,13 +4,20 @@ import React from "react";
 import Modal from "../General/Modal";
 import { deleteComment } from "@/app/lib/comments";
 
-export default function DeleteComment({ onClose, isVisable, comment_id, token }) {
+export default function DeleteComment({
+  onClose,
+  isVisable,
+  comment_id,
+  token,
+  setRefresh,
+  refresh,
+}) {
   const handleDelete = async () => {
     try {
-        console.log("Comment id : " + comment_id)
+      console.log("Comment id : " + comment_id);
       const commentdelete = await deleteComment(comment_id, token);
       if (commentdelete.success) {
-        //have toast are something
+        setRefresh(!refresh);
       } else {
       }
       onClose();
@@ -18,7 +25,7 @@ export default function DeleteComment({ onClose, isVisable, comment_id, token })
       console.log("There ha been a error deleting post");
     }
   };
-  
+
   return (
     <div>
       <Modal onClose={onClose} isVisable={isVisable}>
