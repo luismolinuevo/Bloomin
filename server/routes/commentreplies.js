@@ -15,7 +15,7 @@ router.post(
   commentRepliesControllers.addCommentReply
 );
 router.delete(
-  "/commentreply:comment_id",
+  "/commentreply/:comment_id",
   passport.authenticate("jwt", { session: false }),
   commentRepliesControllers.deleteComment
 );

@@ -91,3 +91,38 @@ export const likeComment = async (comment_id, data, token) => {
     throw error;
   }
 };
+
+export const deleteCommentReply = async (comment_id, token) => {
+  try {
+    console.log(token);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/commentreply/${comment_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error(
+        "Delete comment reply request failed. Response status:",
+        response.status
+      );
+      const errorData = await response.json();
+      console.error("Error details:", errorData);
+
+      throw new Error("Delete comment reply request failed");
+    }
+
+    // If the response is successful, return the data (if needed)
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    // Log more details about the error
+    console.error("Error deleting comment reply:", error);
+    throw error;
+  }
+};

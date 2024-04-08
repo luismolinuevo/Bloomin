@@ -60,6 +60,7 @@ const deleteComment = async (req, res) => {
       message: "Unable to delete commment reply",
     });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: "Something went wrong", error: error });
