@@ -42,7 +42,7 @@ const deleteComment = async (req, res) => {
     const { commentId } = req.params;
     const deleteComment = await prisma.comment.deleteMany({
       where: {
-        id: commentId,
+        id: parseInt(commentId),
       },
     });
 
@@ -57,7 +57,8 @@ const deleteComment = async (req, res) => {
       message: "Unable to delete commment",
     });
   } catch (error) {
-    return res.status(500).json({ error: "Someting went wrong" });
+    console.log(error);
+    return res.status(500).json({ error: "Someting went wrong", error });
   }
 };
 
