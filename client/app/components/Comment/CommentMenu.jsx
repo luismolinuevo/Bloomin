@@ -7,10 +7,11 @@ import {
   MenuList,
   MenuItem,
 } from "../../utils/MaterialTailwind";
+import DeleteComment from "./CommentDelete";
 
 export default function CommentMenu({ comment, token }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-
+  console.log(comment)
   return (
     <div>
       <Menu>
@@ -39,14 +40,14 @@ export default function CommentMenu({ comment, token }) {
         </MenuList>
       </Menu>
 
-      {/* {confirmDelete && (
-        <DeletePost
-          post_id={post?.id}
+      {confirmDelete && (
+        <DeleteComment
+          comment_id={comment?.id}
           isVisable={confirmDelete}
           onClose={() => setConfirmDelete(false)}
           token={token}
         />
-      )} */}
+      )}
     </div>
   );
 }

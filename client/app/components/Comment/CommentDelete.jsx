@@ -2,13 +2,14 @@
 
 import React from "react";
 import Modal from "../General/Modal";
-import { deletePost } from "@/app/lib/post";
+import { deleteComment } from "@/app/lib/comments";
 
 export default function DeleteComment({ onClose, isVisable, comment_id, token }) {
   const handleDelete = async () => {
     try {
-      const postdelete = await deletePost(post_id, token);
-      if (postdelete.success) {
+        console.log("Comment id : " + comment_id)
+      const commentdelete = await deleteComment(comment_id, token);
+      if (commentdelete.success) {
         //have toast are something
       } else {
       }
@@ -23,7 +24,7 @@ export default function DeleteComment({ onClose, isVisable, comment_id, token })
       <Modal onClose={onClose} isVisable={isVisable}>
         <div className="text-center">
           <h1 className="text-[25px]">
-            Are you sure you want to delete this post?
+            Are you sure you want to delete this comment?
           </h1>
           <div className="flex gap-3 justify-center mt-2">
             <button
