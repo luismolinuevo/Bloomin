@@ -14,11 +14,10 @@ export default function DeleteCommentReply({
 }) {
   const handleDelete = async () => {
     try {
-      console.log("Comment id : " + comment_id);
       const commentdelete = await deleteCommentReply(comment_id, token);
+      console.log(commentdelete);
       if (commentdelete.success) {
         setRefresh(!refresh);
-      } else {
       }
       onClose();
     } catch (error) {

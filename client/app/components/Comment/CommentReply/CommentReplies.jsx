@@ -109,8 +109,8 @@ export default function CommentReplies({
                   <CommentCard
                     key={index}
                     comment={comment}
-                    setRefresh={setRefresh}
-                    refresh={refresh}
+                    setRefresh={setRefreshReplies}
+                    refresh={refreshReplies}
                     token={token}
                     isReply={true}
                   />
