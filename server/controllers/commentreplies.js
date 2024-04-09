@@ -41,24 +41,31 @@ const addCommentReply = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   try {
-    const { comment_Id } = req.params;
-    const deleteComment = await prisma.commentReply.deleteMany({
+    const { comment_id } = req.params;
+
+    const comment = await prisma.commentReply.findUnique({
       where: {
-        id: comment_Id,
+        id: parseInt(comment_id),
       },
     });
 
-    if (deleteComment) {
+    if (comment) {
+      const deleteComment = await prisma.commentReply.deleteMany({
+        where: {
+          id: parseInt(comment_id),
+        },
+      });
+
       return res.status(200).json({
         success: true,
         message: "Deleted comment reply",
       });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Unable to delete commment reply",
+      });
     }
-
-    return res.status(404).json({
-      success: false,
-      message: "Unable to delete commment reply",
-    });
   } catch (error) {
     console.log(error);
     return res
@@ -88,7 +95,7 @@ const getCommentReplies = async (req, res) => {
               where: {
                 commentReply: reply.id,
                 type: "like",
-              }, 
+              },
             });
 
             const userLike = await prisma.like.findFirst({

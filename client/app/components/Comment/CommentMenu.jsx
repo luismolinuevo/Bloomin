@@ -8,8 +8,15 @@ import {
   MenuItem,
 } from "../../utils/MaterialTailwind";
 import DeleteComment from "./CommentDelete";
+import DeleteCommentReply from "./CommentReply/CommmentReplyDelete";
 
-export default function CommentMenu({ comment, token, setRefresh, refresh }) {
+export default function CommentMenu({
+  comment,
+  token,
+  setRefresh,
+  refresh,
+  type,
+}) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   console.log(comment);
   return (
@@ -40,8 +47,19 @@ export default function CommentMenu({ comment, token, setRefresh, refresh }) {
         </MenuList>
       </Menu>
 
-      {confirmDelete && (
+      {confirmDelete && type == "comment" && (
         <DeleteComment
+          comment_id={comment?.id}
+          isVisable={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          token={token}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
+      )}
+
+      {confirmDelete && type == "commentreply" && (
+        <DeleteCommentReply
           comment_id={comment?.id}
           isVisable={confirmDelete}
           onClose={() => setConfirmDelete(false)}

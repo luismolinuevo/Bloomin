@@ -29,7 +29,7 @@ export default function CommentCard({
         </div>
         <div>
           {comment?.user?.id == userData?.id && (
-            <CommentMenu comment={comment} token={token} setRefresh={setRefresh} refresh={refresh}/>
+            <CommentMenu comment={comment} token={token} setRefresh={setRefresh} refresh={refresh} type={isReply ? "commentreply" : "comment"}/>
           )}
         </div>
       </div>
