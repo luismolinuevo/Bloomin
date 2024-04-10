@@ -1,7 +1,9 @@
-export const getComments = async (post_id, token) => {
+export const getComments = async (post_id, token, cursor, sort) => {
   try {
     const comments = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comments/${post_id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comments/${post_id}?cursor=${
+        cursor || ""
+      }&&sort=${sort}`,
       {
         method: "GET",
         headers: {
@@ -94,7 +96,7 @@ export const likeComment = async (comment_id, data, token) => {
 
 export const deleteComment = async (comment_id, token) => {
   try {
-    console.log(token)
+    console.log(token);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comment/${comment_id}`,
       {

@@ -294,7 +294,7 @@ const editPost = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "Edited post successfully",
-        post
+        post,
       });
     } else {
       return res.status(404).json({
@@ -311,4 +311,168 @@ const editPost = async (req, res) => {
   }
 };
 
-export { createPost, getAllPost, getPost, deletePost, editPost };
+const getAllUserPost = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const { cursor, limit = 15, sort, filter } = req.query;
+
+    // Define the default sort order
+    let orderBy = { createdAt: "desc" }; // Default to newest to oldest
+
+    // Handle different sorting criteria
+    if (sort === "oldest") {
+      orderBy = { createdAt: "asc" };
+    } else if (sort === "newest") {
+      orderBy = { createdAt: "desc" };
+    } else if (sort === "most_liked") {
+      orderBy = { like: { _count: "desc" } }; // Sort by the count of likes in descending order
+    }
+
+    let where = {}; // Default to an empty object
+    if (filter === "userpost") {
+      // Example condition
+      where = {
+        userId: user_id,
+      };
+    } else if (filter === "userfavs") {
+      // Retrieve user favorites for the given user_id
+      const userFavorites = await prisma.favorites.findMany({
+        where: {
+          userId: parseInt(user_id),
+        },
+        select: {
+          postId: true,
+        },
+      });
+      // Extract the post IDs from user favorites
+      const userFavPostIds = userFavorites.map((fav) => fav.postId);
+
+      where = {
+        id: {
+          in: userFavPostIds,
+        },
+      };
+    } else if (filter === "userliked") {
+      // Retrieve posts that the user has liked
+      const userLikedPosts = await prisma.like.findMany({
+        where: {
+          userId: parseInt(user_id),
+        },
+        select: {
+          postId: true,
+        },
+      });
+      // Extract the post IDs from user liked posts
+      const userLikedPostIds = userLikedPosts.map((liked) => liked.postId);
+
+      where = {
+        id: {
+          in: userLikedPostIds,
+        },
+      };
+    }
+
+    // Retrieve posts with associated user, applying pagination
+    let posts;
+    if (cursor) {
+      posts = await prisma.post.findMany({
+        include: {
+          user: true,
+          like: true,
+        },
+        cursor: {
+          id: parseInt(cursor),
+        },
+        take: limit,
+        orderBy,
+      });
+    } else {
+      posts = await prisma.post.findMany({
+        include: {
+          user: true,
+          like: true,
+        },
+        take: limit,
+        orderBy,
+      });
+    }
+
+    // Check if posts are found
+    if (posts.length >= 0) {
+      // Iterate over each post to retrieve additional data
+      const postsWithData = await Promise.all(
+        posts.map(async (post) => {
+          // Retrieve comment count for the post
+          const commentCount = await prisma.comment.count({
+            where: {
+              postId: post.id,
+            },
+          });
+
+          const commentReplyCount = await prisma.commentReply.count({
+            where: {
+              postId: post.id,
+            },
+          });
+
+          const totalCommentCount = commentCount + commentReplyCount;
+
+          // Retrieve like count for the post
+          const likeCount = await prisma.like.count({
+            where: {
+              postId: post.id,
+              type: "like",
+            },
+          });
+
+          // Retrieve favorite count for the post
+          const favCount = await prisma.favorites.count({
+            where: {
+              postId: post.id,
+            },
+          });
+
+          const userFav = await prisma.favorites.findFirst({
+            where: {
+              postId: post.id,
+              userId: req.user.id,
+            },
+          });
+          // Check if the user has already liked the post
+          const userLike = await prisma.like.findFirst({
+            where: {
+              postId: post.id,
+              userId: req.user.id,
+            },
+          });
+
+          // Return the post object with comment count, like count, and favorite count
+          return {
+            ...post,
+            commentCount: totalCommentCount,
+            likeCount,
+            favCount,
+            userLike: userLike ? userLike.type : false,
+            userFav: userFav ? true : false,
+          };
+        })
+      );
+
+      return res.status(200).json({
+        success: true,
+        posts: postsWithData,
+      });
+    } else {
+      console.log("Error: No posts found");
+      return res.status(404).json({
+        message: "No posts found",
+        success: false,
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export { createPost, getAllPost, getPost, deletePost, editPost, getAllUserPost };

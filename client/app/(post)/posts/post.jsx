@@ -20,33 +20,6 @@ export default function Post() {
   const [allPostsFetched, setAllPostsFetched] = useState(false);
   const sentinelRef = useRef(null);
 
-  // const fetchData = async () => {
-  //   setLoading(true);
-  //   console.log(sortType);
-
-  //   try {
-  //     const response = await getAllPosts(token, lastPostId, sortType);
-  //     if (response.success) {
-  //       console.log(response.posts);
-  //       const newPosts = response.posts.filter(
-  //         (post) => post.id !== lastPostId
-  //       ); // Filter out posts with the same ID as the last one
-  //       setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-  //       if (newPosts.length > 0) {
-  //         setLastPostId(newPosts[newPosts.length - 1].id);
-  //       } else {
-  //         // If no new posts were fetched, it means all posts have been fetched
-  //         setAllPostsFetched(true);
-  //       }
-  //     } else {
-  //       console.error("Error fetching posts:", response.error);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching posts:", error);
-  //   }
-  //   setLoading(false);
-  // };
-
   useEffect(() => {
     // fetchData();
     const fetchData = async () => {
