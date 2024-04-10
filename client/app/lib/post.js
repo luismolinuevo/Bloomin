@@ -117,7 +117,6 @@ export const getPost = async (post_id, token) => {
   }
 };
 
-
 export const deletePost = async (post_id, token) => {
   try {
     const response = await fetch(
@@ -184,5 +183,33 @@ export const updatePost = async (data, token, post_id) => {
     // Log more details about the error
     console.error("Error during editing post:", error);
     throw error;
+  }
+};
+
+export const getAllUserPosts = async (token, cursor, sort, filter, user_id) => {
+  try {
+    const posts = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/userposts/${user_id}?cursor=${
+        cursor || ""
+      }&&sort=${sort}&&filter=${filter}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (posts.ok) {
+      const res = await posts.json();
+
+      return res;
+    } else {
+      console.log("Unable to fetch errors")
+    }
+  } catch (error) {
+    console.log(error.message);
+    return error;
   }
 };

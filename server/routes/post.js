@@ -35,7 +35,7 @@ router.get(
 );
 
 router.get(
-  "/userpost/:user_id",
+  "/userposts/:user_id",
   passport.authenticate("jwt", { session: false }),
   postControllers.getAllUserPost
 );
