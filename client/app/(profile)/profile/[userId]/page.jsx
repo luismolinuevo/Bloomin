@@ -26,7 +26,7 @@ export default function Page() {
           token,
           lastPostId,
           "",
-          "userliked",
+          "userfavs",
           userId
         );
         if (userData.success) {

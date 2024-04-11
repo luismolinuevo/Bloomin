@@ -334,7 +334,7 @@ const getAllUserPost = async (req, res) => {
       where = {
         userId: parseInt(user_id),
       };
-    } else if (filter == "userfavs") {
+    } else if (filter === "userfavs") {
       // Retrieve user favorites for the given user_id
       const userFavorites = await prisma.favorites.findMany({
         where: {
@@ -344,29 +344,38 @@ const getAllUserPost = async (req, res) => {
           postId: true,
         },
       });
+
       // Extract the post IDs from user favorites
       const userFavPostIds = userFavorites.map((fav) => fav.postId);
 
-      where = {
-        id: {
-          in: userFavPostIds,
-        },
-      };
+      if (userFavPostIds.length > 0) {
+        where = {
+          id: {
+            in: userFavPostIds, // Provide an array of post IDs
+          },
+        };
+      } else {
+        // If the user has no favorite posts, return an empty array of posts
+        return res.status(200).json({
+          success: true,
+          message: "No user faved post",
+          posts: [],
+        });
+      }
     } else if (filter === "userliked") {
       // Retrieve posts that the user has liked
       const userLikedPosts = await prisma.like.findMany({
         where: {
           userId: parseInt(user_id),
         },
-        // select: {
-        //   postId: true,
-        // },
+        select: {
+          postId: true,
+        },
       });
 
-      console.log("User liked posts:", userLikedPosts); 
       // Extract the post IDs from user liked posts
       const userLikedPostIds = userLikedPosts.map((liked) => liked.postId);
-      console.log("User liked post IDs:", userLikedPostIds); 
+
       // Ensure userLikedPostIds is an array and not empty before using it
       if (userLikedPostIds.length > 0) {
         where = {
@@ -378,6 +387,7 @@ const getAllUserPost = async (req, res) => {
         // If the user has not liked any posts, return an empty array of posts
         return res.status(200).json({
           success: true,
+          message: "No user liked post",
           posts: [],
         });
       }
