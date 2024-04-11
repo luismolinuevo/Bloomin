@@ -329,12 +329,12 @@ const getAllUserPost = async (req, res) => {
     }
 
     let where = {}; // Default to an empty object
-    if (filter === "userpost") {
+    if (filter == "userpost") {
       // Example condition
       where = {
-        userId: user_id,
+        userId: parseInt(user_id),
       };
-    } else if (filter === "userfavs") {
+    } else if (filter == "userfavs") {
       // Retrieve user favorites for the given user_id
       const userFavorites = await prisma.favorites.findMany({
         where: {
@@ -358,24 +358,36 @@ const getAllUserPost = async (req, res) => {
         where: {
           userId: parseInt(user_id),
         },
-        select: {
-          postId: true,
-        },
+        // select: {
+        //   postId: true,
+        // },
       });
+
+      console.log("User liked posts:", userLikedPosts); 
       // Extract the post IDs from user liked posts
       const userLikedPostIds = userLikedPosts.map((liked) => liked.postId);
-
-      where = {
-        id: {
-          in: userLikedPostIds,
-        },
-      };
+      console.log("User liked post IDs:", userLikedPostIds); 
+      // Ensure userLikedPostIds is an array and not empty before using it
+      if (userLikedPostIds.length > 0) {
+        where = {
+          id: {
+            in: userLikedPostIds, // Provide an array of post IDs
+          },
+        };
+      } else {
+        // If the user has not liked any posts, return an empty array of posts
+        return res.status(200).json({
+          success: true,
+          posts: [],
+        });
+      }
     }
 
     // Retrieve posts with associated user, applying pagination
     let posts;
     if (cursor) {
       posts = await prisma.post.findMany({
+        where,
         include: {
           user: true,
           like: true,
@@ -388,6 +400,7 @@ const getAllUserPost = async (req, res) => {
       });
     } else {
       posts = await prisma.post.findMany({
+        where,
         include: {
           user: true,
           like: true,
@@ -475,4 +488,11 @@ const getAllUserPost = async (req, res) => {
   }
 };
 
-export { createPost, getAllPost, getPost, deletePost, editPost, getAllUserPost };
+export {
+  createPost,
+  getAllPost,
+  getPost,
+  deletePost,
+  editPost,
+  getAllUserPost,
+};
