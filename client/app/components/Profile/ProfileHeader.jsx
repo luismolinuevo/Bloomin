@@ -17,7 +17,7 @@ export default function ProfileHeader({ user }) {
           <div className="flex gap-4 text-[17px]">
             <p>{user?.postCount} Posts</p>
             <p>{user?.followingCount} Following</p>
-            <p>{user?.follwerCount} 1000 Followers</p>
+            <p>{user?.followerCount} Followers</p>
           </div>
         </div>
       </div>
