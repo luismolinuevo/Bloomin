@@ -131,9 +131,71 @@ const getUserAuthInfo = async (req, res) => {
   // }
 };
 
+const getUserProfileInfo = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    if (user_id) {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: parseInt(user_id),
+        },
+      });
+
+      if (user) {
+        //get follower count
+        const followerCount = await prisma.follower.count({
+          where: {
+            followerId: user_id,
+          },
+        });
+
+        //get following count
+        const followingCount = await prisma.follower.count({
+          where: {
+            followingId: user_id,
+          },
+        });
+
+        //get post count
+        const postCount = await prisma.post.count({
+          where: {
+            userId: user_id,
+          },
+        });
+
+        return res.status(200).json({
+          message: "Returning user data",
+          success: true,
+          user,
+          followerCount,
+          followingCount,
+          postCount,
+        });
+      } else {
+        return res.status(404).json({
+          message: "No user with that id found",
+          success: false,
+          user: [],
+        });
+      }
+    } else {
+      return res.status(404).json({
+        message: "No user id given",
+        success: false,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
 const googleCallBack = async (req, res) => {
   const token = req.user; // req.user now contains the JWT token
   res.redirect(`http://localhost:3000?token=${token}`);
 };
 
-export { signup, login, getUserAuthInfo, googleCallBack };
+export { signup, login, getUserAuthInfo, googleCallBack, getUserProfileInfo };

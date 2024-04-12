@@ -12,6 +12,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   authControllers.getUserAuthInfo
 );
+
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -19,10 +20,17 @@ router.get(
     scope: ["profile", "email"],
   })
 );
+
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false, failureRedirect: "/" }),
   authControllers.googleCallBack
+);
+
+router.get(
+  "/userprofile",
+  passport.authenticate("jwt", { session: false }),
+  authControllers.getUserProfileInfo
 );
 
 export default router;
