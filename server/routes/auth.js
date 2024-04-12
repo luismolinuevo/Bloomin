@@ -28,7 +28,7 @@ router.get(
 );
 
 router.get(
-  "/userprofile",
+  "/userprofile/:user_id",
   passport.authenticate("jwt", { session: false }),
   authControllers.getUserProfileInfo
 );

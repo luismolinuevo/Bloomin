@@ -87,3 +87,27 @@ export const getUser = async (token) => {
     return error;
   }
 };
+
+export const getUserProfileData = async (token, user_id) => {
+  try {
+    const user = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/userprofile/${user_id}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (user.ok) {
+      const res = await user.json();
+
+      return res;
+    }
+  } catch (error) {
+    console.log(error.message);
+    return error;
+  }
+};
