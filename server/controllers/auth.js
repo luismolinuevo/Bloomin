@@ -145,21 +145,21 @@ const getUserProfileInfo = async (req, res) => {
         //get follower count
         const followerCount = await prisma.follower.count({
           where: {
-            followerId: user_id,
+            followerId: parseInt(user_id),
           },
         });
 
         //get following count
         const followingCount = await prisma.follower.count({
           where: {
-            followingId: user_id,
+            followingId: parseInt(user_id),
           },
         });
 
         //get post count
         const postCount = await prisma.post.count({
           where: {
-            userId: user_id,
+            userId: parseInt(user_id),
           },
         });
 
@@ -172,6 +172,7 @@ const getUserProfileInfo = async (req, res) => {
           postCount,
         });
       } else {
+        console.log("No user with that id");
         return res.status(404).json({
           message: "No user with that id found",
           success: false,
@@ -179,6 +180,7 @@ const getUserProfileInfo = async (req, res) => {
         });
       }
     } else {
+      console.log("No id given");
       return res.status(404).json({
         message: "No user id given",
         success: false,

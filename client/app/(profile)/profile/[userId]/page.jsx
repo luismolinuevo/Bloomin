@@ -6,17 +6,19 @@ import { useRouter, useParams } from "next/navigation";
 import { getAllUserPosts } from "@/app/lib/post";
 import cookie from "js-cookie";
 import PostCard from "@/app/components/Post/PostCard";
+import { getUserProfileData } from "@/app/lib/auth";
 
 export default function Page() {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [lastPostId, setLastPostId] = useState(null);
   const [allPostsFetched, setAllPostsFetched] = useState(false);
   const sentinelRef = useRef(null);
   const token = cookie.get("user_token");
-  const userId = params.userId;
+  const user_id = params.userId;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +29,7 @@ export default function Page() {
           lastPostId,
           "",
           "userfavs",
-          userId
+          user_id
         );
         if (userData.success) {
           console.log(userData);
@@ -41,10 +43,10 @@ export default function Page() {
             setAllPostsFetched(true);
           }
         } else {
-          console.error("Error fetching user data:", userData.error);
+          console.error("Unable to fetch userdata");
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user post:", error);
       }
       setLoading(false);
     };
@@ -61,7 +63,27 @@ export default function Page() {
     }
 
     return () => observer.disconnect();
-  }, [loading, lastPostId, token, allPostsFetched, userId]);
+  }, [loading, lastPostId, token, allPostsFetched, user_id]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        setLoading(true);
+        const fetchData = await getUserProfileData(token, user_id);
+
+        if (fetchData.success) {
+          console.log(fetchData);
+          setUserData(fetchData);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchUserProfile();
+  }, [user_id]);
 
   return (
     <div>
