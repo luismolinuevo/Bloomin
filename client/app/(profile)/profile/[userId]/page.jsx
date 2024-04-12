@@ -87,7 +87,7 @@ export default function Page() {
 
   return (
     <div>
-      <ProfileHeader />
+      <ProfileHeader user={userData}/>
       <div className="mx-16">
         {posts.map((post, index) => (
           <PostCard key={index} post={post} />

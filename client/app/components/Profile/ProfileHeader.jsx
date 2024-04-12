@@ -10,14 +10,14 @@ export default function ProfileHeader({ user }) {
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex gap-4">
-            <p className="text-[25px]">Username</p>
+            <p className="text-[25px]">{user?.user?.userName}</p>
             <button>EditProfile</button>
             <p>Setting</p>
           </div>
           <div className="flex gap-4 text-[17px]">
-            <p>10 Posts</p>
-            <p>1000 Following</p>
-            <p>1000 Followers</p>
+            <p>{user?.postCount} Posts</p>
+            <p>{user?.followingCount} Following</p>
+            <p>{user?.follwerCount} 1000 Followers</p>
           </div>
         </div>
       </div>
