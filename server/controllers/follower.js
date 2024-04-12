@@ -62,7 +62,7 @@ const followUser = async (req, res) => {
     const follow = await prisma.follower.create({
       data: {
         followingId: followingId,
-        followerId: followerId,
+        followerId: req.user.id,
       },
     });
 

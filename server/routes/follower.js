@@ -4,7 +4,7 @@ import passport from "passport";
 
 const router = Router();
 
-router.post("/followeruser", followerControllers.followUser);
+router.post("/follow", passport.authenticate("jwt", { session: false }), followerControllers.followUser);
 router.get("/getfollowing/:user_id", followerControllers.getUserFollowing);
 router.get("/getfollowers/:user_id", followerControllers.getUserFollowers);
 
