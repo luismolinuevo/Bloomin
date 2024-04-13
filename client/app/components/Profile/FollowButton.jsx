@@ -2,7 +2,7 @@
 
 import { button } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
-import { follow } from "@/app/lib/follower";
+import { follow, unfollow } from "@/app/lib/follower";
 
 //this button could only appear if first its a differnt user,
 export default function FollowButton({ token, user_id, userFollowing }) {
@@ -23,7 +23,7 @@ export default function FollowButton({ token, user_id, userFollowing }) {
       console.log("IM here");
       const request = await follow(data, token);
 
-      if (follow.success) {
+      if (request.success) {
         setIsFollowing(!isFollowing);
       }
     } catch (error) {
@@ -31,12 +31,23 @@ export default function FollowButton({ token, user_id, userFollowing }) {
     }
   };
 
-  const unfollow = async () => {};
+  const unfollowUser = async () => {
+    try {
+      console.log(user_id)
+      const request = await unfollow(user_id, token);
+
+      if (request.success) {
+        setIsFollowing(!isFollowing);
+      }
+    } catch (error) {
+      console.error("There has been a error with unfollowing a user", error);
+    }
+  };
 
   return (
     <div>
       {isFollowing ? (
-        <button>Unfollow</button>
+        <button onClick={unfollowUser}>Unfollow</button>
       ) : (
         <button onClick={followUser}>Follow</button>
       )}

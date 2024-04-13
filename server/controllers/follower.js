@@ -88,7 +88,7 @@ const unFollowUser = async (req, res) => {
 
     if (following_id) {
       const follow = await prisma.follower.deleteMany({
-        data: {
+        where: {
           followingId: parseInt(following_id),
           followerId: req.user.id,
         },
