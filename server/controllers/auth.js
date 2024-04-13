@@ -145,14 +145,14 @@ const getUserProfileInfo = async (req, res) => {
         //get follower count
         const followerCount = await prisma.follower.count({
           where: {
-            followerId: parseInt(user_id),
+            followingId: parseInt(user_id),
           },
         });
 
         //get following count
         const followingCount = await prisma.follower.count({
           where: {
-            followingId: parseInt(user_id),
+            followerId: parseInt(user_id),
           },
         });
 
