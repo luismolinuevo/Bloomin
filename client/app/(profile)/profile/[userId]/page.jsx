@@ -24,6 +24,16 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
+
+        // Fetch user profile data
+        const userProfileData = await getUserProfileData(token, user_id);
+        if (userProfileData.success) {
+          console.log(userProfileData);
+          setUserData(userProfileData);
+        } else {
+          console.error("Unable to fetch user profile data");
+        }
+
         const userData = await getAllUserPosts(
           token,
           lastPostId,
@@ -65,29 +75,9 @@ export default function Page() {
     return () => observer.disconnect();
   }, [loading, lastPostId, token, allPostsFetched, user_id]);
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        setLoading(true);
-        const fetchData = await getUserProfileData(token, user_id);
-
-        if (fetchData.success) {
-          console.log(fetchData);
-          setUserData(fetchData);
-        } else {
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-      setLoading(false);
-    };
-
-    fetchUserProfile();
-  }, [user_id]);
-
   return (
     <div>
-      <ProfileHeader user={userData} token={token}/>
+      <ProfileHeader user={userData} token={token} />
       <div className="mx-16">
         {posts.map((post, index) => (
           <PostCard key={index} post={post} />
