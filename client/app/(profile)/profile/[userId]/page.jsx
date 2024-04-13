@@ -28,7 +28,7 @@ export default function Page() {
           token,
           lastPostId,
           "",
-          "userfavs",
+          "userliked",
           user_id
         );
         if (userData.success) {
@@ -87,7 +87,7 @@ export default function Page() {
 
   return (
     <div>
-      <ProfileHeader user={userData}/>
+      <ProfileHeader user={userData} token={token}/>
       <div className="mx-16">
         {posts.map((post, index) => (
           <PostCard key={index} post={post} />

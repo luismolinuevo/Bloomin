@@ -1,7 +1,8 @@
 import React from "react";
 import { AvatarDefault } from "../General/ProfilePic";
+import FollowButton from "./FollowButton";
 
-export default function ProfileHeader({ user }) {
+export default function ProfileHeader({ user, token }) {
   return (
     <div>
       <div className="flex justify-center items-center">
@@ -12,6 +13,7 @@ export default function ProfileHeader({ user }) {
           <div className="flex gap-4">
             <p className="text-[25px]">{user?.user?.userName}</p>
             <button>EditProfile</button>
+            <FollowButton token={token} user_id={user?.user?.id} />
             <p>Setting</p>
           </div>
           <div className="flex gap-4 text-[17px]">
