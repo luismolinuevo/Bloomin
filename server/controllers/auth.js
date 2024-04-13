@@ -156,6 +156,20 @@ const getUserProfileInfo = async (req, res) => {
           },
         });
 
+        let isFollowing;
+        const checkIfFollowing = await prisma.follower.findFirst({
+          where: {
+            followerId: req.user.id,
+            followingId: parseInt(user_id),
+          },
+        });
+
+        if (checkIfFollowing) {
+          isFollowing = true;
+        } else {
+          isFollowing = false;
+        }
+
         //get post count
         const postCount = await prisma.post.count({
           where: {
@@ -170,6 +184,7 @@ const getUserProfileInfo = async (req, res) => {
           followerCount,
           followingCount,
           postCount,
+          isFollowing
         });
       } else {
         console.log("No user with that id");
