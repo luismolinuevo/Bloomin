@@ -1,6 +1,7 @@
 import React from "react";
 import { AvatarDefault } from "../General/ProfilePic";
 import FollowButton from "./FollowButton";
+import EditButton from "./EditButton";
 
 export default function ProfileHeader({ user, token }) {
   return (
@@ -12,8 +13,12 @@ export default function ProfileHeader({ user, token }) {
         <div className="flex flex-col gap-3">
           <div className="flex gap-4">
             <p className="text-[25px]">{user?.user?.userName}</p>
-            <button>EditProfile</button>
-            <FollowButton token={token} user_id={user?.user?.id} />
+            <EditButton />
+            <FollowButton
+              token={token}
+              user_id={user?.user?.id}
+              userFollowing={user?.isFollowing}
+            />
             <p>Setting</p>
           </div>
           <div className="flex gap-4 text-[17px]">
