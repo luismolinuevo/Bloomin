@@ -184,7 +184,7 @@ const getUserProfileInfo = async (req, res) => {
           followerCount,
           followingCount,
           postCount,
-          isFollowing
+          isFollowing,
         });
       } else {
         console.log("No user with that id");
@@ -215,4 +215,45 @@ const googleCallBack = async (req, res) => {
   res.redirect(`http://localhost:3000?token=${token}`);
 };
 
-export { signup, login, getUserAuthInfo, googleCallBack, getUserProfileInfo };
+const editProfile = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(user_id),
+      },
+    });
+
+    if (user) {
+      const editUser = await prisma.user.updateMany({
+        where: {
+          id: user_id,
+        },
+        data: {
+          userName: req.body.userName,
+          imageUrl: req.body.imageUrl,
+        },
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "Edit profile successfully",
+        editUser,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No user with that Id found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+export { signup, login, getUserAuthInfo, googleCallBack, getUserProfileInfo, editProfile };

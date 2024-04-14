@@ -33,4 +33,10 @@ router.get(
   authControllers.getUserProfileInfo
 );
 
+router.update(
+  "/userprofile/:user_id",
+  passport.authenticate("jwt", { session: false }),
+  authControllers.editProfile
+);
+
 export default router;
