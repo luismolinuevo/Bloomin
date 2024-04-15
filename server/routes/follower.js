@@ -14,7 +14,7 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   followerControllers.unFollowUser
 );
-router.get("/getfollowing/:user_id", passport.authenticate("jwt", { session: false }), followerControllers.getUserFollowing);
-router.get("/getfollowers/:user_id", passport.authenticate("jwt", { session: false }), followerControllers.getUserFollowers);
+router.get("/following/:user_id", passport.authenticate("jwt", { session: false }), followerControllers.getUserFollowing);
+router.get("/followers/:user_id", passport.authenticate("jwt", { session: false }), followerControllers.getUserFollowers);
 
 export default router;

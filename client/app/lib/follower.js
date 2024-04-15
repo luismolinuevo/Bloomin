@@ -65,3 +65,55 @@ export const unfollow = async (user_id, token) => {
     throw error;
   }
 };
+
+export const getAllUserFollowers = async (token, user_id, user_name) => {
+  try {
+    const posts = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/followers/${user_id}?username=${user_name}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (posts.ok) {
+      const res = await posts.json();
+
+      return res;
+    } else {
+      console.log("Unable to fetch errors");
+    }
+  } catch (error) {
+    console.log(error.message);
+    return error;
+  }
+};
+
+export const getAllUserFollowing = async (token, user_id, user_name) => {
+  try {
+    const posts = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/following/${user_id}?username=${user_name}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (posts.ok) {
+      const res = await posts.json();
+
+      return res;
+    } else {
+      console.log("Unable to fetch errors");
+    }
+  } catch (error) {
+    console.log(error.message);
+    return error;
+  }
+};
