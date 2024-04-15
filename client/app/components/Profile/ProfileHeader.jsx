@@ -8,12 +8,12 @@ export default function ProfileHeader({ user, token }) {
     <div>
       <div className="flex justify-center items-center">
         <div className="pr-5">
-          <AvatarDefault src={""} size={"xxl"} />
+          <AvatarDefault src={user?.user?.imageUrl} size={"xxl"} />
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex gap-4">
             <p className="text-[25px]">{user?.user?.userName}</p>
-            <EditButton user={user} token={token}/>
+            <EditButton user={user} token={token} />
             <FollowButton
               token={token}
               user_id={user?.user?.id}
