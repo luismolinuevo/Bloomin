@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client"
+
+import React, { useState, useEffect } from "react";
 import Modal from "../General/Modal";
 import { Input, Textarea, Button } from "../../utils/MaterialTailwind";
 import { uploadImage } from "@/app/lib/imageupload";
@@ -11,14 +13,17 @@ export default function EditButton({ user, token }) {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      userName: user?.user?.userName || "",
-    },
-  });
+  } = useForm();
 
+  console.log(user?.user?.userName);
   const [imageUrl, setImageUrl] = useState(user?.user?.imageUrl);
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    if (user?.user?.userName) {
+      setValue("userName", user.user.userName); // Set the default value for userName
+    }
+  }, [setValue, user]);
 
   const onEdit = async (data) => {
     // Receive form data from handleSubmit
@@ -36,7 +41,7 @@ export default function EditButton({ user, token }) {
       const body = {
         // Use form data here
         userName: data.userName,
-        imgUrl: newImageUrl,
+        imageUrl: newImageUrl,
       };
 
       await updateProfile(body, token, user?.user?.id); // Make sure to await the updateProfile function
