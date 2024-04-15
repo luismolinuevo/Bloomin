@@ -40,13 +40,13 @@ model Post {
   img                      String?  @db.VarChar(300)
   createdAt                DateTime @default(now())
 
-  userId  Int
-  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  Favorites Favorites[]
-  Comment   Comment[]
+  Favorites    Favorites[]
+  Comment      Comment[]
   // votes     Votes[]
-  like      Like[]
+  like         Like[]
   commentReply CommentReply[]
 
   @@index([userId])
@@ -155,7 +155,7 @@ model Message {
 }
 
 model Follower {
-  id          Int @id @default(autoincrement())
-  followingId Int
-  followerId  Int
+  id           Int   @id @default(autoincrement())
+  followingId  Int
+  followerId   Int
 }
