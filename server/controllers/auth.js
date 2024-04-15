@@ -228,7 +228,7 @@ const editProfile = async (req, res) => {
     if (user) {
       const editUser = await prisma.user.updateMany({
         where: {
-          id: user_id,
+          id: parseInt(user_id),
         },
         data: {
           userName: req.body.userName,

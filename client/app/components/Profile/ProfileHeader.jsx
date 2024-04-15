@@ -13,7 +13,7 @@ export default function ProfileHeader({ user, token }) {
         <div className="flex flex-col gap-3">
           <div className="flex gap-4">
             <p className="text-[25px]">{user?.user?.userName}</p>
-            <EditButton />
+            <EditButton user={user} token={token}/>
             <FollowButton
               token={token}
               user_id={user?.user?.id}

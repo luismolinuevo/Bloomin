@@ -33,7 +33,7 @@ router.get(
   authControllers.getUserProfileInfo
 );
 
-router.update(
+router.put(
   "/userprofile/:user_id",
   passport.authenticate("jwt", { session: false }),
   authControllers.editProfile

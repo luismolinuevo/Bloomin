@@ -3,8 +3,9 @@ import Modal from "../General/Modal";
 import { Input, Textarea, Button } from "../../utils/MaterialTailwind";
 import { uploadImage } from "@/app/lib/imageupload";
 import { useForm } from "react-hook-form";
+import { updateProfile } from "@/app/lib/auth";
 
-export default function EditButton({ userName, profileImg }) {
+export default function EditButton({ user, token }) {
   const {
     register,
     handleSubmit,
@@ -12,14 +13,15 @@ export default function EditButton({ userName, profileImg }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      userName: userName || "",
+      userName: user?.user?.userName || "",
     },
   });
 
-  const [imageUrl, setImageUrl] = useState(profileImg);
+  const [imageUrl, setImageUrl] = useState(user?.user?.imageUrl);
   const [openModal, setOpenModal] = useState(false);
 
-  const onEdit = async () => {
+  const onEdit = async (data) => {
+    // Receive form data from handleSubmit
     try {
       let newImageUrl = imageUrl;
       if (data.image[0] !== undefined) {
@@ -31,12 +33,17 @@ export default function EditButton({ userName, profileImg }) {
         }
       }
 
-      const data = {
-        //i want data here
+      const body = {
+        // Use form data here
         userName: data.userName,
         imgUrl: newImageUrl,
       };
-    } catch (error) {}
+
+      await updateProfile(body, token, user?.user?.id); // Make sure to await the updateProfile function
+      setOpenModal(false);
+    } catch (error) {
+      console.error("There has been a error editing post", error);
+    }
   };
 
   const handleImageChange = (e) => {
