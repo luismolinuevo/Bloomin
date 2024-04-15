@@ -5,6 +5,7 @@ const getUserFollowers = async (req, res) => {
   try {
     const { user_id } = req.params;
     const { username } = req.query;
+    const loggedInUserId = req.user.id; // Assuming the logged-in user ID is available in req.body.id
 
     let whereCondition = { followingId: parseInt(user_id) }; // Convert user_id to integer
     if (username && username.trim() !== "") {
@@ -36,6 +37,7 @@ const getUserFollowers = async (req, res) => {
     });
 
     if (followers && followers.length > 0) {
+      // Get follower users with selected fields
       const followerUsers = await prisma.user.findMany({
         where: {
           id: {
@@ -49,9 +51,22 @@ const getUserFollowers = async (req, res) => {
         },
       });
 
+      // Check if the logged-in user is following each follower
+      const followersWithFollowingStatus = await Promise.all(
+        followerUsers.map(async (follower) => {
+          const isFollowing = await prisma.follower.findFirst({
+            where: {
+              followingId: parseInt(loggedInUserId),
+              followerId: follower.id,
+            },
+          });
+          return { ...follower, isFollowing: !!isFollowing };
+        })
+      );
+
       return res.status(200).json({
         success: true,
-        followers: followerUsers,
+        followers: followersWithFollowingStatus,
       });
     }
 
@@ -70,6 +85,7 @@ const getUserFollowing = async (req, res) => {
   try {
     const { user_id } = req.params;
     const { username } = req.query;
+    const loggedInUserId = req.body.id; // Assuming the logged-in user ID is available in req.body.id
 
     let whereCondition = { followerId: parseInt(user_id) }; // Convert user_id to integer
     if (username && username.trim() !== "") {
@@ -96,16 +112,16 @@ const getUserFollowing = async (req, res) => {
       }
     }
 
-    const followers = await prisma.follower.findMany({
+    const following = await prisma.follower.findMany({
       where: whereCondition,
     });
 
-    if (followers && followers.length > 0) {
-      //the relation wasnt working with prisma
+    if (following && following.length > 0) {
+      // Get following users with selected fields
       const followingUsers = await prisma.user.findMany({
         where: {
           id: {
-            in: followers.map((follower) => follower.followingId),
+            in: following.map((follow) => follow.followingId),
           },
         },
         select: {
@@ -115,9 +131,22 @@ const getUserFollowing = async (req, res) => {
         },
       });
 
+      // Check if the logged-in user is following each user
+      const followingUsersWithFollowingStatus = await Promise.all(
+        followingUsers.map(async (user) => {
+          const isFollowing = await prisma.follower.findFirst({
+            where: {
+              followingId: user.id,
+              followerId: loggedInUserId,
+            },
+          });
+          return { ...user, isFollowing: !!isFollowing };
+        })
+      );
+
       return res.status(200).json({
         success: true,
-        followers: followingUsers,
+        following: followingUsersWithFollowingStatus,
       });
     }
 
