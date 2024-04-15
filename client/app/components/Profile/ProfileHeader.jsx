@@ -2,6 +2,7 @@ import React from "react";
 import { AvatarDefault } from "../General/ProfilePic";
 import FollowButton from "./FollowButton";
 import EditButton from "./EditButton";
+import FollowingPopup from "./FollowingPopup";
 
 export default function ProfileHeader({ user, token }) {
   return (
@@ -23,7 +24,7 @@ export default function ProfileHeader({ user, token }) {
           </div>
           <div className="flex gap-4 text-[17px]">
             <p>{user?.postCount} Posts</p>
-            <p>{user?.followingCount} Following</p>
+            <FollowingPopup followingCount={user?.followingCount} />
             <p>{user?.followerCount} Followers</p>
           </div>
         </div>
