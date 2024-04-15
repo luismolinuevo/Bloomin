@@ -92,10 +92,10 @@ export const getAllUserFollowers = async (token, user_id, user_name) => {
   }
 };
 
-export const getAllUserFollowing = async (token, user_id, user_name) => {
+export const getAllUserFollowing = async (token, user_id, search) => {
   try {
     const posts = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/following/${user_id}?username=${user_name}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/following/${user_id}?username=${search}`,
       {
         method: "GET",
         headers: {

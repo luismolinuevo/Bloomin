@@ -77,7 +77,7 @@ export default function Page() {
 
   return (
     <div>
-      <ProfileHeader user={userData} token={token} />
+      <ProfileHeader user={userData} token={token} setLoading={setLoading} />
       <div className="mx-16">
         {posts.map((post, index) => (
           <PostCard key={index} post={post} />

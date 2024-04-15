@@ -1,16 +1,66 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../General/Modal";
+import { getAllUserFollowers } from "@/app/lib/follower";
+import UserCard from "../General/UserCard";
 
-export default function FollowersPopup() {
+export default function FollowersPopup({
+  token,
+  user_id,
+  followerCount,
+  setLoading,
+}) {
+  const [search, setSearch] = useState("");
+  const [followers, setFollowers] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    //could also make it so that it opens when the popup first opens. Also have pagination(for time purposes i dont but I have in other files)
+    const getFollowers = async () => {
+      try {
+        console.log("Entered");
+        if (user_id) {
+          setLoading(true);
+          const data = await getAllUserFollowers(token, user_id, search);
+          console.log(data);
+          if (data.success) {
+            console.log(data);
+            setFollowers(data.followers);
+            setLoading(false);
+          } else {
+            console.log("Unable to fetch followers");
+          }
+        } else {
+          console.log("No valid user id");
+        }
+      } catch (error) {
+        console.error("There has been a error getting user followers", error);
+      }
+    };
+
+    getFollowers();
+  }, [user_id, search]);
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div>
+      <button onClick={() => setOpenModal(!openModal)}>
+        {followerCount} Followers
+      </button>
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
         <div>
-          <input type="text" />
-          <div></div>
+          <input
+            type="text"
+            placeholder="Search by username"
+            onChange={handleSearchChange}
+          />
+          {followers && followers.length != 0
+            ? followers.map((user) => <UserCard token={token} user={user} />)
+            : "No followers"}
         </div>
       </Modal>
     </div>

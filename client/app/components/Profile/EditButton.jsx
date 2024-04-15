@@ -7,7 +7,7 @@ import { uploadImage } from "@/app/lib/imageupload";
 import { useForm } from "react-hook-form";
 import { updateProfile } from "@/app/lib/auth";
 
-export default function EditButton({ user, token }) {
+export default function EditButton({ user, token, setLoading }) {
   const {
     register,
     handleSubmit,

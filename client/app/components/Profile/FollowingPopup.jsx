@@ -5,7 +5,7 @@ import Modal from "../General/Modal";
 import FollowButton from "./FollowButton";
 import UserCard from "../General/UserCard";
 
-export default function FollowingPopup({ followingCount }) {
+export default function FollowingPopup({ followingCount, setLoading }) {
   const [openModal, setOpenModal] = useState(false);
   return (
     <div>

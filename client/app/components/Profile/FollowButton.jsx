@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { follow, unfollow } from "@/app/lib/follower";
 
 //this button could only appear if first its a differnt user,
-export default function FollowButton({ token, user_id, userFollowing }) {
+export default function FollowButton({ token, user_id, userFollowing, setLoading }) {
   const [isFollowing, setIsFollowing] = useState(userFollowing || false);
 
   useEffect(() => {
