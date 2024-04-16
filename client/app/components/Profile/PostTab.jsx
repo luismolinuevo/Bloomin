@@ -99,6 +99,7 @@ export default function PostTab({ setTab, tab }) {
           {data.map(({ value, desc }) => (
             <TabPanel key={value} value={value}>
               {desc}
+              <p></p>
             </TabPanel>
           ))}
         </TabsBody>
