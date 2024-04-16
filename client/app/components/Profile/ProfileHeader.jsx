@@ -23,7 +23,9 @@ export default function ProfileHeader({ user, token, setLoading }) {
             {userData?.id == user?.user?.id ? (
               <>
                 <EditButton user={user} token={token} setLoading={setLoading} />
-                <p>Setting</p>
+                <button className="border border-[#459858] px-4 rounded-lg text-[#459858] h-[40px]">
+                  Setting
+                </button>
               </>
             ) : (
               <FollowButton
