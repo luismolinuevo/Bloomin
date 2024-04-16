@@ -10,7 +10,12 @@ import {
   MenuList,
   MenuItem,
   Textarea,
-  Button
+  Button,
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
 } from "@material-tailwind/react";
 
 export {
@@ -23,5 +28,10 @@ export {
   MenuList,
   MenuItem,
   Textarea,
-  Button
+  Button,
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
 };

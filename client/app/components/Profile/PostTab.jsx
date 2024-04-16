@@ -5,7 +5,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
-} from "@material-tailwind/react";
+} from "../../utils/MaterialTailwind";
 
 //Tab system in user profile
 export default function PostTab({ setTab, tab }) {
