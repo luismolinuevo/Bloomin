@@ -61,7 +61,7 @@ export default function FollowersPopup({
             onChange={handleSearchChange}
           />
           {followers && followers.length != 0
-            ? followers.map((user) => <UserCard token={token} user={user} />)
+            ? followers.map((user, index) => <UserCard token={token} user={user} key={index} />)
             : "No followers"}
         </div>
       </Modal>

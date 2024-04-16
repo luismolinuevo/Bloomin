@@ -62,7 +62,9 @@ export default function FollowingPopup({
             onChange={handleSearchChange}
           />
           {following && following.length != 0
-            ? following.map((user) => <UserCard token={token} user={user} />)
+            ? following.map((user, index) => (
+                <UserCard token={token} user={user} key={index} />
+              ))
             : "No following"}
         </div>
       </Modal>
