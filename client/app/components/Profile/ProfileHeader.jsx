@@ -12,12 +12,14 @@ export default function ProfileHeader({ user, token, setLoading }) {
   return (
     <div>
       <div className="flex justify-center items-center">
-        <div className="pr-5">
+        <div className="pr-3 sm:pr-5">
           <AvatarDefault src={user?.user?.imageUrl} size={"xxl"} />
         </div>
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-4">
-            <p className="text-[25px]">{user?.user?.userName}</p>
+        <div className="flex flex-col">
+          <div className="flex gap-3 sm:gap-4">
+            <p className="text-[23px] sm:text-[25px] w-[70px] sm:w-[85px] ">
+              {user?.user?.userName}
+            </p>
             {userData?.id == user?.user?.id ? (
               <>
                 <EditButton user={user} token={token} setLoading={setLoading} />
@@ -32,8 +34,9 @@ export default function ProfileHeader({ user, token, setLoading }) {
               />
             )}
           </div>
-          <div className="flex gap-4 text-[17px]">
-            <p>{user?.postCount} Posts</p>
+          <div className="sm:flex gap-3 sm:gap-4 sm:text-[17px]">
+            <p className="w-[70px] sm:w-[85px]">{user?.postCount} Posts</p>
+
             <FollowingPopup
               token={token}
               user_id={user?.user?.id}
