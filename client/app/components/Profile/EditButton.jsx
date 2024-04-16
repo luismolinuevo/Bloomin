@@ -63,7 +63,7 @@ export default function EditButton({ user, token, setLoading }) {
   };
   return (
     <div>
-      <button onClick={() => setOpenModal(!openModal)}>Edit Profile</button>
+      <button className="bg-[#459858] px-4 rounded-lg text-white h-[40px]" onClick={() => setOpenModal(!openModal)}>Edit Profile</button>
 
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
         <h1>Edit Profile</h1>

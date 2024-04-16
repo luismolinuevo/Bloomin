@@ -47,9 +47,9 @@ export default function FollowButton({ token, user_id, userFollowing, setLoading
   return (
     <div>
       {isFollowing ? (
-        <button onClick={unfollowUser}>Unfollow</button>
+        <button className="bg-red-600 text-[15px] px-2 sm:px-4 rounded-lg text-white h-[40px]" onClick={unfollowUser}>Unfollow</button>
       ) : (
-        <button onClick={followUser}>Follow</button>
+        <button className="bg-[#459858] px-4 rounded-lg text-white h-[40px]" onClick={followUser}>Follow</button>
       )}
     </div>
   );
