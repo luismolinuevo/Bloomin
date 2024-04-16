@@ -26,7 +26,7 @@ export default function FollowingPopup({
           console.log(data);
           if (data.success) {
             console.log(data);
-            setFollowing(data.followers);
+            setFollowing(data.following);
             setLoading(false);
           } else {
             console.log("Unable to fetch following");
@@ -54,7 +54,7 @@ export default function FollowingPopup({
 
       <Modal
         onClose={() => setOpenModal(false)}
-        isVisable={openModal && following.length != 0}
+        isVisable={openModal && following && following.length != 0}
       >
         <div>
           <input
