@@ -1,4 +1,4 @@
-import { generateResponse } from "../services/openaiService";
+import { generateResponse } from "../services/openai.js"
 
 export async function generateAdvice(req, res) {
   const situation = req.body.situation || "";
@@ -7,7 +7,7 @@ export async function generateAdvice(req, res) {
     const response = await generateResponse(situation);
     res.status(200).json({ result: response, success: true });
   } catch (error) {
-    console.error(`Error with OpenAI API request: ${error.message}`);
+    console.log(`Error with OpenAI API request: ${error}`);
     res.status(500).json({
       error: {
         message: "An error occurred during your request.",
@@ -17,5 +17,3 @@ export async function generateAdvice(req, res) {
     });
   }
 }
-
-export { generateAdvice };

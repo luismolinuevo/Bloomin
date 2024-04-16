@@ -1,16 +1,17 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
-const configuration = new Configuration({
+const configuration = {
   apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+};
+
+const openai = new OpenAI(configuration);
 
 export async function generateResponse(situation) {
   // Validate input (if needed)
 
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
+    const completion = await openai.chat.completions.create({
+      model: "davinci-002",
       prompt: generatePrompt(situation),
       temperature: 0.9,
       max_tokens: 250,
