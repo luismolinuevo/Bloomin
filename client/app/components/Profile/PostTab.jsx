@@ -7,6 +7,7 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 
+//Tab system in user profile
 export default function PostTab({ setTab, tab }) {
   const handleTabChange = (value) => {
     setTab(value);
@@ -84,7 +85,7 @@ export default function PostTab({ setTab, tab }) {
             <Tab
               key={value}
               value={value}
-              className="flex items-center justify-center gap-2" // Add justify-center to center items horizontally
+              className="flex items-center justify-center gap-2"
               onClick={() => handleTabChange(value)}
             >
               <div className="flex items-center justify-center h-full">

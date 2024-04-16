@@ -6,9 +6,10 @@ import FollowingPopup from "./FollowingPopup";
 import FollowersPopup from "./FollowersPopup";
 import { useAppSelector } from "@/app/store/reduxhooks";
 
+//Profile header in user profile(part that shows the user information)
 export default function ProfileHeader({ user, token, setLoading }) {
   const userData = useAppSelector((state) => state.auth.userData);
-  console.log(userData);
+
   return (
     <div>
       <div className="flex justify-center items-center">

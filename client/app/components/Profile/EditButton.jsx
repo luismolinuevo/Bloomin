@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Modal from "../General/Modal";
@@ -7,6 +7,7 @@ import { uploadImage } from "@/app/lib/imageupload";
 import { useForm } from "react-hook-form";
 import { updateProfile } from "@/app/lib/auth";
 
+//Edit user Profile button
 export default function EditButton({ user, token, setLoading }) {
   const {
     register,
@@ -15,7 +16,6 @@ export default function EditButton({ user, token, setLoading }) {
     formState: { errors },
   } = useForm();
 
-  console.log(user?.user?.userName);
   const [imageUrl, setImageUrl] = useState(user?.user?.imageUrl);
   const [openModal, setOpenModal] = useState(false);
 
@@ -39,7 +39,6 @@ export default function EditButton({ user, token, setLoading }) {
       }
 
       const body = {
-        // Use form data here
         userName: data.userName,
         imageUrl: newImageUrl,
       };
@@ -63,7 +62,12 @@ export default function EditButton({ user, token, setLoading }) {
   };
   return (
     <div>
-      <button className="bg-[#459858] px-4 rounded-lg text-white h-[40px]" onClick={() => setOpenModal(!openModal)}>Edit Profile</button>
+      <button
+        className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+        onClick={() => setOpenModal(!openModal)}
+      >
+        Edit Profile
+      </button>
 
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
         <h1>Edit Profile</h1>

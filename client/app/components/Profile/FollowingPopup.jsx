@@ -6,6 +6,7 @@ import FollowButton from "./FollowButton";
 import UserCard from "../General/UserCard";
 import { getAllUserFollowing } from "@/app/lib/follower";
 
+//Following up that opens when a user clicks user following count
 export default function FollowingPopup({
   token,
   user_id,
@@ -23,9 +24,7 @@ export default function FollowingPopup({
         if (user_id) {
           setLoading(true);
           const data = await getAllUserFollowing(token, user_id, search);
-          console.log(data);
           if (data.success) {
-            console.log(data);
             setFollowing(data.following);
             setLoading(false);
           } else {

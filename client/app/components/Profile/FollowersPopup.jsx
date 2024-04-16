@@ -5,6 +5,7 @@ import Modal from "../General/Modal";
 import { getAllUserFollowers } from "@/app/lib/follower";
 import UserCard from "../General/UserCard";
 
+//Followers popup that opens when user clicks on follower count
 export default function FollowersPopup({
   token,
   user_id,
@@ -23,9 +24,7 @@ export default function FollowersPopup({
         if (user_id) {
           setLoading(true);
           const data = await getAllUserFollowers(token, user_id, search);
-          console.log(data);
           if (data.success) {
-            console.log(data);
             setFollowers(data.followers);
             setLoading(false);
           } else {

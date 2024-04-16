@@ -9,6 +9,7 @@ import PostCard from "@/app/components/Post/PostCard";
 import { getUserProfileData } from "@/app/lib/auth";
 import PostTab from "@/app/components/Profile/PostTab";
 
+//User profile page
 export default function Page() {
   const router = useRouter();
   const params = useParams();
@@ -30,7 +31,6 @@ export default function Page() {
         // Fetch user profile data
         const userProfileData = await getUserProfileData(token, user_id);
         if (userProfileData.success) {
-          console.log(userProfileData);
           setUserData(userProfileData);
         } else {
           console.error("Unable to fetch user profile data");
@@ -46,7 +46,6 @@ export default function Page() {
 
         console.log(userData);
         if (userData.success) {
-          console.log(userData);
           const newPosts = userData.posts.filter(
             (post) => post.id !== lastPostId
           );
@@ -81,9 +80,9 @@ export default function Page() {
 
   const handleTabChange = (tabChange) => {
     setTab(tabChange);
-    setPosts([]); // Clear posts when changing sort criteria
-    setLastPostId(null); // Reset lastPostId to null when changing sort criteria
-    setAllPostsFetched(false); // Reset allPostsFetched when changing sort criteria
+    setPosts([]);
+    setLastPostId(null);
+    setAllPostsFetched(false);
   };
 
   return (
