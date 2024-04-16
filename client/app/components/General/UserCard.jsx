@@ -4,19 +4,23 @@ import FollowButton from "../Profile/FollowButton";
 import Link from "next/link";
 
 //This is the card using in components like following popup, and follower popup
-export default function UserCard(user, token, userFollowing) {
-  console.log(user);
+export default function UserCard({ user, token }) {
+  const handleButtonClick = (e) => {
+    e.preventDefault(); // Prevent the default behavior of the link
+  };
   return (
     <Link href={`/profile/${user?.id}`} className="flex gap-28 items-center">
       <div className="flex gap-2 items-center">
-        <Avatar size="md" src={`${user?.user?.imageUrl}`} />
-        <h1>{user?.user?.userName}</h1>
+        <Avatar size="md" src={`${user?.imageUrl}`} />
+        <h1>{user?.userName}</h1>
       </div>
-      <FollowButton
-        token={token}
-        user_id={user?.user?.id}
-        userFollowing={userFollowing}
-      />
+      <div onClick={handleButtonClick}>
+        <FollowButton
+          token={token}
+          user_id={user?.id}
+          userFollowing={user?.isFollowing}
+        />
+      </div>
     </Link>
   );
 }
