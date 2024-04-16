@@ -7,11 +7,13 @@ import { getAllUserPosts } from "@/app/lib/post";
 import cookie from "js-cookie";
 import PostCard from "@/app/components/Post/PostCard";
 import { getUserProfileData } from "@/app/lib/auth";
+import PostTab from "@/app/components/Profile/PostTab";
 
 export default function Page() {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState("userposts");
   const [posts, setPosts] = useState([]);
   const [userData, setUserData] = useState([]);
   const [lastPostId, setLastPostId] = useState(null);
@@ -38,9 +40,11 @@ export default function Page() {
           token,
           lastPostId,
           "",
-          "userliked",
+          tab,
           user_id
         );
+
+        console.log(userData);
         if (userData.success) {
           console.log(userData);
           const newPosts = userData.posts.filter(
@@ -75,13 +79,22 @@ export default function Page() {
     return () => observer.disconnect();
   }, [loading, lastPostId, token, allPostsFetched, user_id]);
 
+  const handleTabChange = (tabChange) => {
+    setTab(tabChange);
+    setPosts([]); // Clear posts when changing sort criteria
+    setLastPostId(null); // Reset lastPostId to null when changing sort criteria
+    setAllPostsFetched(false); // Reset allPostsFetched when changing sort criteria
+  };
+
   return (
-    <div>
+    <div className="px-8">
       <ProfileHeader user={userData} token={token} setLoading={setLoading} />
+      <PostTab setTab={handleTabChange} tab={tab} />
       <div className="mx-16">
         {posts.map((post, index) => (
           <PostCard key={index} post={post} />
         ))}
+
         <div ref={sentinelRef}></div>
         {loading && <p>Loading...</p>}
       </div>
