@@ -10,13 +10,13 @@ export async function generateResponse(situation) {
   // Validate input (if needed)
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "davinci-002",
+    const completion = await openai.completions.create({
+      model: "gpt-3.5-turbo-instruct",
       prompt: generatePrompt(situation),
       temperature: 0.9,
       max_tokens: 250,
     });
-    return completion.data.choices[0].text;
+    return completion?.choices[0]?.text;
   } catch (error) {
     throw error;
   }
