@@ -27,6 +27,8 @@ export default function ProfileHeader({ user, token, setLoading }) {
           <div className="flex gap-4 text-[17px]">
             <p>{user?.postCount} Posts</p>
             <FollowingPopup
+              token={token}
+              user_id={user?.user?.id}
               followingCount={user?.followingCount}
               setLoading={setLoading}
             />

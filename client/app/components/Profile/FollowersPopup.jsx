@@ -51,7 +51,10 @@ export default function FollowersPopup({
       <button onClick={() => setOpenModal(!openModal)}>
         {followerCount} Followers
       </button>
-      <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
+      <Modal
+        onClose={() => setOpenModal(false)}
+        isVisable={openModal && followers.length != 0}
+      >
         <div>
           <input
             type="text"
