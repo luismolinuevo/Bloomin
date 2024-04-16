@@ -85,7 +85,7 @@ const getUserFollowing = async (req, res) => {
   try {
     const { user_id } = req.params;
     const { username } = req.query;
-    const loggedInUserId = req.body.id; // Assuming the logged-in user ID is available in req.body.id
+    const loggedInUserId = req.user.id; // Assuming the logged-in user ID is available in req.body.id
 
     let whereCondition = { followerId: parseInt(user_id) }; // Convert user_id to integer
     if (username && username.trim() !== "") {
@@ -137,7 +137,7 @@ const getUserFollowing = async (req, res) => {
           const isFollowing = await prisma.follower.findFirst({
             where: {
               followingId: user.id,
-              followerId: loggedInUserId,
+              followerId: parseInt(loggedInUserId),
             },
           });
           return { ...user, isFollowing: !!isFollowing };
