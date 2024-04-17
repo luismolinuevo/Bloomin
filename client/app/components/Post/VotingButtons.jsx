@@ -16,6 +16,7 @@ export default function VotingButtons({ post, token, setLoading }) {
 
   const vote = async (type) => {
     try {
+      setLoading(true);
       const voting = await votePost(post?.id, token, type);
       if (voting.success) {
         if (type === "like") {
@@ -26,6 +27,8 @@ export default function VotingButtons({ post, token, setLoading }) {
           setPostLikes(postLikes - 1);
         }
       }
+
+      setLoading(false);
     } catch (error) {
       console.log("Voting not working ", error);
     }
