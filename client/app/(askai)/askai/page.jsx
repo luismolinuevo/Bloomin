@@ -45,22 +45,7 @@ export default function page() {
         </button>
       </form>
 
-      {/* <p className="text-lg whitespace-pre-line mt-5">{tips}</p> */}
-      <div className="mt-5 text-lg">
-        Some suggestions for making your home more environmentally conscious are
-        - Switching to energy-efficient light bulbs - Installing programmable
-        thermostats to reduce energy usage - Using natural cleaning products
-        instead of harsh chemicals - Installing low-flow showerheads and faucets
-        to conserve water - Properly insulating your home to reduce heating and
-        cooling costs - Investing in renewable energy sources such as solar
-        panels - Composting kitchen waste for a more sustainable way to dispose
-        of food scraps - Planting native species in your yard to attract
-        beneficial insects and reduce water usage - Properly disposing of
-        hazardous materials to avoid polluting the environment - Conserving
-        water by fixing leaks and using drought-resistant landscaping - Using
-        reusable bags and containers instead of single-use plastic products -
-        Choosing energy-efficient appliances when replacing old ones.
-      </div>
+      <p className="text-lg whitespace-pre-line mt-5">{tips}</p>
 
       <img
         src={"/AskAiBg.png"}
