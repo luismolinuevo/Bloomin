@@ -5,6 +5,8 @@ import { askOpenAi } from "@/app/lib/openai";
 import cookie from "js-cookie";
 import { Input } from "../../utils/MaterialTailwind";
 import LoadingSpinner from "@/app/components/General/LoadingIcon";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function page() {
   const token = cookie.get("user_token");
@@ -24,8 +26,10 @@ export default function page() {
         if (askAi.success) {
           setTips(askAi?.result);
           setLoading(false);
+          toast.success("Got your tips!!");
         } else {
           console.log("Update to ask ai");
+          toast.error("Error getting tips");
         }
       }
     } catch (error) {
@@ -36,6 +40,7 @@ export default function page() {
   return (
     <div className="mx-10 md:mx-20">
       {loading && <LoadingSpinner />}
+      <ToastContainer />
       <h1 className="font-bold text-[50px] mb-4">Ask Ai...</h1>
       <form action={onAsk} className="flex">
         <Input
