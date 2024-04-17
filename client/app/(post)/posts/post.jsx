@@ -85,7 +85,7 @@ export default function Post() {
       </div>
 
       <div className="mx-16">
-        <CreatePost />
+        <CreatePost setLoading={setLoading}/>
 
         <div>
           {posts.map((post, index) => (

@@ -10,7 +10,7 @@ import {
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 
-export default function PostMenu({ post, token }) {
+export default function PostMenu({ post, token, setLoading }) {
   const [edit, setEdit] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -59,6 +59,7 @@ export default function PostMenu({ post, token }) {
           isVisible={edit} // Corrected prop name
           onClose={() => setEdit(false)}
           token={token}
+          setLoading={setLoading}
         />
         // <p>hey</p>
       )}
@@ -69,6 +70,7 @@ export default function PostMenu({ post, token }) {
           isVisable={confirmDelete}
           onClose={() => setConfirmDelete(false)}
           token={token}
+          setLoading={setLoading}
         />
       )}
     </div>

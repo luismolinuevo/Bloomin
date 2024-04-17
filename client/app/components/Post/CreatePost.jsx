@@ -13,7 +13,7 @@ import {
 import Select from "react-select";
 import { uploadImage } from "@/app/lib/imageupload";
 
-export default function CreatePost() {
+export default function CreatePost({ setLoading }) {
   const [openModal, setOpenModal] = useState(false);
   const {
     register,
@@ -26,6 +26,7 @@ export default function CreatePost() {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       let imageUrl = null;
       if (data.image[0] != null) {
         const upload = await uploadImage(data.image[0]);
@@ -38,7 +39,7 @@ export default function CreatePost() {
         }
       }
 
-      console.log("Image URL " + imageUrl)
+      console.log("Image URL " + imageUrl);
       let postData = {
         title: data.title,
         description: data.description,
@@ -55,6 +56,7 @@ export default function CreatePost() {
       }
 
       setOpenModal(false);
+      setLoading(false);
     } catch (error) {
       console.error("Error creating post: ", error);
     }

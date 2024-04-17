@@ -14,11 +14,13 @@ export default function PostCard({ post, token, setLoading }) {
       <div className="border-b p-4 w-full">
         <div className="flex justify-between font-sans">
           <div className="flex items-center gap-4 mb-2">
-            <AvatarDefault size={"lg"}/>
+            <AvatarDefault size={"lg"} />
             <h3 className="text-[19px] font-bold">{post?.user?.userName}</h3>
           </div>
 
-          {post?.user?.id == userData?.id && <PostMenu post={post} token={token}/>}
+          {post?.user?.id == userData?.id && (
+            <PostMenu post={post} token={token} setLoading={setLoading} />
+          )}
         </div>
         <div className="flex">
           {post?.img != null && (
@@ -42,7 +44,7 @@ export default function PostCard({ post, token, setLoading }) {
           </div>
         </div>
         <div>
-          <PostCardsButtons post={post} setLoading={setLoading}/>
+          <PostCardsButtons post={post} setLoading={setLoading} />
           <button>
             <img src="favs" alt="" />
           </button>

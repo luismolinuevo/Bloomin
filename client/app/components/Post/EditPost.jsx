@@ -10,7 +10,7 @@ import {
   implementationDifficulty,
 } from "../../utils/SelectOptions";
 
-export default function EditPost({ token, post, onClose, isVisible }) {
+export default function EditPost({ token, post, onClose, isVisible, setLoading }) {
   const {
     register,
     handleSubmit,
