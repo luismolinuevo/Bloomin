@@ -1,5 +1,9 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
+import Navbar from "../components/Navbar/Navbar";
+import { ThemeProvider } from "../utils/MaterialTailwind";
+import StoreProvider from "../store/StoreProvider";
+import AuthWrapper from "../components/Auth/AuthWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,11 +15,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="flex flex-col h-screen">
-          <main className="flex-grow">{children}</main>
-        </div>
-      </body>
+      <ThemeProvider>
+        <body className={inter.className}>
+          <div className="flex flex-col h-screen">
+            <Navbar />
+
+            <main className="flex-grow">
+              <StoreProvider>
+                <AuthWrapper>{children}</AuthWrapper>
+              </StoreProvider>
+            </main>
+          </div>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

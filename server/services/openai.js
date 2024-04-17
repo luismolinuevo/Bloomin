@@ -25,7 +25,7 @@ export async function generateResponse(situation) {
 function generatePrompt(situation) {
   return `You give advice on environmentally conscious things you can do to your home or place of living.
 You respond with a max of 250 tokens, so you should keep your bullets straight to the point.
-Don't give an intro or ending, just respond with 10 bullet points of things to do to be more environmentally conscious based on the following input:
+Don't give an intro or ending, just respond with basic steps of things to do to be more environmentally conscious based on the following input:
 
 ${situation}`;
 }
