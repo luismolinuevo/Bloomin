@@ -4,14 +4,18 @@ import React, { useState } from "react";
 import { askOpenAi } from "@/app/lib/openai";
 import cookie from "js-cookie";
 import { Input } from "../../utils/MaterialTailwind";
+import LoadingSpinner from "@/app/components/General/LoadingIcon";
 
 export default function page() {
   const token = cookie.get("user_token");
   const [prompt, setPrompt] = useState("");
   const [tips, setTips] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const onAsk = async () => {
     try {
       if (token && prompt != "") {
+        setLoading(true);
         const data = {
           prompt,
         };
@@ -19,6 +23,7 @@ export default function page() {
         console.log(askAi);
         if (askAi.success) {
           setTips(askAi?.result);
+          setLoading(false);
         } else {
           console.log("Update to ask ai");
         }
@@ -29,6 +34,7 @@ export default function page() {
   };
   return (
     <div className="mx-10 md:mx-20">
+      {loading && <LoadingSpinner />}
       <h1 className="font-bold text-[50px] mb-4">Ask Ai...</h1>
       <form action={onAsk} className="flex">
         <Input
