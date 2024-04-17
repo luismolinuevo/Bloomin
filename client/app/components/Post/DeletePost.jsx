@@ -4,20 +4,28 @@ import React from "react";
 import Modal from "../General/Modal";
 import { deletePost } from "@/app/lib/post";
 
-export default function DeletePost({ onClose, isVisable, post_id, token, setLoading }) {
+export default function DeletePost({
+  onClose,
+  isVisable,
+  post_id,
+  token,
+  setLoading,
+}) {
   const handleDelete = async () => {
     try {
+      setLoading(true);
       const postdelete = await deletePost(post_id, token);
       if (postdelete.success) {
         //have toast are something
       } else {
       }
       onClose();
+      setLoading(false);
     } catch (error) {
       console.log("There ha been a error deleting post");
     }
   };
-  
+
   return (
     <div>
       <Modal onClose={onClose} isVisable={isVisable}>

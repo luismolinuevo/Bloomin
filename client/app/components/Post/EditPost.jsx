@@ -32,6 +32,7 @@ export default function EditPost({ token, post, onClose, isVisible, setLoading }
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       let newImageUrl = imageUrl;
       if (data.image[0] !== undefined) {
         const upload = await uploadImage(data.image[0]);
@@ -56,6 +57,7 @@ export default function EditPost({ token, post, onClose, isVisible, setLoading }
 
       await updatePost(updatedPostData, token, post?.id);
       onClose();
+      setLoading(false);
     } catch (error) {
       console.error("Error updating post: ", error);
     }
