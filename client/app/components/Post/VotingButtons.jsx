@@ -3,7 +3,7 @@
 import { votePost } from "@/app/lib/post";
 import { useState, useEffect } from "react";
 
-export default function VotingButtons({ post, token }) {
+export default function VotingButtons({ post, token, setLoading }) {
   const [liked, setLiked] = useState(post?.userLike || null);
   const [postLikes, setPostLikes] = useState(post?.likeCount || 0);
 

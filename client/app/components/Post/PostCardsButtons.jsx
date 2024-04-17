@@ -3,8 +3,10 @@ import cookie from "js-cookie";
 import VotingButtons from "./VotingButtons";
 import FavoritePostButton from "./FavoritePostButton";
 import Link from "next/link";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function PostCardsButtons({ post }) {
+export default function PostCardsButtons({ post, setLoading }) {
   const token = cookie.get("user_token");
 
   return (
@@ -13,8 +15,9 @@ export default function PostCardsButtons({ post }) {
         token={token}
         post={post}
         post_upvotes={post?.post_upvotes}
+        setLoading={setLoading}
       />
-      <FavoritePostButton post={post} token={token} />
+      <FavoritePostButton post={post} token={token} setLoading={setLoading}/>
       <button className="border p-2 bg-gray-300 rounded-lg flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"

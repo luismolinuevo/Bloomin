@@ -89,7 +89,7 @@ export default function Post() {
 
         <div>
           {posts.map((post, index) => (
-            <PostCard key={index} post={post} token={token} />
+            <PostCard key={index} post={post} token={token} setLoading={setLoading}/>
           ))}
           <div ref={sentinelRef}></div>
           {loading && <LoadingSpinner />}

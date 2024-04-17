@@ -7,7 +7,7 @@ import ShowMoreText from "../General/ShowMoreText";
 import { useAppSelector } from "@/app/store/reduxhooks";
 import { AvatarDefault } from "../General/ProfilePic";
 
-export default function PostCard({ post, token }) {
+export default function PostCard({ post, token, setLoading }) {
   const userData = useAppSelector((state) => state.auth.userData);
   return (
     <div className="flex">
@@ -42,7 +42,7 @@ export default function PostCard({ post, token }) {
           </div>
         </div>
         <div>
-          <PostCardsButtons post={post} />
+          <PostCardsButtons post={post} setLoading={setLoading}/>
           <button>
             <img src="favs" alt="" />
           </button>

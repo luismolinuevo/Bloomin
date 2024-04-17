@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { favoritePost } from "@/app/lib/favorites";
 
-export default function FavoritePostButton({ post, token }) {
+export default function FavoritePostButton({ post, token, setLoading }) {
   const [faved, setFaved] = useState(post?.userFav || 0); //doing it this way so api doest have to refresh, I would also use web sockets.
   const [favLikes, setFavLikes] = useState(post?.favCount || 0);
 
@@ -16,6 +16,7 @@ export default function FavoritePostButton({ post, token }) {
 
   const handleFavorite = async () => {
     try {
+      setLoading(true);
       const data = await favoritePost(post?.id, token);
       console.log(data);
       //true
@@ -28,6 +29,8 @@ export default function FavoritePostButton({ post, token }) {
           setFavLikes(favLikes + 1);
         }
       }
+
+      setLoading(false);
     } catch (error) {
       console.log("There has been a error faving the post ", error);
     }
