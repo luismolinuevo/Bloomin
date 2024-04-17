@@ -14,8 +14,8 @@ export default function page() {
 
   const onAsk = async () => {
     try {
+      setLoading(true);
       if (token && prompt != "") {
-        setLoading(true);
         const data = {
           prompt,
         };
@@ -32,6 +32,7 @@ export default function page() {
       console.error("There has been a error with ask ai", error);
     }
   };
+
   return (
     <div className="mx-10 md:mx-20">
       {loading && <LoadingSpinner />}
