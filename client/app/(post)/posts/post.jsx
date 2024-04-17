@@ -8,6 +8,7 @@ import cookie from "js-cookie";
 import { useEffect, useState, useRef } from "react";
 import { getAllPosts } from "@/app/lib/post.js";
 import SortPost from "@/app/components/Post/SortPost.jsx";
+import LoadingSpinner from "@/app/components/General/LoadingIcon.jsx";
 
 export default function Post() {
   const userId = useAppSelector((state) => state.auth.userData);
@@ -28,7 +29,7 @@ export default function Post() {
 
       try {
         const response = await getAllPosts(token, lastPostId, sortType);
-        console.log(response)
+        console.log(response);
         if (response.success) {
           console.log(response.posts);
           const newPosts = response.posts.filter(
@@ -88,10 +89,10 @@ export default function Post() {
 
         <div>
           {posts.map((post, index) => (
-            <PostCard key={index} post={post} token={token}/>
+            <PostCard key={index} post={post} token={token} />
           ))}
           <div ref={sentinelRef}></div>
-          {loading && <p>Loading...</p>}
+          {loading && <LoadingSpinner />}
         </div>
       </div>
     </div>
