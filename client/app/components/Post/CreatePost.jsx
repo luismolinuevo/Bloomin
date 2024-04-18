@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../General/Modal";
@@ -19,7 +17,6 @@ export default function CreatePost({ setLoading }) {
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm();
   const token = cookie.get("user_token");
@@ -31,15 +28,12 @@ export default function CreatePost({ setLoading }) {
       if (data.image[0] != null) {
         const upload = await uploadImage(data.image[0]);
         if (upload.data) {
-          console.log(upload.data);
           imageUrl = upload.data;
         } else {
-          //need to have some from a error alert
           console.error("Error uploading image");
         }
       }
 
-      console.log("Image URL " + imageUrl);
       let postData = {
         title: data.title,
         description: data.description,
@@ -47,8 +41,8 @@ export default function CreatePost({ setLoading }) {
         target: data.target,
         livingSituation: data.housingType,
         implementationDifficulty: data.implementationDifficulty,
-        city: "bronx",
-        img: imageUrl, // Assuming only one image is uploaded
+        city: data.city,
+        img: imageUrl,
       };
 
       if (token != null) {
@@ -72,100 +66,85 @@ export default function CreatePost({ setLoading }) {
 
   return (
     <div>
-      <button onClick={() => setOpenModal(!openModal)}>
+      <button onClick={() => setOpenModal(!openModal)} className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4">
         Create a new post
       </button>
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
-        <form onSubmit={handleSubmit(onSubmit)} className="">
-          <h1 className="text-[25px] text-center text-bold">Create Post</h1>
-          <div className="flex gap-5 my-5 justify-between">
-            <div>
-              <label>Title</label>
-              <Input
-                type="text"
-                label="Title"
-                {...register("title", { required: true })}
-                error={errors.title}
-                helperText={errors.title && "Title is required"}
-                className="w-[230px]"
-                size="md"
-              />
-            </div>
-            <div>
-              <label>Who is it good for?</label>
-              <Input
-                type="text"
-                label="Who is it good for?"
-                {...register("target")}
-                className="w-[230px]"
-                size="md"
-              />
-            </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+          <h1 className="text-xl font-semibold mb-4">Create Post</h1>
+          <div className="mb-4">
+            <label className="block mb-1">Title</label>
+            <Input
+              type="text"
+              label="Title"
+              {...register("title", { required: true })}
+              error={errors.title}
+            />
+            {errors.title && <p className="text-red-500">Title is required</p>}
           </div>
-          <div>
-            <label>Description</label>
+          <div className="mb-4">
+            <label className="block mb-1">Who is it good for?</label>
+            <Input
+              type="text"
+              label="Who is it good for?"
+              {...register("target")}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1">Description</label>
             <Textarea
               type="text"
               label="Description"
               {...register("description", { required: true })}
               error={errors.description}
-              helperText={errors.description && "Description is required"}
-              className="w-[480px]"
             />
+            {errors.description && <p className="text-red-500">Description is required</p>}
           </div>
-          <div className="flex gap-5 my-5 justify-between">
-            <div>
-              <label>Cost</label>
+          <div className="flex flex-wrap mb-4">
+            <div className="w-full md:w-1/2 md:pr-2 mb-4 md:mb-0">
+              <label className="block mb-1">Cost</label>
               <Input
                 type="number"
                 label="Cost"
                 {...register("cost")}
-                className="w-[230px]"
-                size="md"
               />
             </div>
-            <div>
-              <label>City</label>
+            <div className="w-full md:w-1/2 md:pl-2">
+              <label className="block mb-1">City</label>
               <Input
                 type="text"
                 label="City"
                 {...register("city", { required: true })}
                 error={errors.city}
-                helperText={errors.city && "City is required"}
-                className="w-[230px]"
-                size="md"
               />
+              {errors.city && <p className="text-red-500">City is required</p>}
             </div>
           </div>
-          <div className="flex justify-between my-5">
-            <div>
-              <label>Housing Type</label>
+          <div className="flex flex-wrap mb-4">
+            <div className="w-full md:w-1/2 md:pr-2 mb-4 md:mb-0">
+              <label className="block mb-1">Housing Type</label>
               <Select
                 {...register("housingType", { required: true })}
                 label="Housing Type"
                 options={housingOption}
                 onChange={handleHousingTypeChange}
-                className="w-[233px]"
               />
             </div>
-            <div>
-              <label>Implementation Difficulty</label>
+            <div className="w-full md:w-1/2 md:pl-2">
+              <label className="block mb-1">Implementation Difficulty</label>
               <Select
                 label="Implementation Difficulty"
                 {...register("implementationDifficulty", { required: true })}
                 options={implementationDifficulty}
                 onChange={handleImplementationDifficultyChange}
-                className="w-[233px]"
               />
             </div>
           </div>
-
-          <div className="flex flex-col gap-1 my-5">
-            <label>Upload Image</label>
+          <div className="mb-4">
+            <label className="block mb-1">Upload Image</label>
             <input type="file" {...register("image")} />
           </div>
-
-          <div className="flex justify-center ">
+          <div className="flex justify-center">
             <Button
               type="submit"
               className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
