@@ -11,8 +11,8 @@ export default function PostSearch({ page }) {
   console.log("Entered in here");
 
   return (
-    <div className="px-12 md:px-16 py-20">
-      <h1 className={`${titleStyles} text-[40px]`}>
+    <div className="px-12 md:px-16 py-10 md:py-20">
+      <h1 className={`${titleStyles} text-[30px] md:text-[40px]`}>
         Find Sustainable Solutions for Your Home
       </h1>
       <div>
