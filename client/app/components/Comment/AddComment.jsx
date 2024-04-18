@@ -24,10 +24,10 @@ export default function AddComment({ post_id, token, setRefresh, refresh }) {
 
   return (
     <div>
-      <div className="flex gap-4 justify-between mt-5">
+      <div className="flex gap-2 lg:gap-4 justify-between mt-5">
         <input
           type="text"
-          className="border bg-grey-1 w-[70%] rounded-lg p-2 "
+          className="border bg-grey-1 w-auto lg:w-[70%] rounded-lg p-2 "
           placeholder="Add comment"
           onChange={(e) => setTextBody(e.target.value)}
         />

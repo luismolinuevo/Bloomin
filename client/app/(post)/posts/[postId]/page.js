@@ -16,15 +16,15 @@ export default function PostId() {
   const postId = params.postId;
   const [post, setPost] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(false);
   const token = cookie.get("user_token");
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        setLoading(true);
         if (postId) {
-          console.log("Entered");
           const data = await getPost(postId, token);
-          console.log(data);
           if (data.success) {
             setPost(data.post);
           }
@@ -32,6 +32,8 @@ export default function PostId() {
           console.log("No post Id");
           router.push("/posts");
         }
+
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -42,8 +44,8 @@ export default function PostId() {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[800px]">
-        <PostCard post={post} token={token}/>
+      <div className="">
+        <PostCard post={post} token={token} setLoading={setLoading}/>
         <Comments post={post} setRefresh={setRefresh} refresh={refresh} post_id={postId}/>
       </div>
     </div>

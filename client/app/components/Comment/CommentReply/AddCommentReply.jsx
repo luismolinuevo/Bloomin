@@ -42,7 +42,7 @@ export default function AddCommentReply({
 
   return (
     <div>
-      <div className="flex gap-4 justify-between mt-5">
+      <div className="mt-5">
         <Input
           type="text"
           variant="standard"
