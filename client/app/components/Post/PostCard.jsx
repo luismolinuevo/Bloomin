@@ -24,9 +24,9 @@ export default function PostCard({ post, token, setLoading }) {
             <PostMenu post={post} token={token} setLoading={setLoading} />
           )}
         </div>
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row">
           {post?.img != null && (
-            <div className=" mr-7 flex-shrink-0">
+            <div className="lg:mr-7 flex-shrink-0">
               <img
                 src={post?.img}
                 className="bg-cover bg-center object-center bg-black rounded-xl w-[400px] h-[300px]"
