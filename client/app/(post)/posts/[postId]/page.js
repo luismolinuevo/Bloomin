@@ -43,15 +43,17 @@ export default function PostId() {
   }, [postId, refresh]);
 
   return (
-    <div className="flex justify-center px-[50px] md:px-[80px]">
+    <div className="flex justify-center px-12 md:px-16 ">
       <div className="">
         <PostCard post={post} token={token} setLoading={setLoading} />
-        <Comments
-          post={post}
-          setRefresh={setRefresh}
-          refresh={refresh}
-          post_id={postId}
-        />
+        <div className=" w-[275px] md:w-[400px]">
+          <Comments
+            post={post}
+            setRefresh={setRefresh}
+            refresh={refresh}
+            post_id={postId}
+          />
+        </div>
       </div>
     </div>
   );

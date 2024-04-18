@@ -45,7 +45,7 @@ export default function CommentReplies({
   }, [refreshReplies]); // Trigger the effect when refreshReplies changes
 
   return (
-    <div className="flex gap-3 mx-4">
+    <div className="flex gap-3 md:mx-4">
       {!showReplies ? (
         <div className="flex items-center gap-2">
           <button>
@@ -78,7 +78,7 @@ export default function CommentReplies({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-4 sm:w-6 h-4 sm:h-6"
             onClick={() => setShowReplies(false)}
           >
             <path
@@ -102,7 +102,7 @@ export default function CommentReplies({
           </div>
 
           {comments && comments.length != 0 ? (
-            <div>
+            <div className=" w-[235px] md:w-[400px]">
               {comments.map((comment, index) => (
                 <div className="mb-5">
                   <CommentCard
