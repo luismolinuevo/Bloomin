@@ -6,7 +6,7 @@ import PostCard from "@/app/components/Post/PostCard";
 import { useRouter, useParams } from "next/navigation";
 import Comments from "@/app/components/Comment/Comments";
 import { useAppSelector } from "@/app/store/reduxhooks";
-import cookie from "js-cookie"
+import cookie from "js-cookie";
 
 export default function PostId() {
   const router = useRouter();
@@ -43,10 +43,15 @@ export default function PostId() {
   }, [postId, refresh]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center px-[50px] md:px-[80px]">
       <div className="">
-        <PostCard post={post} token={token} setLoading={setLoading}/>
-        <Comments post={post} setRefresh={setRefresh} refresh={refresh} post_id={postId}/>
+        <PostCard post={post} token={token} setLoading={setLoading} />
+        <Comments
+          post={post}
+          setRefresh={setRefresh}
+          refresh={refresh}
+          post_id={postId}
+        />
       </div>
     </div>
   );

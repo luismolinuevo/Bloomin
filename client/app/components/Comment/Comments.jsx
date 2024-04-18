@@ -7,19 +7,17 @@ import SortComments from "./SortComments";
 
 export default function Comments({ post, setRefresh, refresh, post_id }) {
   const [comments, setComments] = useState([]);
+  
   const token = cookie.get("user_token");
   useEffect(() => {
     const fetchComments = async () => {
       try {
         if (post) {
-          // Ensure post is not null or undefined
-          console.log(post);
           const data = await getComments(post_id, token);
-          console.log(data);
+
           if (data.success) {
             setComments(data.comments);
           }
-          
         }
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -41,7 +39,6 @@ export default function Comments({ post, setRefresh, refresh, post_id }) {
       {comments && comments.length != 0 ? (
         <div>
           {comments.map((comment) => (
-            // Render each comment here
             <CommentCard
               key={comment?.id}
               comment={comment}

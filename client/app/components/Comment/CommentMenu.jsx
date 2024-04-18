@@ -18,7 +18,7 @@ export default function CommentMenu({
   type,
 }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  console.log(comment);
+
   return (
     <div>
       <Menu>
