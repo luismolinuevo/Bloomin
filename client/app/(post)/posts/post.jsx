@@ -75,8 +75,8 @@ export default function Post() {
   return (
     <div>
       <PostSearch />
-      <div className="mx-16 flex justify-between items-center">
-        <p className="text-[40px] text-[#459857]">Recommended</p>
+      <div className="mx-16 flex justify-between items-center gap-4">
+        <p className="text-[25px] md:text-[40px] pb-4 text-[#459857]">Recommended</p>
         <SortPost
           setSortType={handleSortTypeChange}
           onChange={onChange}
@@ -85,11 +85,16 @@ export default function Post() {
       </div>
 
       <div className="mx-16">
-        <CreatePost setLoading={setLoading}/>
+        <CreatePost setLoading={setLoading} />
 
         <div>
           {posts.map((post, index) => (
-            <PostCard key={index} post={post} token={token} setLoading={setLoading}/>
+            <PostCard
+              key={index}
+              post={post}
+              token={token}
+              setLoading={setLoading}
+            />
           ))}
           <div ref={sentinelRef}></div>
           {loading && <LoadingSpinner />}

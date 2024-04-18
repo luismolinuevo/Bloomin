@@ -83,115 +83,69 @@ export default function EditPost({ token, post, onClose, isVisible, setLoading }
   };
 
   return (
-    <div>
-      <Modal onClose={onClose} isVisable={isVisible}>
-        <form onSubmit={handleSubmit(onSubmit)} className="">
-          <h1 className="text-[25px] text-center font-bold">Edit Post</h1>
-          <div className="flex gap-5 my-5 justify-between">
-            <div>
-              <label>Title</label>
-              <Input
-                type="text"
-                label="Title"
-                {...register("title", { required: true })}
-                error={errors.title}
-                helperText={errors.title && "Title is required"}
-                className="w-[230px]"
-                size="md"
-              />
-            </div>
-            <div>
-              <label>Who is it good for?</label>
-              <Input
-                type="text"
-                label="Who is it good for?"
-                {...register("target")}
-                className="w-[230px]"
-                size="md"
-              />
-            </div>
-          </div>
-          <div>
-            <label>Description</label>
-            <Textarea
-              type="text"
-              label="Description"
-              {...register("description", { required: true })}
-              error={errors.description}
-              helperText={errors.description && "Description is required"}
-              className="w-[480px]"
-            />
-          </div>
-          <div className="flex gap-5 my-5 justify-between">
-            <div>
-              <label>Cost</label>
-              <Input
-                type="number"
-                label="Cost"
-                {...register("cost")}
-                className="w-[230px]"
-                size="md"
-              />
-            </div>
-            <div>
-              <label>City</label>
-              <Input
-                type="text"
-                label="City"
-                {...register("city", { required: true })}
-                error={errors.city}
-                helperText={errors.city && "City is required"}
-                className="w-[230px]"
-                size="md"
-              />
-            </div>
-          </div>
-          <div className="flex gap-5 my-5 justify-between">
-            <div>
-              <label>Housing Type</label>
-              <Select
-                {...register("housingType", { required: true })}
-                label="Housing Type"
-                options={housingOption}
-                onChange={handleHousingTypeChange}
-                className="w-[230px]"
-                defaultValue={housingOption.find(
-                    (option) => option.value === post?.livingSituation
-                  )}
-              />
-            </div>
-            <div>
-              <label>Implementation Difficulty</label>
-              <Select
-                label="Implementation Difficulty"
-                {...register("implementationDifficulty", { required: true })}
-                options={implementationDifficulty}
-                onChange={handleImplementationDifficultyChange}
-                className="w-[230px]"
-                defaultValue={implementationDifficulty.find(
-                    (option) => option.value === post?.implementationDifficulty
-                  )}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-1 my-5">
-            <label>Upload Image</label>
-            <input
-              type="file"
-              {...register("image")}
-              onChange={handleImageChange}
-            />
-          </div>
-          <div className="flex justify-center">
-            <Button
-              type="submit"
-              className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
-      </Modal>
-    </div>
+    <Modal onClose={onClose} isVisable={isVisible}>
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+        <h1 className="text-xl font-semibold mb-4">Edit Post</h1>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Input
+            type="text"
+            label="Title"
+            {...register("title", { required: true })}
+            error={errors.title}
+          />
+          <Input
+            type="text"
+            label="Who is it good for?"
+            {...register("target")}
+          />
+          <Textarea
+            type="text"
+            label="Description"
+            {...register("description", { required: true })}
+            error={errors.description}
+          />
+          <Input
+            type="number"
+            label="Cost"
+            {...register("cost")}
+          />
+          <Input
+            type="text"
+            label="City"
+            {...register("city", { required: true })}
+            error={errors.city}
+          />
+          <Select
+            {...register("housingType", { required: true })}
+            label="Housing Type"
+            options={housingOption}
+            onChange={handleHousingTypeChange}
+            defaultValue={housingOption.find(
+              (option) => option.value === post?.livingSituation
+            )}
+          />
+          <Select
+            label="Implementation Difficulty"
+            {...register("implementationDifficulty", { required: true })}
+            options={implementationDifficulty}
+            onChange={handleImplementationDifficultyChange}
+            defaultValue={implementationDifficulty.find(
+              (option) => option.value === post?.implementationDifficulty
+            )}
+          />
+          <input
+            type="file"
+            {...register("image")}
+            onChange={handleImageChange}
+          />
+          <Button
+            type="submit"
+            className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Modal>
   );
 }
