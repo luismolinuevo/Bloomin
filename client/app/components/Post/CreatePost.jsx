@@ -66,7 +66,7 @@ export default function CreatePost({ setLoading }) {
 
   return (
     <div>
-      <button onClick={() => setOpenModal(!openModal)} className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4">
+      <button onClick={() => setOpenModal(!openModal)} className="border-[#459858] border text-[#459858] px-4 py-2 rounded-md mb-4">
         Create a new post
       </button>
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
