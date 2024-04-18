@@ -8,10 +8,10 @@ export default function PostSearch({ page }) {
   const inputStyles = page == "home" ? "bg-white" : "bg-[#D9D9D9] w-[500px]";
   const subTitleStyles = page == "home" ? "text-white" : "text-black";
 
-  console.log("Entered in here")
+  console.log("Entered in here");
 
   return (
-    <div className="px-16 py-20">
+    <div className="px-12 md:px-16 py-20">
       <h1 className={`${titleStyles} text-[40px]`}>
         Find Sustainable Solutions for Your Home
       </h1>
@@ -22,22 +22,20 @@ export default function PostSearch({ page }) {
           className={inputStyles}
           // className="bg-black"
         />
-        <div className="flex gap-20 mt-10">
-          <div>
+        <div className="flex flex-col md:flex-row md:justify-normal md:items-end md:gap-20 mt-4">
+          <div className="mb-4 md:mb-0">
             <label className={subTitleStyles}>Living Situation</label>
             <Select label="-please select-" className="bg-white">
-              <Option>TEst</Option>
+              <Option>Test</Option>
             </Select>
           </div>
-          {/* <div className="flex"> */}
-          <div>
+          <div className="mb-4 md:mb-0">
             <label className={subTitleStyles}>Type</label>
             <Select label="-please select-" className="bg-white">
-              <Option>TEst</Option>
+              <Option>Test</Option>
             </Select>
           </div>
-          {/* </div> */}
-          <div className="flex items-end">
+          <div>
             <button className="bg-[#459858] px-4 rounded-lg text-white h-[40px]">
               Submit
             </button>
