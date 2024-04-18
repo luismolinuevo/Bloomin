@@ -14,8 +14,10 @@ export default function PostCard({ post, token, setLoading }) {
       <div className="border-b p-4 w-full">
         <div className="flex justify-between font-sans">
           <div className="flex items-center gap-4 mb-2">
-            <AvatarDefault size={"lg"} />
-            <h3 className="text-[19px] font-bold">{post?.user?.userName}</h3>
+            <AvatarDefault size={"md"} />
+            <h3 className="text-[16px] sm:text-[19px] font-bold break-words">
+              {post?.user?.userName}
+            </h3>
           </div>
 
           {post?.user?.id == userData?.id && (
@@ -31,10 +33,12 @@ export default function PostCard({ post, token, setLoading }) {
               />
             </div>
           )}
-          <div className="w-[65%]">
-            <h1 className="text-[25px] break-words font-bold">{post?.title}</h1>
+          <div className="w-full sm:w-[50%] max-w-[600px]">
+            <h1 className="text-[22px] sm:text-[25px] break-words font-bold">
+              {post?.title}
+            </h1>
             <p className="break-words text-[18px]">
-              {/* <ShowMoreText text={post?.description} maxLength={150} /> */}
+              <ShowMoreText text={post?.description} maxLength={150} />
             </p>
             <div className="text-[16px] mt-4 font-bold">
               <h4>Cost: {post?.cost}</h4>
