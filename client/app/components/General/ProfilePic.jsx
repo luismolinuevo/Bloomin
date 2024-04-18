@@ -11,6 +11,7 @@ export function AvatarDefault({ src, size }) {
       alt="avatar"
       size={size ? size : "md"}
       title="Profile Picture"
+      className="z-[-1]"
     />
   );
 }
