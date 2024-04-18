@@ -6,7 +6,6 @@ import { likeComment } from "@/app/lib/commentreply";
 export default function CommentReplyLikeButtons({ token, comment }) {
   const [liked, setLiked] = useState(comment?.userLike);
   const [likeCount, setLikeCount] = useState(comment?.replyLikeCount);
-  console.log(comment);
   
   const onClick = async (type) => {
     try {

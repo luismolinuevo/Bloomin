@@ -24,7 +24,6 @@ export default function CommentReplies({
       setShowReplies(true);
 
       if (data?.success) {
-        console.log(data);
         setComments(data?.comments);
         setRefresh(!refresh);
       } else {

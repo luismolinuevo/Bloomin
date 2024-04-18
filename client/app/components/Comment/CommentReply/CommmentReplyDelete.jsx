@@ -15,7 +15,6 @@ export default function DeleteCommentReply({
   const handleDelete = async () => {
     try {
       const commentdelete = await deleteCommentReply(comment_id, token);
-      console.log(commentdelete);
       if (commentdelete.success) {
         setRefresh(!refresh);
       }
