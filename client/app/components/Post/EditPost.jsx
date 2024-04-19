@@ -93,11 +93,11 @@ export default function EditPost({ token, post, onClose, isVisible, setLoading }
             {...register("title", { required: true })}
             error={errors.title}
           />
-          <Input
+          {/* <Input
             type="text"
             label="Who is it good for?"
             {...register("target")}
-          />
+          /> */}
           <Textarea
             type="text"
             label="Description"

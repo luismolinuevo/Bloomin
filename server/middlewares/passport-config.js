@@ -53,7 +53,7 @@ passport.use(
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
             userName: profile.displayName,
-            imageUrl: profile.photos[0].value
+            imageUrl: profile.photos[0].value,
           },
         });
 
@@ -63,7 +63,8 @@ passport.use(
         // Create a JWT token with an expiration time and send it in the done function
         const token = jwt.sign(
           {
-            userId: user.id,
+            id: user.id,
+            userName: user.userName,
             email: user.email,
           },
           JSON_KEY,

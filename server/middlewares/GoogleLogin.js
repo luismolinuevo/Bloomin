@@ -36,7 +36,7 @@ passport.use(
 
         // Create a JWT token with an expiration time and send it in the done function
         const token = jwt.sign(
-          { userId: user.id, email: user.email, fullName: user.fullName },
+          { id: user.id, email: user.email, fullName: user.fullName },
           JSON_KEY,
           {
             expiresIn,

@@ -82,14 +82,14 @@ export default function CreatePost({ setLoading }) {
             />
             {errors.title && <p className="text-red-500">Title is required</p>}
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block mb-1">Who is it good for?</label>
             <Input
               type="text"
               label="Who is it good for?"
               {...register("target")}
             />
-          </div>
+          </div> */}
           <div className="mb-4">
             <label className="block mb-1">Description</label>
             <Textarea
