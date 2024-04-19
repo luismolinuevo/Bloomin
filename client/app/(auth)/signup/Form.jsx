@@ -9,11 +9,14 @@ import cookie from "js-cookie";
 export default function Form() {
   const {
     register,
-    data,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
   const router = useRouter();
+
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
 
   const onSubmit = async (formData) => {
     try {
@@ -53,25 +56,54 @@ export default function Form() {
           />
           {errors.email && <p>Email is required.</p>}
           <input
-            {...register("userName", { required: true })}
+            {...register("userName", {
+              required: true,
+              minLength: 3,
+              maxLength: 14,
+            })}
             className="bg-white p-1 rounded-lg h-[50px]"
             placeholder="Username"
           />
-          {errors.userName && <p>Username is required.</p>}
+          {errors.userName?.type === "required" && <p>Username is required.</p>}
+          {errors.userName?.type === "minLength" && (
+            <p>Username must be at least 3 characters long.</p>
+          )}
+          {errors.userName?.type === "maxLength" && (
+            <p>Username must not exceed 14 characters.</p>
+          )}
           <input
-            {...register("password", { required: true })}
+            {...register("password", {
+              required: true,
+              minLength: 8,
+              maxLength: 30,
+            })}
             className="bg-white p-1 rounded-lg h-[50px]"
             type="password"
             placeholder="Password"
           />
-          {errors.password && <p>Password is required.</p>}
+          {errors.password?.type === "required" && <p>Password is required.</p>}
+          {errors.password?.type === "minLength" && (
+            <p>Password must be at least 8 characters long.</p>
+          )}
+          {errors.password?.type === "maxLength" && (
+            <p>Password must not exceed 30 characters.</p>
+          )}
           <input
-            {...register("confirmPassword", { required: true })}
+            {...register("confirmPassword", {
+              required: true,
+              validate: (value) => value === password,
+            })}
             className="bg-white p-1 rounded-lg h-[50px]"
             type="password"
             placeholder="Confirm Password"
           />
-          {errors.confirmPassword && <p>Confirm Password is required.</p>}
+          {errors.confirmPassword?.type === "required" && (
+            <p>Confirm Password is required.</p>
+          )}
+          {errors.confirmPassword?.type === "validate" && (
+            <p>Passwords do not match.</p>
+          )}
+
           <div className="flex justify-center mt-5">
             <input
               type="submit"
