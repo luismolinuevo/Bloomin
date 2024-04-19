@@ -114,7 +114,7 @@ const getAllPost = async (req, res) => {
           user: true,
           like: true,
         },
-        // where,
+        where,
         cursor: {
           id: parseInt(cursor),
         },
@@ -127,7 +127,7 @@ const getAllPost = async (req, res) => {
           user: true,
           like: true,
         },
-        // where,
+        where,
         take: limit,
         orderBy,
       });

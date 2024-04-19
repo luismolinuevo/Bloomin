@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Select, Option, Input } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
+import Select from "react-select";
+import {
+  implementationDifficulty,
+  housingOption,
+} from "../../utils/SelectOptions.js";
 
 export default function PostSearch({
   page,
@@ -14,15 +19,23 @@ export default function PostSearch({
   const inputStyles = page == "home" ? "bg-white" : "bg-[#D9D9D9] w-[500px]";
   const subTitleStyles = page == "home" ? "text-white" : "text-black";
 
-  const [filterLocation, setFilterLocation] = useState(null);
-  const [filterLivingSituation, setFilterLivingSituation] = useState(null);
-  const [filterDifficulty, setFilterDifficulty] = useState(null);
+  const [filterLocation, setFilterLocation] = useState("");
+  const [filterLivingSituation, setFilterLivingSituation] = useState("");
+  const [filterDifficulty, setFilterDifficulty] = useState("");
 
   const filterPost = () => {
     location(filterLocation);
     livingSituation(filterLivingSituation);
     difficulty(filterDifficulty);
     reload();
+  };
+
+  const handleHousingTypeChange = (selectedOption) => {
+    setFilterLivingSituation(selectedOption.value);
+  };
+
+  const handleImplementationDifficultyChange = (selectedOption) => {
+    setFilterDifficulty(selectedOption.value);
   };
 
   return (
@@ -41,18 +54,46 @@ export default function PostSearch({
         <div className="flex flex-col md:flex-row md:justify-normal md:items-end md:gap-20 mt-4">
           <div className="mb-4 md:mb-0">
             <label className={subTitleStyles}>Living Situation</label>
-            <Select label="-please select-" className="bg-white">
-              <Option>Test</Option>
-            </Select>
+            {/* <Select
+              value={filterLivingSituation}
+              onChange={handleHousingTypeChange}
+              options={housingOption}
+              defaultValue={housingOption.find(
+                (option) => option.value === filterLivingSituation
+              )}
+
+            /> */}
+            <Select
+              value={housingOption.find(
+                (option) => option.value === filterLivingSituation
+              )}
+              onChange={handleHousingTypeChange}
+              options={housingOption}
+            />
           </div>
           <div className="mb-4 md:mb-0">
             <label className={subTitleStyles}>Type</label>
-            <Select label="-please select-" className="bg-white">
-              <Option>Test</Option>
-            </Select>
+            <Select
+              value={implementationDifficulty.find(
+                (option) => option.value === filterDifficulty
+              )}
+              onChange={handleImplementationDifficultyChange}
+              options={implementationDifficulty}
+            />
+            {/* <Select
+              value={filterDifficulty}
+              onChange={handleImplementationDifficultyChange}
+              options={implementationDifficulty}
+              defaultValue={implementationDifficulty.find(
+                (option) => option.value === filterDifficulty
+              )}
+            /> */}
           </div>
           <div>
-            <button className="bg-[#459858] px-4 rounded-lg text-white h-[40px]" onClick={filterPost}>
+            <button
+              className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+              onClick={filterPost}
+            >
               Submit
             </button>
           </div>

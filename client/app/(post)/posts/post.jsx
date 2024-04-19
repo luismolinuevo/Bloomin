@@ -19,9 +19,9 @@ export default function Post() {
   const [posts, setPosts] = useState([]);
   const [lastPostId, setLastPostId] = useState(null);
   const [allPostsFetched, setAllPostsFetched] = useState(false);
-  const [location, setLocation] = useState(null);
-  const [livingSituation, setLivingSituation] = useState(null);
-  const [difficulty, setDifficulty] = useState(null);
+  const [location, setLocation] = useState("");
+  const [livingSituation, setLivingSituation] = useState("");
+  const [difficulty, setDifficulty] = useState("");
   const sentinelRef = useRef(null);
 
   useEffect(() => {
