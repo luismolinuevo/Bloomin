@@ -86,7 +86,7 @@ export default function Page() {
   };
 
   return (
-    <div className="px-8">
+    <div className="">
       <ProfileHeader user={userData} token={token} setLoading={setLoading} />
       <PostTab setTab={handleTabChange} tab={tab} />
       <div className="mx-16">

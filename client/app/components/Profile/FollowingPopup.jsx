@@ -5,6 +5,7 @@ import Modal from "../General/Modal";
 import FollowButton from "./FollowButton";
 import UserCard from "../General/UserCard";
 import { getAllUserFollowing } from "@/app/lib/follower";
+import { Input } from "../../utils/MaterialTailwind";
 
 //Following up that opens when a user clicks user following count
 export default function FollowingPopup({
@@ -56,11 +57,14 @@ export default function FollowingPopup({
         isVisable={openModal && following && following.length != 0}
       >
         <div>
-          <input
-            type="text"
-            placeholder="Search by username"
-            onChange={handleSearchChange}
-          />
+          <div className="my-6">
+            <Input
+              type="text"
+              placeholder="Search by username"
+              onChange={handleSearchChange}
+              className=""
+            />
+          </div>
           {following && following.length != 0
             ? following.map((user, index) => (
                 <UserCard token={token} user={user} key={index} />

@@ -78,8 +78,8 @@ export default function PostTab({ setTab, tab }) {
   ];
 
   return (
-    <div className="my-8">
-      <Tabs value={tab}>
+    <div className="my-8 ">
+      <Tabs value={tab} className="z-[-1]">
         <TabsHeader>
           {data.map(({ label, value, icon }) => (
             <Tab

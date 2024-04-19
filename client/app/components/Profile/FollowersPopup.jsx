@@ -54,11 +54,12 @@ export default function FollowersPopup({
         onClose={() => setOpenModal(false)}
         isVisable={openModal && followers.length != 0}
       >
-        <div>
+        <div className="flex flex-col">
           <input
             type="text"
             placeholder="Search by username"
             onChange={handleSearchChange}
+            className=""
           />
           {followers && followers.length != 0
             ? followers.map((user, index) => <UserCard token={token} user={user} key={index} />)
