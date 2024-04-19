@@ -1,9 +1,16 @@
-export const getAllPosts = async (token, cursor, sort) => {
+export const getAllPosts = async (
+  token,
+  cursor,
+  sort,
+  location,
+  livingSituation,
+  difficulty
+) => {
   try {
     const posts = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts?cursor=${
         cursor || ""
-      }&&sort=${sort}`,
+      }&&sort=${sort}&&location=${location}&&livingSituation=${livingSituation}&&difficulty=${difficulty}`,
       {
         method: "GET",
         headers: {
@@ -206,7 +213,7 @@ export const getAllUserPosts = async (token, cursor, sort, filter, user_id) => {
 
       return res;
     } else {
-      console.log("Unable to fetch errors")
+      console.log("Unable to fetch errors");
     }
   } catch (error) {
     console.log(error.message);

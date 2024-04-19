@@ -18,7 +18,7 @@ const createPost = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      newPost
+      newPost,
     });
   } catch (error) {
     console.log(error);
@@ -68,7 +68,14 @@ const deletePost = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const { cursor, limit = 15, sort } = req.query;
+    const {
+      cursor,
+      limit = 15,
+      sort,
+      location,
+      livingSituation,
+      difficulty,
+    } = req.query;
 
     // Define the default sort order
     let orderBy = { createdAt: "desc" }; // Default to newest to oldest
@@ -82,6 +89,18 @@ const getAllPost = async (req, res) => {
       orderBy = { like: { _count: "desc" } }; // Sort by the count of likes in descending order
     }
 
+    // Define filter conditions
+    const where = {};
+    if (location) {
+      where.city = location;
+    }
+    if (livingSituation) {
+      where.livingSituation = livingSituation;
+    }
+    if (difficulty) {
+      where.implementationDifficulty = difficulty;
+    }
+
     // Retrieve posts with associated user, applying pagination
     let posts;
     if (cursor) {
@@ -90,6 +109,7 @@ const getAllPost = async (req, res) => {
           user: true,
           like: true,
         },
+        where,
         cursor: {
           id: parseInt(cursor),
         },
@@ -102,6 +122,7 @@ const getAllPost = async (req, res) => {
           user: true,
           like: true,
         },
+        where,
         take: limit,
         orderBy,
       });
