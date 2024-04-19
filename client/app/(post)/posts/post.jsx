@@ -19,6 +19,9 @@ export default function Post() {
   const [posts, setPosts] = useState([]);
   const [lastPostId, setLastPostId] = useState(null);
   const [allPostsFetched, setAllPostsFetched] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [livingSituation, setLivingSituation] = useState(null);
+  const [difficulty, setDifficulty] = useState(null);
   const sentinelRef = useRef(null);
 
   useEffect(() => {
@@ -28,7 +31,14 @@ export default function Post() {
       console.log(sortType);
 
       try {
-        const response = await getAllPosts(token, lastPostId, sortType);
+        const response = await getAllPosts(
+          token,
+          lastPostId,
+          sortType,
+          location,
+          livingSituation,
+          difficulty
+        );
         console.log(response);
         if (response.success) {
           console.log(response.posts);
@@ -81,7 +91,12 @@ export default function Post() {
 
   return (
     <div>
-      <PostSearch />
+      <PostSearch
+        location={setLocation}
+        livingSituation={setLivingSituation}
+        difficulty={setDifficulty}
+        reload={reload}
+      />
       <div className="mx-16 flex justify-between items-center gap-4">
         <p className="text-[25px] md:text-[40px] pb-4 text-[#459857]">
           Recommended

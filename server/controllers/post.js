@@ -90,14 +90,19 @@ const getAllPost = async (req, res) => {
     }
 
     // Define filter conditions
+    // Define filter conditions
     const where = {};
-    if (location) {
+    if (location !== undefined && location !== null && location !== "") {
       where.city = location;
     }
-    if (livingSituation) {
+    if (
+      livingSituation !== undefined &&
+      livingSituation !== null &&
+      livingSituation !== ""
+    ) {
       where.livingSituation = livingSituation;
     }
-    if (difficulty) {
+    if (difficulty !== undefined && difficulty !== null && difficulty !== "") {
       where.implementationDifficulty = difficulty;
     }
 
@@ -109,7 +114,7 @@ const getAllPost = async (req, res) => {
           user: true,
           like: true,
         },
-        where,
+        // where,
         cursor: {
           id: parseInt(cursor),
         },
@@ -122,7 +127,7 @@ const getAllPost = async (req, res) => {
           user: true,
           like: true,
         },
-        where,
+        // where,
         take: limit,
         orderBy,
       });
