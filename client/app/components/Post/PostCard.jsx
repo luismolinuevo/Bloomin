@@ -13,12 +13,15 @@ export default function PostCard({ post, token, setLoading }) {
     <div className="flex">
       <div className="border-b p-4 w-full">
         <div className="flex justify-between font-sans">
-          <div className="flex items-center gap-4 mb-2">
+          <Link
+            href={`/profile/${post?.userId}`}
+            className="flex items-center gap-4 mb-2"
+          >
             <AvatarDefault size={"md"} />
             <h3 className="text-[16px] sm:text-[19px] font-bold break-words">
               {post?.user?.userName}
             </h3>
-          </div>
+          </Link>
 
           {post?.user?.id == userData?.id && (
             <PostMenu post={post} token={token} setLoading={setLoading} />
@@ -49,11 +52,11 @@ export default function PostCard({ post, token, setLoading }) {
         </div>
         <div>
           <PostCardsButtons post={post} setLoading={setLoading} />
-          <button>
+          {/* <button>
             <img src="favs" alt="" />
           </button>
           <button></button>
-          <button></button>
+          <button></button> */}
         </div>
       </div>
       {/* <div></div> */}

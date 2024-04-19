@@ -10,6 +10,7 @@ import {
 } from "../../utils/SelectOptions.js";
 import Select from "react-select";
 import { uploadImage } from "@/app/lib/imageupload";
+// import TextAreaWithLimit from "../General/TextAreaWithLimit";
 
 export default function CreatePost({ setLoading }) {
   const [openModal, setOpenModal] = useState(false);
@@ -66,7 +67,10 @@ export default function CreatePost({ setLoading }) {
 
   return (
     <div>
-      <button onClick={() => setOpenModal(!openModal)} className="border-[#459858] border text-[#459858] px-4 py-2 rounded-md mb-4">
+      <button
+        onClick={() => setOpenModal(!openModal)}
+        className="border-[#459858] border text-[#459858] px-4 py-2 rounded-md mb-4"
+      >
         Create a new post
       </button>
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
@@ -98,16 +102,14 @@ export default function CreatePost({ setLoading }) {
               {...register("description", { required: true })}
               error={errors.description}
             />
-            {errors.description && <p className="text-red-500">Description is required</p>}
+            {errors.description && (
+              <p className="text-red-500">Description is required</p>
+            )}
           </div>
           <div className="flex flex-wrap mb-4">
             <div className="w-full md:w-1/2 md:pr-2 mb-4 md:mb-0">
               <label className="block mb-1">Cost</label>
-              <Input
-                type="number"
-                label="Cost"
-                {...register("cost")}
-              />
+              <Input type="number" label="Cost" {...register("cost")} />
             </div>
             <div className="w-full md:w-1/2 md:pl-2">
               <label className="block mb-1">City</label>
