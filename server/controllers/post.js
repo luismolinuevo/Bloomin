@@ -18,6 +18,7 @@ const createPost = async (req, res) => {
 
     return res.status(201).json({
       success: true,
+      newPost
     });
   } catch (error) {
     console.log(error);

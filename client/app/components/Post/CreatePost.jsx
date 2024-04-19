@@ -10,9 +10,11 @@ import {
 } from "../../utils/SelectOptions.js";
 import Select from "react-select";
 import { uploadImage } from "@/app/lib/imageupload";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import TextAreaWithLimit from "../General/TextAreaWithLimit";
 
-export default function CreatePost({ setLoading }) {
+export default function CreatePost({ setLoading, reload }) {
   const [openModal, setOpenModal] = useState(false);
   const {
     register,
@@ -47,12 +49,20 @@ export default function CreatePost({ setLoading }) {
       };
 
       if (token != null) {
-        createPost(postData, token);
+        const create = await createPost(postData, token);
+
+        if (create.success) {
+          reload();
+          toast.success("Created post!!!");
+        } else {
+          toast.error("Error creating post");
+        }
       }
 
       setOpenModal(false);
       setLoading(false);
     } catch (error) {
+      toast.error("Error creating post");
       console.error("Error creating post: ", error);
     }
   };
