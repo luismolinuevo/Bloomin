@@ -30,6 +30,16 @@ export default function PostSearch({
     reload();
   };
 
+  const clearFilter = () => {
+    setFilterDifficulty("");
+    setFilterLivingSituation("");
+    setFilterLocation("");
+    location("");
+    livingSituation("");
+    difficulty("");
+    reload();
+  };
+
   const handleHousingTypeChange = (selectedOption) => {
     setFilterLivingSituation(selectedOption.value);
   };
@@ -49,24 +59,20 @@ export default function PostSearch({
           placeholder="enter city, site, and zipcode"
           className={inputStyles}
           onChange={(e) => setFilterLocation(e.target.value)}
-          // className="bg-black"
+          value={filterLocation}
         />
         <div className="flex flex-col md:flex-row md:justify-normal md:items-end md:gap-20 mt-4">
           <div className="mb-4 md:mb-0">
             <label className={subTitleStyles}>Living Situation</label>
-            {/* <Select
-              value={filterLivingSituation}
-              onChange={handleHousingTypeChange}
-              options={housingOption}
-              defaultValue={housingOption.find(
-                (option) => option.value === filterLivingSituation
-              )}
 
-            /> */}
             <Select
-              value={housingOption.find(
-                (option) => option.value === filterLivingSituation
-              )}
+              value={
+                filterLivingSituation !== ""
+                  ? housingOption.find(
+                      (option) => option.value === filterLivingSituation
+                    )
+                  : null
+              }
               onChange={handleHousingTypeChange}
               options={housingOption}
             />
@@ -74,27 +80,29 @@ export default function PostSearch({
           <div className="mb-4 md:mb-0">
             <label className={subTitleStyles}>Type</label>
             <Select
-              value={implementationDifficulty.find(
-                (option) => option.value === filterDifficulty
-              )}
+              value={
+                filterDifficulty !== ""
+                  ? implementationDifficulty.find(
+                      (option) => option.value === filterDifficulty
+                    )
+                  : null
+              }
               onChange={handleImplementationDifficultyChange}
               options={implementationDifficulty}
             />
-            {/* <Select
-              value={filterDifficulty}
-              onChange={handleImplementationDifficultyChange}
-              options={implementationDifficulty}
-              defaultValue={implementationDifficulty.find(
-                (option) => option.value === filterDifficulty
-              )}
-            /> */}
           </div>
-          <div>
+          <div className="flex gap-4 justify-center">
             <button
               className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
               onClick={filterPost}
             >
               Submit
+            </button>
+            <button
+              className="border-[#459858] border px-4 rounded-lg text-[#459858] h-[40px]"
+              onClick={clearFilter}
+            >
+              Clear
             </button>
           </div>
         </div>
