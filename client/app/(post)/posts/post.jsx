@@ -76,6 +76,7 @@ export default function Post() {
     setPosts([]); // Clear posts when changing sort criteria
     setLastPostId(null); // Reset lastPostId to null when changing sort criteria
     setAllPostsFetched(false);
+    setLoading(false);
   };
 
   return (
@@ -93,10 +94,7 @@ export default function Post() {
       </div>
 
       <div className="mx-16">
-        <CreatePost
-          setLoading={setLoading}
-          reload={reload}
-        />
+        <CreatePost setLoading={setLoading} reload={reload} />
 
         <div>
           {posts.map((post, index) => (
@@ -105,6 +103,7 @@ export default function Post() {
               post={post}
               token={token}
               setLoading={setLoading}
+              reload={reload}
             />
           ))}
           <div ref={sentinelRef}></div>

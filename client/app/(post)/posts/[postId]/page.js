@@ -42,10 +42,19 @@ export default function PostId() {
     fetchPost();
   }, [postId, refresh]);
 
+  const reload = () => {
+    setRefresh(!refresh);
+  };
+
   return (
     <div className="flex justify-center px-12 md:px-16 ">
       <div className="">
-        <PostCard post={post} token={token} setLoading={setLoading} />
+        <PostCard
+          post={post}
+          token={token}
+          setLoading={setLoading}
+          reload={reload}
+        />
         <div className=" w-[275px] md:w-[400px]">
           <Comments
             post={post}

@@ -10,7 +10,7 @@ import {
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 
-export default function PostMenu({ post, token, setLoading }) {
+export default function PostMenu({ post, token, setLoading, reload }) {
   const [edit, setEdit] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -71,6 +71,7 @@ export default function PostMenu({ post, token, setLoading }) {
           onClose={() => setConfirmDelete(false)}
           token={token}
           setLoading={setLoading}
+          reload={reload}
         />
       )}
     </div>

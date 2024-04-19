@@ -7,7 +7,7 @@ import ShowMoreText from "../General/ShowMoreText";
 import { useAppSelector } from "@/app/store/reduxhooks";
 import { AvatarDefault } from "../General/ProfilePic";
 
-export default function PostCard({ post, token, setLoading }) {
+export default function PostCard({ post, token, setLoading, reload }) {
   const userData = useAppSelector((state) => state.auth.userData);
   return (
     <div className="flex">
@@ -24,7 +24,7 @@ export default function PostCard({ post, token, setLoading }) {
           </Link>
 
           {post?.user?.id == userData?.id && (
-            <PostMenu post={post} token={token} setLoading={setLoading} />
+            <PostMenu post={post} token={token} setLoading={setLoading} reload={reload}/>
           )}
         </div>
         <div className="flex flex-col lg:flex-row">

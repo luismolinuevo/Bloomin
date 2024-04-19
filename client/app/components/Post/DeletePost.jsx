@@ -3,6 +3,8 @@
 import React from "react";
 import Modal from "../General/Modal";
 import { deletePost } from "@/app/lib/post";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function DeletePost({
   onClose,
@@ -10,19 +12,24 @@ export default function DeletePost({
   post_id,
   token,
   setLoading,
+  reload,
 }) {
   const handleDelete = async () => {
     try {
       setLoading(true);
       const postdelete = await deletePost(post_id, token);
       if (postdelete.success) {
-        //have toast are something
+        toast.success("Deleted post!!!");
+        reload();
       } else {
+        toast.error("Unable to delete post");
       }
+
       onClose();
       setLoading(false);
     } catch (error) {
-      console.log("There ha been a error deleting post");
+      toast.error("Unable to delete post");
+      console.log("There has been a error deleting post");
     }
   };
 

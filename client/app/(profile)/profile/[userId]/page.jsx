@@ -85,13 +85,19 @@ export default function Page() {
     setAllPostsFetched(false);
   };
 
+  const reload = () => {
+    setPosts([]); // Clear posts when changing sort criteria
+    setLastPostId(null); // Reset lastPostId to null when changing sort criteria
+    setAllPostsFetched(false);
+  };
+
   return (
     <div className="">
       <ProfileHeader user={userData} token={token} setLoading={setLoading} />
       <PostTab setTab={handleTabChange} tab={tab} />
       <div className="mx-16">
         {posts.map((post, index) => (
-          <PostCard key={index} post={post} />
+          <PostCard key={index} post={post} reload={reload} />
         ))}
 
         <div ref={sentinelRef}></div>

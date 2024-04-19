@@ -52,8 +52,8 @@ export default function CreatePost({ setLoading, reload }) {
         const create = await createPost(postData, token);
 
         if (create.success) {
-          reload();
           toast.success("Created post!!!");
+          reload();
         } else {
           toast.error("Error creating post");
         }
