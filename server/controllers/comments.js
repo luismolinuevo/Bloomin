@@ -42,7 +42,7 @@ const deleteComment = async (req, res) => {
     const { commentId } = req.params;
     const deleteComment = await prisma.comment.deleteMany({
       where: {
-        id: commentId,
+        id: parseInt(commentId),
       },
     });
 
