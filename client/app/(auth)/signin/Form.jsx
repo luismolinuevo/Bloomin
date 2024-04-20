@@ -45,6 +45,7 @@ export default function Form() {
             {...register("password", { required: true })}
             className="bg-white p-1 rounded-lg h-[50px]"
             placeholder="Password"
+            type="password"
           />
           {errors.password && <p>Password is required.</p>}
           <div className="flex justify-center mt-5">
