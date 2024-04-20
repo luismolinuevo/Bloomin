@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Navbar from "../components/Navbar/Navbar";
 import { ThemeProvider } from "../utils/MaterialTailwind";
+import StoreProvider from "../store/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +16,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <ThemeProvider>
         <body className={inter.className}>
-          <div className="flex flex-col h-screen">
-            <Navbar />
+          <StoreProvider>
+            <div className="flex flex-col h-screen">
+              <Navbar />
 
-            <main className="flex-grow">{children}</main>
-          </div>
+              <main className="flex-grow">{children}</main>
+            </div>
+          </StoreProvider>
         </body>
       </ThemeProvider>
     </html>

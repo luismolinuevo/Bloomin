@@ -94,7 +94,7 @@ export default function Navbar() {
                     <Link href={`/profile/${userData?.id}`}>Profile</Link>
                   </div>
                   <div>
-                    <ProfileMenu />
+                    <ProfileMenu user={userData}/>
                   </div>
                 </>
               )}
