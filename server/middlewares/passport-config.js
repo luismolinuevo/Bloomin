@@ -53,7 +53,6 @@ passport.use(
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
             userName: profile.displayName,
-            imageUrl: profile.photos[0].value,
           },
         });
 
