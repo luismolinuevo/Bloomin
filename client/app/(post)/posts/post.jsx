@@ -27,7 +27,6 @@ export default function Post() {
 
   useClearUrl();
 
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -115,15 +114,19 @@ export default function Post() {
         <CreatePost setLoading={setLoading} reload={reload} />
 
         <div>
-          {posts.map((post, index) => (
-            <PostCard
-              key={index}
-              post={post}
-              token={token}
-              setLoading={setLoading}
-              reload={reload}
-            />
-          ))}
+          {posts.length === 0 ? (
+            <p>No posts available</p>
+          ) : (
+            posts.map((post, index) => (
+              <PostCard
+                key={index}
+                post={post}
+                token={token}
+                setLoading={setLoading}
+                reload={reload}
+              />
+            ))
+          )}
           <div ref={sentinelRef}></div>
           {loading && <LoadingSpinner />}
         </div>
