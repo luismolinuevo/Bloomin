@@ -4,82 +4,25 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import { MenuIcon } from "@heroicons/react/outline";
-
-// export default function Navbar() {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [openHamburger, setOpenHamburger] = useState(false);
-
-//   return (
-//     <header className="block">
-//       <div className="lg:px-20 lg:py-5 px-10 py-2 w-full fixed z-10">
-//         <nav className="flex items-center justify-between">
-//           <Link href="/" className="flex items-center">
-//             <Image
-//               src={"/logo.png"}
-//               alt="Navbar logo"
-//               width={64}
-//               height={64}
-//               className="mr-8"
-//             />
-//             <h1 className="text-xl text-green-1 hidden lg:block">Bloomin</h1>
-//           </Link>
-//           <SearchBar />
-//           <div className="text-xl lg:flex lg:items-center lg:gap-6">
-//             <Link href={"/"}>Home</Link>
-//             <Link href={"/"}>Browse</Link>
-//             <Link href={"/"}>Form</Link>
-//             {!isLoggedIn && <Link href={"/"}>Signup or SignIn</Link>}
-//             {isLoggedIn && (
-//               <div>
-//                 <Link href={"/"}>
-//                   <Image
-//                     src={"/favsIcon.png"}
-//                     width={26}
-//                     height={26}
-//                     alt="Favorites Icon"
-//                   />
-//                 </Link>
-//               </div>
-//             )}
-//           </div>
-//           <button
-//             onClick={() => setOpenHamburger(!openHamburger)}
-//             className={`lg:hidden ${openHamburger ? 'hidden' : ''}`}
-//           >
-//             <MenuIcon className={`h-8 w-8 text-black`} />
-//           </button>
-//         </nav>
-//         {openHamburger && (
-//           <div className="lg:hidden text-xl flex flex-col items-center">
-//             <Link href={"/"}>Home</Link>
-//             <Link href={"/"}>Browse</Link>
-//             <Link href={"/"}>Form</Link>
-//             {!isLoggedIn && <Link href={"/"}>Signup or SignIn</Link>}
-//             {isLoggedIn && (
-//               <div>
-//                 <Link href={"/"}>
-//                   <Image
-//                     src={"/favsIcon.png"}
-//                     width={26}
-//                     height={26}
-//                     alt="Favorites Icon"
-//                   />
-//                 </Link>
-//               </div>
-//             )}
-//           </div>
-//         )}
-//       </div>
-//     </header>
-//   );
-// }
+import cookie from "js-cookie";
+import { useAppSelector } from "@/app/store/reduxhooks";
+import { ProfileMenu } from "./ProfileMenu";
 
 export default function Navbar() {
+  const token = cookie.get("user_token");
+  const userData = useAppSelector((state) => state.auth.userData);
   const [openNav, setOpenNav] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    // Check if token exists
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+
     const handleScroll = () => {
       if (window.scrollY > 0) {
         setIsScrolled(true);
@@ -105,12 +48,14 @@ export default function Navbar() {
             ? "bg-gray-800 bg-opacity-80"
             : ""
         }`}
-        style={{position: isScrolled ? "sticky" : "static", top: 0}}
+        style={{ position: isScrolled ? "sticky" : "static", top: 0 }}
       >
         <nav className="flex justify-between">
           <Link
             href={"/"}
-            className={`cursor-pointer pr-4 flex items-center ${openNav && "hidden"}`}
+            className={`cursor-pointer pr-4 flex items-center ${
+              openNav && "hidden"
+            }`}
           >
             <Image
               src={"/logo.png"}
@@ -139,21 +84,19 @@ export default function Navbar() {
               <div className={`${openNav ? "flex justify-center" : "hidden"}`}>
                 <SearchBar />
               </div>
-              <Link href={"/"}>Home</Link>
-              <Link href={"/"}>Browse</Link>
-              <Link href={"/"}>Form</Link>
-              {!isLoggedIn && <Link href={"/"}>Signup or SignIn</Link>}
+              {!isLoggedIn && <Link href={"/"}>Home</Link>}
+              <Link href={"/askai"}>Askai</Link>
+              <Link href={"/posts"}>Browse</Link>
+              {!isLoggedIn && <Link href={"/signin"}>Sign in</Link>}
               {isLoggedIn && (
-                <div>
-                  <Link href={"/"}>
-                    <Image
-                      src={"/favsIcon.png"}
-                      width={26}
-                      height={26}
-                      alt="Favorites Icon"
-                    />
-                  </Link>
-                </div>
+                <>
+                  <div>
+                    <Link href={`/profile/${userData?.id}`}>Profile</Link>
+                  </div>
+                  <div>
+                    <ProfileMenu />
+                  </div>
+                </>
               )}
             </div>
           </div>

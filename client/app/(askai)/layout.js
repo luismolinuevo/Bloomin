@@ -17,15 +17,15 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <ThemeProvider>
         <body className={inter.className}>
-          <div className="flex flex-col h-screen">
-            <Navbar />
+          <StoreProvider>
+            <div className="flex flex-col h-screen">
+              <Navbar />
 
-            <main className="flex-grow">
-              <StoreProvider>
+              <main className="flex-grow">
                 <AuthWrapper>{children}</AuthWrapper>
-              </StoreProvider>
-            </main>
-          </div>
+              </main>
+            </div>
+          </StoreProvider>
         </body>
       </ThemeProvider>
     </html>
