@@ -1,4 +1,5 @@
 import cookie from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export const signup = async (data) => {
   try {
@@ -145,4 +146,10 @@ export const updateProfile = async (data, token, user_id) => {
     console.error("Error during editing post:", error);
     throw error;
   }
+};
+
+export const logOut = () => {
+  const router = useRouter();
+  cookie.remove("user_token");
+  router.push("/signin");
 };

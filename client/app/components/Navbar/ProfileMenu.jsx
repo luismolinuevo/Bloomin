@@ -6,6 +6,11 @@ import {
   Avatar,
   Typography,
 } from "@material-tailwind/react";
+import { logOut } from "@/app/lib/auth";
+
+const logOutUser = () => {
+  logOut();
+};
 
 export function ProfileMenu({ user }) {
   return (
@@ -75,7 +80,7 @@ export function ProfileMenu({ user }) {
               fill="#90A4AE"
             />
           </svg>
-          <Typography variant="small" className="font-medium">
+          <Typography variant="small" className="font-medium" onClick={logOutUser}>
             Sign Out
           </Typography>
         </MenuItem>
