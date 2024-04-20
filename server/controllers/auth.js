@@ -212,7 +212,7 @@ const getUserProfileInfo = async (req, res) => {
 
 const googleCallBack = async (req, res) => {
   const token = req.user; // req.user now contains the JWT token
-  res.redirect(`http://localhost:3000?token=${token}`);
+  res.redirect(`http://localhost:3000/posts?token=${token}`);
 };
 
 const editProfile = async (req, res) => {

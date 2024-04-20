@@ -19,15 +19,13 @@ export default function Form() {
     try {
       const data = {
         password: formData.password,
-        userName: formData.userName
+        userName: formData.userName,
       };
       const response = await signin(data);
-      if(response.token) {
-        console.log("test");
+      if (response.token) {
         cookie.set("user_token", response.token);
-        router.push("/");
+        router.push("/posts");
       }
-
     } catch (error) {
       console.error("Signup error:", error);
     }

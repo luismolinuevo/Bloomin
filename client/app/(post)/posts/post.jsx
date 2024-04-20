@@ -9,6 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import { getAllPosts } from "@/app/lib/post.js";
 import SortPost from "@/app/components/Post/SortPost.jsx";
 import LoadingSpinner from "@/app/components/General/LoadingIcon.jsx";
+import useClearUrl from "@/app/utils/clearUrl.js";
 
 export default function Post() {
   const userId = useAppSelector((state) => state.auth.userData);
@@ -24,8 +25,10 @@ export default function Post() {
   const [difficulty, setDifficulty] = useState("");
   const sentinelRef = useRef(null);
 
+  useClearUrl();
+
+
   useEffect(() => {
-    // fetchData();
     const fetchData = async () => {
       setLoading(true);
       console.log(sortType);

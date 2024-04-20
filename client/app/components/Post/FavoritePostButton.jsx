@@ -16,7 +16,7 @@ export default function FavoritePostButton({ post, token, setLoading }) {
 
   const handleFavorite = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const data = await favoritePost(post?.id, token);
       console.log(data);
       //true
@@ -30,7 +30,7 @@ export default function FavoritePostButton({ post, token, setLoading }) {
         }
       }
 
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.log("There has been a error faving the post ", error);
     }

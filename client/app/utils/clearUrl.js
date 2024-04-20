@@ -17,7 +17,7 @@ export default function useClearUrl() {
       const newUrl = window.location.href.split("?")[0];
       window.history.replaceState({}, document.title, newUrl);
 
-      router.push("/");
+      router.push("/posts");
     }
   }, [router]);
 }
