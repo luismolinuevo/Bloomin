@@ -20,11 +20,26 @@ export default function VotingButtons({ post, token, setLoading }) {
       const voting = await votePost(post?.id, token, type);
       if (voting.success) {
         if (type === "like") {
-          setLiked("like");
-          setPostLikes(postLikes + 1);
+          //So if not liked already
+          if (liked != "like") {
+            setLiked("like");
+            setPostLikes(postLikes + 1);
+            //If liked already
+          } else {
+            setLiked(null);
+            setPostLikes(postLikes - 1);
+          }
         } else if (type === "dislike") {
-          setLiked("dislike");
-          setPostLikes(postLikes - 1);
+          //if user liked it would subtract by one
+          if (liked == "like") {
+            setPostLikes(postLikes - 1);
+          }
+          //So if not disliked already
+          if (liked != "dislike") {
+            setLiked("dislike");
+          } else {
+            setLiked(null);
+          }
         }
       }
 
