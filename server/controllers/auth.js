@@ -119,16 +119,44 @@ const login = async (req, res) => {
 
 const getUserAuthInfo = async (req, res) => {
   // if (req.user != null) {
-  return res.status(200).json({
-    success: true,
-    data: req.user,
-  });
-  // } else {
-  //   return res.status(404).json({
-  //     success: false,
-  //     message: "Not logged in",
-  //   });
-  // }
+  // return res.status(200).json({
+  //   success: true,
+  //   data: req.user,
+  // });
+  try {
+    if (req.user != null) {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: req.user.id,
+        },
+      });
+
+      if (user) {
+        return res.status(200).json({
+          success: true,
+          data: user,
+          message: "Returned user data",
+        });
+      } else {
+        return res.status(200).json({
+          success: false,
+          data: user,
+          message: "No user found",
+        });
+      }
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "User is not logged in",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong getting user auth info",
+    });
+  }
 };
 
 const getUserProfileInfo = async (req, res) => {
@@ -256,4 +284,11 @@ const editProfile = async (req, res) => {
   }
 };
 
-export { signup, login, getUserAuthInfo, googleCallBack, getUserProfileInfo, editProfile };
+export {
+  signup,
+  login,
+  getUserAuthInfo,
+  googleCallBack,
+  getUserProfileInfo,
+  editProfile,
+};
