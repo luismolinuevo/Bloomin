@@ -57,6 +57,7 @@ export default function FollowingPopup({
         isVisable={openModal && following && following.length != 0}
       >
         <div>
+          <h1 className="text-center text-[40px] font-bold">Following</h1>
           <div className="my-6">
             <Input
               type="text"

@@ -55,6 +55,7 @@ export default function FollowersPopup({
         isVisable={openModal && followers.length != 0}
       >
         <div className="flex flex-col">
+          <h1 className="text-center text-[40px] font-bold">Followers</h1>
           <input
             type="text"
             placeholder="Search by username"
@@ -62,7 +63,9 @@ export default function FollowersPopup({
             className=""
           />
           {followers && followers.length != 0
-            ? followers.map((user, index) => <UserCard token={token} user={user} key={index} />)
+            ? followers.map((user, index) => (
+                <UserCard token={token} user={user} key={index} />
+              ))
             : "No followers"}
         </div>
       </Modal>
