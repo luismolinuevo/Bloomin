@@ -89,6 +89,7 @@ export default function Page() {
     setPosts([]); // Clear posts when changing sort criteria
     setLastPostId(null); // Reset lastPostId to null when changing sort criteria
     setAllPostsFetched(false);
+    setUserData([]);
   };
 
   return (

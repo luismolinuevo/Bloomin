@@ -28,6 +28,7 @@ export default function EditButton({ user, token, setLoading, reload }) {
   const onEdit = async (data) => {
     // Receive form data from handleSubmit
     try {
+      
       let newImageUrl = imageUrl;
       if (data.image[0] !== undefined) {
         const upload = await uploadImage(data.image[0]);
@@ -44,8 +45,8 @@ export default function EditButton({ user, token, setLoading, reload }) {
       };
 
       await updateProfile(body, token, user?.user?.id); // Make sure to await the updateProfile function
-      setOpenModal(false);
       reload();
+      setOpenModal(false);
     } catch (error) {
       console.error("There has been a error editing post", error);
     }
@@ -71,17 +72,19 @@ export default function EditButton({ user, token, setLoading, reload }) {
       </button>
 
       <Modal onClose={() => setOpenModal(false)} isVisable={openModal}>
-        <h1>Edit Profile</h1>
+        <h1 className="text-center text-[40px] font-bold">Edit Profile</h1>
         <form onSubmit={handleSubmit(onEdit)}>
           <div>
+            <label className="">Change profile image</label>
             <input
               type="file"
               {...register("image")}
               onChange={handleImageChange}
+              className="mt-1"
             />
           </div>
 
-          <div>
+          <div className="my-6">
             <label>Username</label>
             <Input
               type="text"
@@ -89,12 +92,17 @@ export default function EditButton({ user, token, setLoading, reload }) {
               {...register("userName", { required: true })}
               error={errors.userName}
               helperText={errors.userName && "Username is required"}
-              className="w-[230px]"
+              className="w-[230px] mt-1"
               size="md"
             />
           </div>
-          <div>
-            <button type="submit">Edit</button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-[#459858] px-4 rounded-lg text-white h-[40px]"
+            >
+              Edit
+            </button>
           </div>
         </form>
       </Modal>

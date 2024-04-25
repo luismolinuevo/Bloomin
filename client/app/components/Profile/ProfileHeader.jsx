@@ -36,7 +36,7 @@ export default function ProfileHeader({ user, token, setLoading, reload }) {
           <div className="flex items-center mb-4">
             <AvatarDefault src={user?.user?.imageUrl} size={"xl"} />
             <div className="ml-4">
-              <p className="text-lg font-semibold">{user?.user?.userName}</p>
+              <p className="text-lg font-semibold break-words">{user?.user?.userName}</p>
               {userData?.id === user?.user?.id ? (
                 <div className="flex mt-2">
                   <EditButton
@@ -83,7 +83,7 @@ export default function ProfileHeader({ user, token, setLoading, reload }) {
           </div>
           <div className="flex flex-col">
             <div className="flex gap-3 sm:gap-4">
-              <p className="text-[23px] sm:text-[25px] w-[70px] sm:w-[85px] ">
+              <p className="text-[23px] sm:text-[25px]  ">
                 {user?.user?.userName}
               </p>
               {userData?.id == user?.user?.id ? (
