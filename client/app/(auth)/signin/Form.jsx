@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { signin } from "@/app/lib/auth";
 import cookie from "js-cookie";
+import Link from "next/link";
 
 export default function Form() {
   const {
@@ -55,6 +56,7 @@ export default function Form() {
             />
           </div>
         </form>
+        <Link href={"/signup"} className="text-center underline my-4">Dont have a account? Create an account</Link>
         <div className="flex items-center gap-2 my-5">
           <hr className="h-1 border-black w-[100px]" />
           <p>or Sign in with</p>
