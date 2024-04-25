@@ -2,8 +2,6 @@ import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import prisma from "../db/index.js";
 import dotenv from "dotenv";
-import passport from "passport";
-// import googlePassport from "../auth/GoogleLogin.js";
 dotenv.config();
 
 const signup = async (req, res) => {
@@ -118,11 +116,6 @@ const login = async (req, res) => {
 };
 
 const getUserAuthInfo = async (req, res) => {
-  // if (req.user != null) {
-  // return res.status(200).json({
-  //   success: true,
-  //   data: req.user,
-  // });
   try {
     if (req.user != null) {
       const user = await prisma.user.findUnique({

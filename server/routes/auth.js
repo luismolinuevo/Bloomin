@@ -1,7 +1,6 @@
 import { Router } from "express";
 import * as authControllers from "../controllers/auth.js";
 import passport from "passport";
-// import googlePassport from "../middlewares/GoogleLogin.js";
 
 const router = Router();
 

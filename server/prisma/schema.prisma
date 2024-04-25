@@ -52,19 +52,6 @@ model Post {
   @@index([userId])
 }
 
-// model Votes {
-//   id     Int    @id @unique @default(autoincrement())
-//   postId Int
-//   type   String //could be upvote or downvote
-//   userId Int
-
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-//   @@index([userId])
-//   @@index([postId])
-// }
-
 model Comment {
   id        Int      @id @unique @default(autoincrement())
   textbody  String   @db.VarChar(400)

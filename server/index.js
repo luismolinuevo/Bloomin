@@ -22,8 +22,5 @@ export default async function createServer() {
 
   app.use("/api", apiRouter);
 
-  // app.listen(PORT || 5000, () => {
-  //   console.log("Connected to express server");
-  // });
   return app;
 }

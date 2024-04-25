@@ -142,46 +142,5 @@ const getCommentReplies = async (req, res) => {
   }
 };
 
-// const getCommentReplies = async (req, res) => {
-//   try {
-//     const { comment_id } = req.params;
-
-//     if (comment_id != null) {
-//       const comments = await prisma.commentReply.findMany({
-//         where: {
-//           commentId: parseInt(comment_id),
-//         },
-//         include: {
-//           user: true,
-//         },
-//       });
-
-//       if (comments) {
-//         return res.status(200).json({
-//           success: true,
-//           message: "Fetched all comment replies",
-//           comments,
-//         });
-//       } else {
-//         return res.status(204).json({
-//           success: false,
-//           message: "No comment replies found with that Id",
-//         });
-//       }
-//     } else {
-//       return res.status(404).json({
-//         success: false,
-//         message: "No comment_id",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       message: "Server error",
-//       error,
-//       success: false,
-//     });
-//   }
-// };
 
 export { addCommentReply, deleteComment, getCommentReplies };

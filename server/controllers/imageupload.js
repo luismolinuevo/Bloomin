@@ -1,4 +1,3 @@
-// import upload from "../middlewares/mutler";
 import cloudinary from "../services/cloudinary.js";
 
 const uploadImage = async (req, res) => {
