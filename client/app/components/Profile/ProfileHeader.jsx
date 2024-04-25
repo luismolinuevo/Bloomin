@@ -7,7 +7,7 @@ import FollowersPopup from "./FollowersPopup";
 import { useAppSelector } from "@/app/store/reduxhooks";
 
 //Profile header in user profile(part that shows the user information)
-export default function ProfileHeader({ user, token, setLoading }) {
+export default function ProfileHeader({ user, token, setLoading, reload }) {
   const userData = useAppSelector((state) => state.auth.userData);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -92,6 +92,7 @@ export default function ProfileHeader({ user, token, setLoading }) {
                     user={user}
                     token={token}
                     setLoading={setLoading}
+                    reload={reload}
                   />
                   <button className="border border-[#459858] px-4 rounded-lg text-[#459858] h-[40px]">
                     Setting

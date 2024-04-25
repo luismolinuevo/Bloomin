@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { updateProfile } from "@/app/lib/auth";
 
 //Edit user Profile button
-export default function EditButton({ user, token, setLoading }) {
+export default function EditButton({ user, token, setLoading, reload }) {
   const {
     register,
     handleSubmit,
@@ -45,6 +45,7 @@ export default function EditButton({ user, token, setLoading }) {
 
       await updateProfile(body, token, user?.user?.id); // Make sure to await the updateProfile function
       setOpenModal(false);
+      reload();
     } catch (error) {
       console.error("There has been a error editing post", error);
     }

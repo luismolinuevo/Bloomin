@@ -93,7 +93,7 @@ export default function Page() {
 
   return (
     <div className="">
-      <ProfileHeader user={userData} token={token} setLoading={setLoading} />
+      <ProfileHeader user={userData} token={token} setLoading={setLoading} reload={reload}/>
       <PostTab setTab={handleTabChange} tab={tab} />
       <div className="mx-16">
         {posts.map((post, index) => (
