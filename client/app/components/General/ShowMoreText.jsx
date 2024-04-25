@@ -22,7 +22,7 @@ export default function ShowMoreText({ text, maxLength }) {
 
   return (
     <div className="max-w-full">
-      {/* <p className="text-[15px] sm:text-[20px] break-words">{renderText()}</p> */}
+      <p className="text-[15px] sm:text-[20px] break-words">{renderText()}</p>
       {text && text.length > 150 && (
         <button onClick={toggleShowAll} className="text-blue-700 underline">
           {showAll ? "View less" : "View more"}

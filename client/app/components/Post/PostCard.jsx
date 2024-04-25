@@ -40,9 +40,9 @@ export default function PostCard({ post, token, setLoading, reload }) {
             <h1 className="text-[22px] sm:text-[25px] break-words font-bold">
               {post?.title}
             </h1>
-            <p className="break-words text-[18px]">
+            <div className="break-words text-[18px]">
               <ShowMoreText text={post?.description} maxLength={150} />
-            </p>
+            </div>
             <div className="text-[16px] mt-4 font-bold">
               <h4>Cost: {post?.cost}</h4>
               <h4>Living Situation: {post?.livingSituation}</h4>
@@ -52,14 +52,8 @@ export default function PostCard({ post, token, setLoading, reload }) {
         </div>
         <div>
           <PostCardsButtons post={post} setLoading={setLoading} />
-          {/* <button>
-            <img src="favs" alt="" />
-          </button>
-          <button></button>
-          <button></button> */}
         </div>
       </div>
-      {/* <div></div> */}
     </div>
   );
 }
