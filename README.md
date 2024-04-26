@@ -17,6 +17,7 @@ OpenAI
 Cloudinary
 Google Oauth
 
+Disclaimer: Hosted On Free services so may be slow at first(api sleeping)
 
 
 
